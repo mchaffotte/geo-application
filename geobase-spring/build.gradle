@@ -1,0 +1,13 @@
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-data-rest'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    integrationTestCompile('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'junit'
+        exclude group: 'org.assertj'
+        exclude group: 'org.mockito'
+    }
+
+}

@@ -1,2 +1,3 @@
 rootProject.name = 'geo-application'
+include 'geobase-spring'
 
