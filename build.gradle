@@ -1,6 +1,17 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1'
+    }
+}
+
 subprojects {
     apply plugin: 'java'
     apply from: "$rootDir/gradle/integration-test.gradle"
+    apply from: "$rootDir/gradle/reporting.gradle"
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8

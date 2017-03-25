@@ -1,0 +1,17 @@
+apply plugin: 'jacoco'
+apply plugin: 'org.sonarqube'
+
+jacoco {
+    toolVersion = '0.7.9'
+}
+
+sonarqube {
+    properties {
+        properties['sonar.tests'] += sourceSets.integrationTest.allSource.srcDirs
+
+        property 'sonar.sourceEncoding', 'UTF-8'
+        property 'sonar.jacoco.itReportPath', 'build/jacoco/integrationTest.exec'
+    }
+}
+
+project.tasks["sonarqube"].dependsOn integrationTest
