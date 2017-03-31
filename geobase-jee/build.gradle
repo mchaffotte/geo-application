@@ -1,0 +1,34 @@
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'wildfly-swarm'
+apply plugin: 'war'
+
+dependencyManagement {
+    imports {
+        mavenBom "org.wildfly.swarm:bom-all:2017.3.3"
+    }
+}
+
+repositories {
+    maven {
+        url 'https://maven.repository.redhat.com/nexus/content/repositories/thirdparty-releases/'
+    }
+    maven {
+        url 'https://repository.jboss.org/nexus/content/repositories/releases/'
+    }
+    maven {
+        url 'https://repo.gradle.org/gradle/libs-releases-local/'
+    }
+}
+
+dependencies {
+    compile 'org.wildfly.swarm:microprofile'
+    compile 'org.wildfly.swarm:jpa'
+    compile 'org.slf4j:slf4j-simple:1.7.10'
+}
+
+swarm {
+    properties {
+        swarm.http.port = 8181
+        swarm.context.path = 'geobase'
+    }
+}

@@ -1,3 +1,4 @@
 rootProject.name = 'geo-application'
 include 'geobase-spring'
+include 'geobase-jee'
 

@@ -1,0 +1,1 @@
+CREATE TABLE country (id INTEGER NOT NULL, name VARCHAR(25), population INTEGER, totalArea INTEGER, PRIMARY KEY(id));
