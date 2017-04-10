@@ -4,7 +4,8 @@ apply plugin: 'war'
 
 dependencyManagement {
     imports {
-        mavenBom "org.wildfly.swarm:bom-all:2017.3.3"
+        mavenBom 'org.wildfly.swarm:bom-all:2017.3.3'
+        mavenBom 'org.jboss.arquillian:arquillian-bom:1.1.13.Final'
     }
 }
 
@@ -24,6 +25,10 @@ dependencies {
     compile 'org.wildfly.swarm:microprofile'
     compile 'org.wildfly.swarm:jpa'
     compile 'org.slf4j:slf4j-simple:1.7.10'
+
+    integrationTestCompile 'org.wildfly.swarm:arquillian'
+    integrationTestCompile 'org.glassfish.jersey.core:jersey-client:2.25.1'
+    integrationTestCompile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.25.1'
 }
 
 swarm {
