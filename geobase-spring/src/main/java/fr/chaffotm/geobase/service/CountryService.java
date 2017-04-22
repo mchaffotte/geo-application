@@ -2,7 +2,6 @@ package fr.chaffotm.geobase.service;
 
 import fr.chaffotm.geobase.model.Country;
 import fr.chaffotm.geobase.repository.CountryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ public class CountryService {
 
     private final CountryRepository countryRepository;
 
-    @Autowired
     public CountryService(final CountryRepository countryRepository) {
         this.countryRepository = countryRepository;
     }

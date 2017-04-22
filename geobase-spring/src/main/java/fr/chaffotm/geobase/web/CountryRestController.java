@@ -2,7 +2,6 @@ package fr.chaffotm.geobase.web;
 
 import fr.chaffotm.geobase.model.Country;
 import fr.chaffotm.geobase.service.CountryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,6 @@ public class CountryRestController {
 
     private final CountryService countryService;
 
-    @Autowired
     public CountryRestController(final CountryService countryService) {
         this.countryService = countryService;
     }
