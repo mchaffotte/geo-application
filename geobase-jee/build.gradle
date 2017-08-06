@@ -2,11 +2,13 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'wildfly-swarm'
 apply plugin: 'war'
 
-project.ext.resteasyVersion = '3.1.4.Final'
+ext {
+    resteasyVersion = '3.1.4.Final'
+}
 
 dependencyManagement {
     imports {
-        mavenBom "org.wildfly.swarm:bom-all:$rootProject.swarmVersion"
+        mavenBom "org.wildfly.swarm:bom-all:$swarmVersion"
     }
 }
 
@@ -21,7 +23,7 @@ dependencies {
     compile 'org.wildfly.swarm:jpa'
     compile 'org.slf4j:slf4j-simple:1.7.10'
 
-    integrationTestCompile "org.wildfly.swarm:gradle-arquillian-adapter:$rootProject.swarmVersion"
+    integrationTestCompile "org.wildfly.swarm:gradle-arquillian-adapter:$swarmVersion"
     integrationTestCompile "org.jboss.resteasy:resteasy-client:$resteasyVersion"
     integrationTestCompile "org.jboss.resteasy:resteasy-jackson-provider:$resteasyVersion"
 }

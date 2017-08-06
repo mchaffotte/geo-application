@@ -1,5 +1,7 @@
 buildscript {
-    project.ext.swarmVersion = '2017.8.1'
+    ext {
+        swarmVersion = '2017.8.1'
+    }
 
     repositories {
         mavenCentral()
@@ -31,7 +33,6 @@ subprojects {
 
     repositories {
         mavenLocal()
-        mavenCentral()
         jcenter()
     }
 
