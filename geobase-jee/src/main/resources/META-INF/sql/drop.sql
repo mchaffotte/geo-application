@@ -1,1 +1,5 @@
 DROP TABLE country IF EXISTS;
+DROP TABLE city IF EXISTS;
+
+DROP SEQUENCE IF EXISTS country_sequence;
+DROP SEQUENCE IF EXISTS city_sequence;
