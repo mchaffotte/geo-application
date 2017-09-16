@@ -57,7 +57,8 @@ public class CountryRepository {
     }
 
     public void delete(final long id) {
-        em.remove(get(id));
+        final CountryEntity country = em.getReference(CountryEntity.class, id);
+        em.remove(country);
     }
 
 }
