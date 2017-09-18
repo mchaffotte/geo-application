@@ -133,5 +133,5 @@ INSERT INTO country (id, code, name, population, total_area, capital_id) VALUES 
 INSERT INTO city (id, name) VALUES (45, 'Cardiff');
 INSERT INTO country (id, code, name, population, total_area, capital_id) VALUES (45, 'GB-WLS', 'Wales', 3063456, 20779, 45);
 
-ALTER SEQUENCE city_sequence START WITH 46;
-ALTER SEQUENCE country_sequence START WITH 46;
+ALTER SEQUENCE city_sequence RESTART WITH 46;
+ALTER SEQUENCE country_sequence RESTART WITH 46;

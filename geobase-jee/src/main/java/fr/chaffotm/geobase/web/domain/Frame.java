@@ -9,7 +9,7 @@ public class Frame<T> {
 
     private final long total;
 
-    // JAX-RS use
+    // Used by JAX-RS
     public Frame() {
         this(new ArrayList<>(), 0);
     }

@@ -5,3 +5,11 @@ CREATE TABLE country (id BIGINT NOT NULL, code VARCHAR(6) NOT NULL, name VARCHAR
 ALTER TABLE country ADD CONSTRAINT uk_country_code UNIQUE(code);
 ALTER TABLE country ADD CONSTRAINT uk_capital_id UNIQUE(capital_id);
 ALTER TABLE country ADD CONSTRAINT fk_country_capital_id FOREIGN KEY(capital_id) REFERENCES city;
+
+CREATE SEQUENCE question_sequence INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE quiz_sequence INCREMENT BY 1 START WITH 1;
+CREATE TABLE choice (question_id BIGINT NOT NULL, choice VARCHAR(255));
+CREATE TABLE question (id BIGINT NOT NULL, expression VARCHAR(255), answer VARCHAR(50), quiz_id BIGINT, PRIMARY KEY(id));
+CREATE TABLE quiz (id BIGINT NOT NULL, PRIMARY KEY(id));
+ALTER TABLE choice ADD CONSTRAINT fk_choice_question FOREIGN KEY(question_id) REFERENCES question;
+ALTER TABLE question ADD CONSTRAINT fk_question_quiz FOREIGN KEY(quiz_id) REFERENCES quiz;
