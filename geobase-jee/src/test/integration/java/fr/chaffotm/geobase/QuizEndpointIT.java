@@ -67,7 +67,7 @@ public class QuizEndpointIT {
         assertThat(response2.getStatusInfo()).isEqualTo(Response.Status.OK);
         final QuizResult result = response2.readEntity(QuizResult.class);
         assertThat(result).isNotNull();
-        assertThat(result.getNbOfRightAnswers()).isEqualTo(0);
+        assertThat(result.getNbOfRightAnswers()).isBetween(0, 1);
         assertThat(result.getTotalNumberOfQuestions()).isEqualTo(10);
     }
 
