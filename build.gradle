@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        swarmVersion = '2017.8.1'
+        swarmVersion = '2017.10.0'
     }
 
     repositories {
@@ -10,7 +10,7 @@ buildscript {
     dependencies {
         classpath 'io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5'
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.7.RELEASE'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE'
         classpath "org.wildfly.swarm:wildfly-swarm-gradle-plugin:$swarmVersion"
     }
 }
@@ -44,7 +44,7 @@ subprojects {
 
         testCompile 'junit:junit:4.12'
         testCompile 'org.assertj:assertj-core:3.8.0'
-        testCompile 'org.mockito:mockito-core:2.10.0'
+        testCompile 'org.mockito:mockito-core:2.11.0'
     }
 
     test.outputs.upToDateWhen { false }
