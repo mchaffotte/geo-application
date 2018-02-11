@@ -1,3 +1,18 @@
+buildscript {
+    ext {
+        swarmVersion = '2018.2.0'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE'
+        classpath "org.wildfly.swarm:wildfly-swarm-gradle-plugin:$swarmVersion"
+    }
+}
+
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'wildfly-swarm'
 apply plugin: 'war'
@@ -21,9 +36,11 @@ repositories {
 dependencies {
     compile 'org.wildfly.swarm:microprofile'
     compile 'org.wildfly.swarm:jpa'
-    compile 'org.slf4j:slf4j-simple:1.7.10'
+    compile 'org.slf4j:slf4j-simple:1.7.25'
 
-    integrationTestCompile "org.wildfly.swarm:gradle-arquillian-adapter:$swarmVersion"
+    integrationTestCompile ("org.wildfly.swarm:gradle-arquillian-adapter:$swarmVersion") {
+        exclude group: 'junit'
+    }
     integrationTestCompile "org.jboss.resteasy:resteasy-client:$resteasyVersion"
     integrationTestCompile "org.jboss.resteasy:resteasy-jackson-provider:$resteasyVersion"
 }

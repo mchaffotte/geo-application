@@ -2,7 +2,7 @@ apply plugin: 'jacoco'
 apply plugin: 'org.sonarqube'
 
 jacoco {
-    toolVersion = '0.7.9'
+    toolVersion = '0.8.0'
 }
 
 sonarqube {

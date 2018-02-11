@@ -1,17 +1,10 @@
 buildscript {
-    ext {
-        swarmVersion = '2017.10.0'
-    }
-
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        classpath 'io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE'
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5'
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE'
-        classpath "org.wildfly.swarm:wildfly-swarm-gradle-plugin:$swarmVersion"
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1'
     }
 }
 
@@ -24,6 +17,14 @@ subprojects {
     targetCompatibility = 1.8
 
     compileJava {
+        options.encoding = 'UTF-8'
+    }
+
+    compileTestJava {
+        options.encoding = 'UTF-8'
+    }
+
+    compileIntegrationTestJava {
         options.encoding = 'UTF-8'
     }
 
@@ -43,13 +44,13 @@ subprojects {
         compile 'com.h2database:h2:1.4.196'
 
         testCompile 'junit:junit:4.12'
-        testCompile 'org.assertj:assertj-core:3.8.0'
-        testCompile 'org.mockito:mockito-core:2.11.0'
+        testCompile 'org.assertj:assertj-core:3.9.0'
+        testCompile 'org.mockito:mockito-core:2.13.0'
     }
 
     test.outputs.upToDateWhen { false }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.2.1'
+    gradleVersion = '4.4.1'
 }
