@@ -1,0 +1,19 @@
+<p>Countries:</p>
+<div>
+  <div class="card col-8">
+      <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let country of countries">
+              <th scope="row">{{ country.id }}</th>
+              <td>{{ country.name }}</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+</div>

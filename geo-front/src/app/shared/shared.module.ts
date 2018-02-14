@@ -8,16 +8,11 @@ import { CountryService } from './country/country.service';
   imports: [
     CommonModule
   ],
+  providers: [
+    CountryService
+  ],
   declarations: []
 })
 export class SharedModule {
 
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: SharedModule,
-      providers: [
-        CountryService
-      ]
-    };
-  }
 }
