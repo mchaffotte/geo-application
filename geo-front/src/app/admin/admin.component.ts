@@ -7,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  ngOnInit() { }
+  isNavbarCollapsed: boolean;
+
+  ngOnInit() {
+    this.isNavbarCollapsed = true;
+  }
+
+  collapseNavbar() {
+    this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
 
 }

@@ -14,7 +14,7 @@ const routes: Routes = [
       path: '',
       component: AdminComponent,
       children: [{
-        path: '',
+        path: 'dashboard',
         component: DashboardComponent
       }, {
         path: 'countries',
@@ -22,6 +22,10 @@ const routes: Routes = [
       }, {
         path: 'sandbox',
         component: SandboxComponent
+      }, {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
       }]
     }]
   }
