@@ -1,0 +1,9 @@
+{
+  "admin": {
+    "menu": {
+      "dashboard": "Dashboard",
+      "countries": "Countries",
+      "sandbox": "Sandobx"
+    }
+  }
+}

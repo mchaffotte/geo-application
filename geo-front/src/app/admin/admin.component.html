@@ -7,13 +7,13 @@
     <div class="collapse navbar-collapse" id="mainMenu" [ngbCollapse]="isNavbarCollapsed">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
+          <a class="nav-link" routerLink="/admin/dashboard" routerLinkActive="active">{{ 'admin.menu.dashboard' | translate }}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/countries" routerLinkActive="active">Countries</a>
+          <a class="nav-link" routerLink="/admin/countries" routerLinkActive="active">{{ 'admin.menu.countries' | translate }}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/sandbox" routerLinkActive="active">Sandbox</a>
+          <a class="nav-link" routerLink="/admin/sandbox" routerLinkActive="active">{{ 'admin.menu.sandbox' | translate }}</a>
         </li>
       </ul>
     </div>

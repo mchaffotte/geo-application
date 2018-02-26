@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders } from '@angular/compiler/src/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { CountryService } from './country/country.service';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+  ],
+  exports: [
+    CommonModule,
+    TranslateModule
   ],
   providers: [
     CountryService
