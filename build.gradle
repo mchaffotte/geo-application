@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1'
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2'
     }
 }
 
@@ -44,13 +44,13 @@ subprojects {
         compile 'com.h2database:h2:1.4.196'
 
         testCompile 'junit:junit:4.12'
-        testCompile 'org.assertj:assertj-core:3.9.0'
-        testCompile 'org.mockito:mockito-core:2.13.0'
+        testCompile 'org.assertj:assertj-core:3.9.1'
+        testCompile 'org.mockito:mockito-core:2.15.0'
     }
 
     test.outputs.upToDateWhen { false }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.4.1'
+    gradleVersion = '4.5.1'
 }
