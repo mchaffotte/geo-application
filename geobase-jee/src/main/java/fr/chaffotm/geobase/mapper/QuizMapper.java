@@ -13,9 +13,9 @@ public class QuizMapper {
         for (QuestionEntity questionEntity : entity.getQuestions()) {
             final Question question = new Question();
             question.setExpression(questionEntity.getExpression());
-            /*for (String choice : questionEntity.getChoices()) {
+            for (String choice : questionEntity.getChoices()) {
                 question.addChoice(choice);
-            }*/
+            }
             quiz.addQuestion(question);
         }
         return quiz;

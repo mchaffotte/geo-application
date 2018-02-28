@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
@@ -26,17 +25,20 @@ public class CountryEndpoint implements ResourceEndpoint {
     public CountryEndpoint(final CountryService countryService) {
         this.countryService = countryService;
     }
-    
+
     @GET
     public Frame<Country> findAll(@QueryParam("offset") @DefaultValue("1") @Min(value = 1, message = "offset cannot be less than 1") final int offset,
-                                  @QueryParam("limit") final Integer limit) {
-        return countryService.findAll(offset, limit);
+                                  @QueryParam("limit") final Integer limit,
+                                  @QueryParam("sort") @DefaultValue("id") final String sort) {
+        return countryService.findAll(offset, limit, sort);
     }
 
     @POST
     public Response create(@Valid final Country country) {
         final long countryId = countryService.create(country);
-        return Response.created(UriBuilder.fromResource(CountryEndpoint.class).path(String.valueOf(countryId)).build()).build();
+        return Response.created(UriBuilder.fromResource(CountryEndpoint.class)
+                .path(String.valueOf(countryId)).build())
+                .build();
     }
 
     @GET

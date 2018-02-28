@@ -11,10 +11,6 @@ import java.util.Objects;
                 @UniqueConstraint(name = "uk_capital_id", columnNames = "capital_id")
         }
 )
-@NamedQueries({
-        @NamedQuery(name = "Country.findAll", query = "SELECT c FROM Country c"),
-        @NamedQuery(name = "Country.count", query = "SELECT COUNT(c.id) FROM Country c")
-})
 public class CountryEntity {
 
     @Id

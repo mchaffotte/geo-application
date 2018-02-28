@@ -3,6 +3,8 @@ package fr.chaffotm.geobase.service;
 import fr.chaffotm.geobase.domain.CountryEntity;
 import fr.chaffotm.geobase.mapper.CountryMapper;
 import fr.chaffotm.geobase.repository.CountryRepository;
+import fr.chaffotm.geobase.repository.Sort;
+import fr.chaffotm.geobase.repository.SortConverter;
 import fr.chaffotm.geobase.web.domain.Country;
 import fr.chaffotm.geobase.web.domain.Frame;
 
@@ -19,6 +21,8 @@ public class CountryService {
 
     private final CountryRepository countryRepository;
 
+    private final SortConverter converter;
+
     // Used by CDI
     protected CountryService() {
         this(null);
@@ -27,10 +31,12 @@ public class CountryService {
     @Inject
     public CountryService(final CountryRepository countryRepository) {
         this.countryRepository = countryRepository;
+        converter = new SortConverter();
     }
 
-    public Frame<Country> findAll(final int offset, final Integer limit) {
-        final List<CountryEntity> countries = countryRepository.findAll(offset, limit);
+    public Frame<Country> findAll(final int offset, final Integer limit, final String sort) {
+        final List<Sort> sorts = converter.getAsList(sort);
+        final List<CountryEntity> countries = countryRepository.findAll(offset, limit, sorts);
         final long nbElements = countryRepository.count();
         return new Frame<>(CountryMapper.map(countries), nbElements);
     }
