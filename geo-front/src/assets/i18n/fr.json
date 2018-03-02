@@ -1,0 +1,9 @@
+{
+  "admin": {
+    "menu": {
+      "dashboard": "Tableau de bord",
+      "countries": "Pays",
+      "sandbox": "Bac à sable"
+    }
+  }
+}
