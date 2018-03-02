@@ -5,6 +5,7 @@ public class QuizResult {
     private int nbOfRightAnswers;
 
     private int totalNumberOfQuestions;
+
     private String message;
 
     public int getNbOfRightAnswers() {

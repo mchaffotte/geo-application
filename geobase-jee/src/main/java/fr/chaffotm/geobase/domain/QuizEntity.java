@@ -30,7 +30,8 @@ public class QuizEntity {
         return questions;
     }
 
-    void setQuestions(final List<QuestionEntity> questions) {
+    // Used by JPA
+    protected void setQuestions(final List<QuestionEntity> questions) {
         this.questions = questions;
     }
 

@@ -27,7 +27,7 @@ public class QuizService {
 
     private final QuizRepository quizRepository;
 
-    // Weld or CDI issue :(
+    // Used by CDI
     protected QuizService() {
         this(null, null);
     }
@@ -51,9 +51,9 @@ public class QuizService {
 
             final QuestionEntity question = new QuestionEntity();
             question.setAnswer(mainCountry.getCapital().getName());
-            question.setExpression("What is the capital name of " + mainCountry.getName());
+            question.setWording("What is the capital name of " + mainCountry.getName());
             for (Country country : possibleCountries) {
-                question.addChoice(country.getCapital().getName());
+                question.addSuggestion(country.getCapital().getName());
             }
             quiz.addQuestion(question);
         }

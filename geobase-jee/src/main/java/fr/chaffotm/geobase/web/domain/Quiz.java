@@ -8,7 +8,11 @@ public class Quiz {
 
     private long id;
 
-    private List<Question> questions = new ArrayList<>();
+    private List<Question> questions;
+
+    public Quiz() {
+        questions = new ArrayList<>();
+    }
 
     public long getId() {
         return id;
@@ -22,7 +26,8 @@ public class Quiz {
         return questions;
     }
 
-    public void setQuestions(List<Question> questions) {
+    // Used by JAX-RS
+    protected void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 
@@ -43,4 +48,5 @@ public class Quiz {
     public int hashCode() {
         return Objects.hash(id, questions);
     }
+
 }

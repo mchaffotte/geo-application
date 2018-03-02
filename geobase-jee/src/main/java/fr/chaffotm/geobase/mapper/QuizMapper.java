@@ -12,9 +12,9 @@ public class QuizMapper {
         quiz.setId(entity.getId());
         for (QuestionEntity questionEntity : entity.getQuestions()) {
             final Question question = new Question();
-            question.setExpression(questionEntity.getExpression());
-            for (String choice : questionEntity.getChoices()) {
-                question.addChoice(choice);
+            question.setWording(questionEntity.getWording());
+            for (String suggestion : questionEntity.getSuggestions()) {
+                question.addSuggestion(suggestion);
             }
             quiz.addQuestion(question);
         }

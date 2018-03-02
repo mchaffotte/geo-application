@@ -6,28 +6,29 @@ import java.util.Objects;
 
 public class Question {
 
-    private String expression;
+    private String wording;
 
-    private List<String> choices = new ArrayList<>();
+    private List<String> suggestions = new ArrayList<>();
 
-    public String getExpression() {
-        return expression;
+    public String getWording() {
+        return wording;
     }
 
-    public void setExpression(String expression) {
-        this.expression = expression;
+    public void setWording(String wording) {
+        this.wording = wording;
     }
 
-    public List<String> getChoices() {
-        return choices;
+    public List<String> getSuggestions() {
+        return suggestions;
     }
 
-    public void setChoices(List<String> choices) {
-        this.choices = choices;
+    // Used by JAX-RS
+    protected void setSuggestions(List<String> suggestions) {
+        this.suggestions = suggestions;
     }
 
-    public void addChoice(final String choice) {
-        this.choices.add(choice);
+    public void addSuggestion(final String suggestion) {
+        this.suggestions.add(suggestion);
     }
 
     @Override
@@ -35,14 +36,13 @@ public class Question {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question = (Question) o;
-        return Objects.equals(expression, question.expression) &&
-                Objects.equals(choices, question.choices);
+        return Objects.equals(wording, question.wording) &&
+                Objects.equals(suggestions, question.suggestions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(expression, choices);
+        return Objects.hash(wording, suggestions);
     }
-
 
 }

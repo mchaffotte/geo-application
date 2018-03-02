@@ -19,18 +19,18 @@ public class QuestionEntity {
     @JoinColumn(name = "quiz_id", foreignKey = @ForeignKey(name = "fk_question_quiz"))
     private QuizEntity quiz;
 
-    private String expression;
+    private String wording;
 
     private String answer;
 
     @ElementCollection
     @CollectionTable(
-            name = "choice",
+            name = "suggestion",
             joinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"),
-            foreignKey = @ForeignKey(name = "fk_choice_question")
+            foreignKey = @ForeignKey(name = "fk_suggestion_question")
     )
-    @Column(name = "choice")
-    private List<String> choices = new ArrayList<>();
+    @Column(name = "suggestion")
+    private List<String> suggestions = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -44,12 +44,12 @@ public class QuestionEntity {
         this.quiz = quiz;
     }
 
-    public String getExpression() {
-        return expression;
+    public String getWording() {
+        return wording;
     }
 
-    public void setExpression(String expression) {
-        this.expression = expression;
+    public void setWording(String wording) {
+        this.wording = wording;
     }
 
     public String getAnswer() {
@@ -60,16 +60,17 @@ public class QuestionEntity {
         this.answer = answer;
     }
 
-    public List<String> getChoices() {
-        return choices;
+    public List<String> getSuggestions() {
+        return suggestions;
     }
 
-    public void setChoices(List<String> choices) {
-        this.choices = choices;
+    // Used by JPA
+    protected void setSuggestions(List<String> suggestions) {
+        this.suggestions = suggestions;
     }
 
-    public void addChoice(String choice) {
-        this.choices.add(choice);
+    public void addSuggestion(String suggestion) {
+        this.suggestions.add(suggestion);
     }
 
     @Override
