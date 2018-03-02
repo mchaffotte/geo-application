@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.*;
 public class SortConverterTest {
 
     @Test
-    public void getAsList_should_get_the_list_with_name_asc() {
+    public void getAsList_should_get_the_list_with_the_property_in_asc_order() {
         final SortConverter converter = new SortConverter();
 
         final List<Sort> sorts = converter.getAsList("name");
@@ -31,6 +31,17 @@ public class SortConverterTest {
     }
 
     @Test
+    public void getAsList_should_get_the_list_with_name_in_uppercase() {
+        final SortConverter converter = new SortConverter();
+
+        final List<Sort> sorts = converter.getAsList("NAME");
+
+        assertThat(sorts)
+                .containsExactly(
+                        new Sort("NAME", Order.ASC));
+    }
+
+    @Test
     public void getAsList_should_get_the_list_with_name_desc() {
         final SortConverter converter = new SortConverter();
 
@@ -42,7 +53,7 @@ public class SortConverterTest {
     }
 
     @Test
-    public void bgetAsList_should_get_the_list_with_name_asc_without_whitespaces() {
+    public void getAsList_should_get_the_list_with_name_asc_without_whitespaces() {
         final SortConverter converter = new SortConverter();
 
         final List<Sort> sorts = converter.getAsList("   name    ");

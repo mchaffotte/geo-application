@@ -15,10 +15,12 @@ public class ValidationExceptionMapper implements ExceptionMapper<ConstraintViol
     public Response toResponse(final ConstraintViolationException exception) {
        final Set<ConstraintViolation<?>> constraintViolations = exception.getConstraintViolations();
        final StringBuilder messageBuilder = new StringBuilder();
-       for (ConstraintViolation<?> constraintViolation : constraintViolations) {
-           messageBuilder.append(constraintViolation.getMessage());
+       if (constraintViolations != null) {
+           for (ConstraintViolation<?> constraintViolation : constraintViolations) {
+               messageBuilder.append(constraintViolation.getMessage());
+           }
        }
-       return Response.status(422).entity(Entity.json(messageBuilder.toString())).build();
+       return Response.status(Response.Status.BAD_REQUEST).entity(Entity.json(messageBuilder.toString())).build();
    }
 
 }
