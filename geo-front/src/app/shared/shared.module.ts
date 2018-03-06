@@ -3,17 +3,19 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CountryService } from './country/country.service';
+import { QuizService } from './quiz/quiz.service';
 
 @NgModule({
   imports: [
-    CommonModule,
+    CommonModule
   ],
   exports: [
     CommonModule,
     TranslateModule
   ],
   providers: [
-    CountryService
+    CountryService,
+    QuizService
   ],
   declarations: []
 })
