@@ -2,8 +2,7 @@
   "admin": {
     "menu": {
       "dashboard": "Dashboard",
-      "countries": "Countries",
-      "sandbox": "Sandbox"
+      "countries": "Countries"
     }
   }
 }

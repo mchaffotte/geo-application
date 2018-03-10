@@ -6,12 +6,10 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { CountriesComponent } from './countries/countries.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SandboxComponent } from './sandbox/sandbox.component';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
-    NgbModule,
     CommonModule,
     AdminRoutingModule,
     SharedModule
@@ -19,8 +17,7 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     AdminComponent,
     CountriesComponent,
-    DashboardComponent,
-    SandboxComponent
+    DashboardComponent
   ]
 })
 export class AdminModule { }

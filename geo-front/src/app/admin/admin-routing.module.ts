@@ -5,7 +5,6 @@ import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Country } from '../shared/country/country';
 import { CountriesComponent } from './countries/countries.component';
-import { SandboxComponent } from './sandbox/sandbox.component';
 
 const routes: Routes = [
   {
@@ -20,10 +19,11 @@ const routes: Routes = [
         path: 'countries',
         component: CountriesComponent
       }, {
-        path: 'sandbox',
-        component: SandboxComponent
-      }, {
         path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      }, {
+        path: '**',
         redirectTo: 'dashboard',
         pathMatch: 'full'
       }]

@@ -10,6 +10,14 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: './admin/admin.module#AdminModule'
+  },
+  {
+    path: 'sandbox',
+    loadChildren: './sandbox/sandbox.module#SandboxModule'
+  }, {
+    path: '**',
+    redirectTo: 'sandbox',
+    pathMatch: 'full'
   }
 ];
 
