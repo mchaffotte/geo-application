@@ -16,7 +16,7 @@ export class Quiz {
 
 export class QuizAnswer {
 
-  answers: string[];
+  answers: string[] = [];
 
 }
 

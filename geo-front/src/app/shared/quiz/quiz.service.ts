@@ -25,7 +25,7 @@ export class QuizService {
   }
 
   answer(quizId: number, answers: QuizAnswer): Observable<QuizResult> {
-    return this.http.put<QuizResult>('api/quizzes/' + quizId, null);
+    return this.http.put<QuizResult>('api/quizzes/' + quizId, answers);
   }
 
 }
