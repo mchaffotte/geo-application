@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        swarmVersion = '2018.3.0'
+        swarmVersion = '2018.3.2'
     }
 
     repositories {
