@@ -47,7 +47,7 @@ public class QuizEndpointIT {
     private URI baseURL;
 
     @Test
-    public void quiz() throws Exception {
+    public void answerQuiz_should_check_user_answers() {
         final Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         Response response = webTarget.request(APPLICATION_JSON_TYPE).post(null);
@@ -61,14 +61,44 @@ public class QuizEndpointIT {
         assertThat(quiz).isNotNull();
         assertThat(quiz.getQuestions()).hasSize(10);
 
-        QuizAnswers answers = new QuizAnswers();
-        answers.setAnswers(Arrays.asList("Paris", "Paris", "Paris", "Paris", "Paris", "Paris", "Paris", "Paris", "Paris", "Paris"));
+        final QuizAnswers answers = new QuizAnswers();
+        answers.setAnswers(Arrays.asList("", "", "", "", "", "", "", "", "", ""));
         final Response response2 = webTarget.path(String.valueOf(quiz.getId())).request(APPLICATION_JSON_TYPE).put(Entity.json(answers));
         assertThat(response2.getStatusInfo()).isEqualTo(Response.Status.OK);
+
+        final QuizResult expected = new QuizResult();
+        expected.setMessage(null);
+        expected.setNbOfRightAnswers(0);
+        expected.setTotalNumberOfQuestions(10);
         final QuizResult result = response2.readEntity(QuizResult.class);
-        assertThat(result).isNotNull();
-        assertThat(result.getNbOfRightAnswers()).isBetween(0, 1);
-        assertThat(result.getTotalNumberOfQuestions()).isEqualTo(10);
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    public void answerQuiz_should_not_recognize_null_body() {
+        final Client client = ClientBuilder.newClient();
+        WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+
+        final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(null);
+        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.UNSUPPORTED_MEDIA_TYPE);
+    }
+
+    @Test
+    public void answerQuiz_should_not_validate_null_body() {
+        final Client client = ClientBuilder.newClient();
+        WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+
+        final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(null));
+        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
+    }
+
+    @Test
+    public void answerQuiz_should_not_validate_empty_body() {
+        final Client client = ClientBuilder.newClient();
+        WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+
+        final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(""));
+        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
     }
 
 }

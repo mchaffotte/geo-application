@@ -5,6 +5,7 @@ import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Country } from '../shared/country/country';
 import { CountriesComponent } from './countries/countries.component';
+import { QuizzesComponent } from './quizzes/quizzes.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,9 @@ const routes: Routes = [
       }, {
         path: 'countries',
         component: CountriesComponent
+      }, {
+        path: 'quizzes',
+        component: QuizzesComponent
       }, {
         path: '',
         redirectTo: 'dashboard',

@@ -51,7 +51,7 @@ public class QuizService {
 
             final QuestionEntity question = new QuestionEntity();
             question.setAnswer(mainCountry.getCapital().getName());
-            question.setWording("What is the capital name of " + mainCountry.getName());
+            question.setWording("What is the capital name of " + mainCountry.getName() + "?");
             for (Country country : possibleCountries) {
                 question.addSuggestion(country.getCapital().getName());
             }

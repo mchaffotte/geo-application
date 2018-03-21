@@ -1,0 +1,30 @@
+<div class="row">
+  <section>
+    <button class="btn btn-primary" (click)="createQuiz()">
+      <span class="fa fa-plus-circle"></span> {{ 'admin.quizzes.play' | translate }}
+    </button>
+  </section>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card mb-4 box-shadow" *ngIf="question">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal"> {{ 'admin.quizzes.question' | translate:{number: index + 1} }} </h4>
+      </div>
+      <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+      <div class="card-body">
+        <p class="card-text">{{question.wording}}</p>
+        <button type="button" class="btn btn-lg btn-block btn-outline-primary" *ngFor="let suggestion of question.suggestions" (click)="selectAnswer(suggestion)">{{suggestion}}</button>
+      </div>
+    </div>
+
+    <div class="card mb-4 box-shadow" *ngIf="result">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal"> {{ 'admin.quizzes.result' | translate }} </h4>
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{result.nbOfRightAnswers}}/{{result.totalNumberOfQuestions}}</p>
+      </div>
+    </div>
+  </div>
+</div>

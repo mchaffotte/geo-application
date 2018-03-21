@@ -7,6 +7,7 @@ import { AdminComponent } from './admin.component';
 import { CountriesComponent } from './countries/countries.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
+import { QuizzesComponent } from './quizzes/quizzes.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     AdminComponent,
     CountriesComponent,
-    DashboardComponent
+    DashboardComponent,
+    QuizzesComponent
   ]
 })
 export class AdminModule { }

@@ -6,6 +6,7 @@ import fr.chaffotm.geobase.web.domain.QuizAnswers;
 import fr.chaffotm.geobase.web.domain.QuizResult;
 
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -39,7 +40,7 @@ public class QuizEndpoint implements ResourceEndpoint {
 
     @PUT
     @Path("{id}")
-    public QuizResult answer(@PathParam("id") final long id, final QuizAnswers answers) {
+    public QuizResult answer(@PathParam("id") final long id, @NotNull final QuizAnswers answers) {
         return quizService.answer(id, answers);
     }
 

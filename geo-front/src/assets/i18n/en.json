@@ -2,7 +2,13 @@
   "admin": {
     "menu": {
       "dashboard": "Dashboard",
-      "countries": "Countries"
+      "countries": "Countries",
+      "quizzes": "Quizzes"
+    },
+    "quizzes": {
+      "play" : "Play",
+      "question" : "Question {{number}}",
+      "result": "Result"
     }
   }
 }

@@ -2,7 +2,13 @@
   "admin": {
     "menu": {
       "dashboard": "Tableau de bord",
-      "countries": "Pays"
+      "countries": "Pays",
+      "quizzes": "Quiz"
+    },
+    "quizzes": {
+      "play" : "Jouer",
+      "question" : "Question {{number}}",
+      "result": "Résultat"
     }
   }
 }
