@@ -1,5 +1,8 @@
+## Gradle
 .gradle/
-.idea/
 **/build/
 **/out/
 /gradle/wrapper
+## Idea
+.idea/
+*.iml
