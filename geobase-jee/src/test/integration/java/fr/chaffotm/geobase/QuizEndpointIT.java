@@ -50,7 +50,7 @@ public class QuizEndpointIT {
     public void answerQuiz_should_check_user_answers() {
         final Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
-        Response response = webTarget.request(APPLICATION_JSON_TYPE).post(null);
+        Response response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(null));
 
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CREATED);
         final String location = response.getHeaderString("location");
@@ -67,9 +67,8 @@ public class QuizEndpointIT {
         assertThat(response2.getStatusInfo()).isEqualTo(Response.Status.OK);
 
         final QuizResult expected = new QuizResult();
-        expected.setMessage(null);
-        expected.setNbOfRightAnswers(0);
-        expected.setTotalNumberOfQuestions(10);
+        expected.setNbOfCorrectAnswers(0);
+        expected.setNbOfQuestions(10);
         final QuizResult result = response2.readEntity(QuizResult.class);
         assertThat(result).isEqualTo(expected);
     }

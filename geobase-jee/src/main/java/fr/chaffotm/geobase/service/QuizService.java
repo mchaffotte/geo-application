@@ -3,11 +3,10 @@ package fr.chaffotm.geobase.service;
 import fr.chaffotm.geobase.domain.QuestionEntity;
 import fr.chaffotm.geobase.domain.QuizEntity;
 import fr.chaffotm.geobase.mapper.QuizMapper;
+import fr.chaffotm.geobase.repository.CountryRepository;
 import fr.chaffotm.geobase.repository.QuizRepository;
-import fr.chaffotm.geobase.web.domain.Country;
-import fr.chaffotm.geobase.web.domain.Quiz;
-import fr.chaffotm.geobase.web.domain.QuizAnswers;
-import fr.chaffotm.geobase.web.domain.QuizResult;
+import fr.chaffotm.geobase.service.quiz.QuizMaker;
+import fr.chaffotm.geobase.web.domain.*;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -23,9 +22,9 @@ public class QuizService {
 
     private static final Random RANDOM = new Random(System.currentTimeMillis());
 
-    private final CountryService countryService;
-
     private final QuizRepository quizRepository;
+
+    private final QuizMaker quizMaker;
 
     // Used by CDI
     protected QuizService() {
@@ -33,32 +32,15 @@ public class QuizService {
     }
 
     @Inject
-    public QuizService(final CountryService countryService, final QuizRepository quizRepository) {
-        this.countryService = countryService;
+    public QuizService(final CountryRepository countryRepository, final QuizRepository quizRepository) {
         this.quizRepository = quizRepository;
+        quizMaker = new QuizMaker(countryRepository);
     }
 
-    public long create() {
-        final QuizEntity quiz = new QuizEntity();
-        final List<Long> excludeIds = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            final Country mainCountry = countryService.getRandom(excludeIds);
-            excludeIds.add(mainCountry.getId());
-
-            final List<Country> possibleCountries = countryService.findRandom(3, mainCountry.getId());
-            possibleCountries.add(mainCountry);
-            Collections.shuffle(possibleCountries, RANDOM);
-
-            final QuestionEntity question = new QuestionEntity();
-            question.setAnswer(mainCountry.getCapital().getName());
-            question.setWording("What is the capital name of " + mainCountry.getName() + "?");
-            for (Country country : possibleCountries) {
-                question.addSuggestion(country.getCapital().getName());
-            }
-            quiz.addQuestion(question);
-        }
-        final QuizEntity quizEntity = quizRepository.create(quiz);
-        return quizEntity.getId();
+    public long create(final QuizConfiguration configuration) {
+        final QuizEntity newQuiz = quizMaker.build(configuration);
+        final QuizEntity createdQuiz = quizRepository.create(newQuiz);
+        return createdQuiz.getId();
     }
 
     public Quiz get(final long id) {
@@ -71,17 +53,17 @@ public class QuizService {
 
         final List<QuestionEntity> questions = quizEntity.getQuestions();
         final List<String> answers1 = answers.getAnswers();
-        int rightAnswers = 0;
+        int nbOfCorrectAnswers = 0;
         for (int i = 0; i < questions.size(); i++) {
             final QuestionEntity question = questions.get(i);
             final String answer = answers1.get(i);
             if (question.getAnswer().equals(answer)) {
-                rightAnswers++;
+                nbOfCorrectAnswers++;
             }
         }
         final QuizResult result = new QuizResult();
-        result.setNbOfRightAnswers(rightAnswers);
-        result.setTotalNumberOfQuestions(questions.size());
+        result.setNbOfCorrectAnswers(nbOfCorrectAnswers);
+        result.setNbOfQuestions(questions.size());
         return result;
     }
 

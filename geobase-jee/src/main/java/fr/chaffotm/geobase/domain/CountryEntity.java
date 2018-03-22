@@ -80,20 +80,16 @@ public class CountryEntity {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CountryEntity)) return false;
+        CountryEntity that = (CountryEntity) o;
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        final CountryEntity other = (CountryEntity) obj;
-        return Objects.equals(id, other.id);
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 
 }

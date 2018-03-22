@@ -4,15 +4,15 @@ import { Observable } from 'rxjs/Observable';
 
 import { map } from 'rxjs/operators';
 
-import { Quiz, QuizResult, QuizAnswer } from './quiz';
+import { Quiz, QuizAnswer, QuizConfiguration, QuizResult } from './quiz';
 
 @Injectable()
 export class QuizService {
 
   constructor(private http: HttpClient) { }
 
-  createQuiz(): Observable<number> {
-    return this.http.post('api/quizzes', null, { observe: 'response' })
+  createQuiz(configuration: QuizConfiguration): Observable<number> {
+    return this.http.post('api/quizzes', configuration, { observe: 'response' })
       .pipe(map(res => {
         const location = res.headers.get('Location');
         const index = location.lastIndexOf('/');

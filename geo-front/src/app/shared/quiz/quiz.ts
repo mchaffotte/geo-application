@@ -1,3 +1,13 @@
+export enum QuestionType {
+  CAPITAL, TOTAL_AREA
+}
+
+export class QuizConfiguration {
+
+  questionType: QuestionType;
+
+}
+
 export class Question {
 
   wording: string;
@@ -22,10 +32,8 @@ export class QuizAnswer {
 
 export class QuizResult {
 
-  nbOfRightAnswers: number;
+  nbOfCorrectAnswers: number;
 
-  totalNumberOfQuestions: number;
-
-  message: string;
+  nbOfQuestions: number;
 
 }

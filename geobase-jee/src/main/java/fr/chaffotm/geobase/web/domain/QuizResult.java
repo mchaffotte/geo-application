@@ -4,34 +4,24 @@ import java.util.Objects;
 
 public class QuizResult {
 
-    private int nbOfRightAnswers;
+    private int nbOfCorrectAnswers;
 
-    private int totalNumberOfQuestions;
+    private int nbOfQuestions;
 
-    private String message;
-
-    public int getNbOfRightAnswers() {
-        return nbOfRightAnswers;
+    public int getNbOfCorrectAnswers() {
+        return nbOfCorrectAnswers;
     }
 
-    public void setNbOfRightAnswers(int nbOfRightAnswers) {
-        this.nbOfRightAnswers = nbOfRightAnswers;
+    public void setNbOfCorrectAnswers(int nbOfCorrectAnswers) {
+        this.nbOfCorrectAnswers = nbOfCorrectAnswers;
     }
 
-    public int getTotalNumberOfQuestions() {
-        return totalNumberOfQuestions;
+    public int getNbOfQuestions() {
+        return nbOfQuestions;
     }
 
-    public void setTotalNumberOfQuestions(int totalNumberOfQuestions) {
-        this.totalNumberOfQuestions = totalNumberOfQuestions;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public void setNbOfQuestions(int nbOfQuestions) {
+        this.nbOfQuestions = nbOfQuestions;
     }
 
     @Override
@@ -39,14 +29,13 @@ public class QuizResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         QuizResult that = (QuizResult) o;
-        return nbOfRightAnswers == that.nbOfRightAnswers &&
-                totalNumberOfQuestions == that.totalNumberOfQuestions &&
-                Objects.equals(message, that.message);
+        return nbOfCorrectAnswers == that.nbOfCorrectAnswers &&
+                nbOfQuestions == that.nbOfQuestions;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nbOfRightAnswers, totalNumberOfQuestions, message);
+        return Objects.hash(nbOfCorrectAnswers, nbOfQuestions);
     }
 
 }

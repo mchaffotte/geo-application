@@ -29,20 +29,16 @@ public class CityEntity {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CityEntity)) return false;
+        CityEntity that = (CityEntity) o;
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-                return true;
-            }
-        if (obj == null || getClass() != obj.getClass()) {
-                return false;
-            }
-        final CityEntity other = (CityEntity) obj;
-        return Objects.equals(id, other.id);
+    public int hashCode() {
+        return Objects.hash(getId());
     }
-    
+
 }

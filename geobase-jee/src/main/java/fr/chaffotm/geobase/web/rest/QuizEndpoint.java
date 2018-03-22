@@ -1,11 +1,10 @@
 package fr.chaffotm.geobase.web.rest;
 
 import fr.chaffotm.geobase.service.QuizService;
-import fr.chaffotm.geobase.web.domain.Quiz;
-import fr.chaffotm.geobase.web.domain.QuizAnswers;
-import fr.chaffotm.geobase.web.domain.QuizResult;
+import fr.chaffotm.geobase.web.domain.*;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -27,8 +26,8 @@ public class QuizEndpoint implements ResourceEndpoint {
     }
 
     @POST
-    public Response create() {
-        final long quizId = quizService.create();
+    public Response create(@Valid QuizConfiguration configuration) {
+        final long quizId = quizService.create(configuration);
         return Response.created(UriBuilder.fromResource(QuizEndpoint.class).path(String.valueOf(quizId)).build()).build();
     }
 

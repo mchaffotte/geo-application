@@ -1,12 +1,31 @@
-<div class="row">
-  <section>
-    <button class="btn btn-primary" (click)="createQuiz()">
-      <span class="fa fa-plus-circle"></span> {{ 'admin.quizzes.play' | translate }}
-    </button>
-  </section>
+<div clas="row">
+    <div class="card box-shadow">
+        <div class="card-block">
+          <h5 class="card-title">{{"route.account.preferences" | translate}}</h5>
+
+          <form (ngSubmit)="createQuiz()">
+            <div class="form-group row">
+              <label for="questionType" class="col-sm-3 col-form-label">Question type</label>
+              <div class="col-sm-9">
+                <ng-select name="questionType" [items]="questionTypes" bindValue="type" [(ngModel)]="selectedQuestionType" [clearable]="false"
+                  [searchable]="false"></ng-select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-9">
+                <button type="submit" class="btn btn-primary">
+                  {{ 'admin.quizzes.play' | translate }}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
 </div>
+
 <div class="row">
-  <div class="col-lg-6">
+
+
     <div class="card mb-4 box-shadow" *ngIf="question">
       <div class="card-header">
         <h4 class="my-0 font-weight-normal"> {{ 'admin.quizzes.question' | translate:{number: index + 1} }} </h4>
@@ -23,8 +42,8 @@
         <h4 class="my-0 font-weight-normal"> {{ 'admin.quizzes.result' | translate }} </h4>
       </div>
       <div class="card-body">
-        <p class="card-text">{{result.nbOfRightAnswers}}/{{result.totalNumberOfQuestions}}</p>
+        <p class="card-text">{{result.nbOfCorrectAnswers}}/{{result.nbOfQuestions}}</p>
       </div>
     </div>
-  </div>
+
 </div>
