@@ -8,7 +8,15 @@
     "quizzes": {
       "play" : "Play",
       "question" : "Question {{number}}",
-      "result": "Result"
+      "result": "Result",
+      "configuration": "Configuration",
+      "question-type": "Type"
+    }
+  },
+  "model": {
+    "question-type": {
+      "capital": "Capital",
+      "total-area": "Total area"
     }
   }
 }

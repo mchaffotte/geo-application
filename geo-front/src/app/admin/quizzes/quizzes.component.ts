@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NgOption } from '@ng-select/ng-select';
+import { TranslateService } from '@ngx-translate/core';
 
 import { Question, Quiz, QuizAnswer, QuizResult, QuizConfiguration, QuestionType } from '../../shared/quiz/quiz';
 import { QuizService } from '../../shared/quiz/quiz.service';
-import { NgOption } from '@ng-select/ng-select';
 
 @Component({
   selector: 'geo-quizzes',
@@ -24,12 +25,13 @@ export class QuizzesComponent implements OnInit {
   questionTypes: Array<NgOption>;
   selectedQuestionType: QuestionType;
 
-  constructor(private quizService: QuizService) { }
+  constructor(private quizService: QuizService, private translate: TranslateService) { }
 
   ngOnInit() {
-    this.questionTypes = new Array<NgOption>();
-    this.questionTypes.push({id: 1, label: 'capital', type: QuestionType.CAPITAL, selected: true});
-    this.questionTypes.push({id: 2, label: 'total area', type: QuestionType.TOTAL_AREA});
+    this.questionTypes = new Array<NgOption>(
+      {id: 1, label: this.translate.instant('model.question-type.capital'), type: QuestionType.CAPITAL, selected: true},
+      {id: 2, label: this.translate.instant('model.question-type.total-area'), type: QuestionType.TOTAL_AREA}
+    );
     this.selectedQuestionType = this.questionTypes[0].type;
   }
 

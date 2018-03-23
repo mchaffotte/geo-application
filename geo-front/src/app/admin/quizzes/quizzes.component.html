@@ -1,11 +1,11 @@
 <div clas="row">
     <div class="card box-shadow">
         <div class="card-block">
-          <h5 class="card-title">{{"route.account.preferences" | translate}}</h5>
+          <h5 class="card-title">{{"admin.quizzes.configuration" | translate}}</h5>
 
           <form (ngSubmit)="createQuiz()">
             <div class="form-group row">
-              <label for="questionType" class="col-sm-3 col-form-label">Question type</label>
+              <label for="questionType" class="col-sm-3 col-form-label">{{"admin.quizzes.question-type" | translate}}</label>
               <div class="col-sm-9">
                 <ng-select name="questionType" [items]="questionTypes" bindValue="type" [(ngModel)]="selectedQuestionType" [clearable]="false"
                   [searchable]="false"></ng-select>
