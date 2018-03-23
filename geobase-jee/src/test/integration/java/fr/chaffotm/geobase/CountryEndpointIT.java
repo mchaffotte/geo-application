@@ -46,11 +46,12 @@ public class CountryEndpointIT {
     private URI baseURL;
 
     @Test
-    public void crud_Country() throws Exception {
+    public void crud_Country() {
         final Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(baseURL).path("api/countries");
 
-        Response response = webTarget.request(APPLICATION_JSON_TYPE).get();
+        Response response = webTarget.request(APPLICATION_JSON_TYPE)
+                .get();
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
         Frame<Country> frame = response.readEntity(new GenericType<Frame<Country>>() {});
         assertThat(frame.getTotal()).isEqualTo(0);

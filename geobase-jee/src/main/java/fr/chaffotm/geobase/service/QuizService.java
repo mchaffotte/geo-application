@@ -6,21 +6,19 @@ import fr.chaffotm.geobase.mapper.QuizMapper;
 import fr.chaffotm.geobase.repository.CountryRepository;
 import fr.chaffotm.geobase.repository.QuizRepository;
 import fr.chaffotm.geobase.service.quiz.QuizMaker;
-import fr.chaffotm.geobase.web.domain.*;
+import fr.chaffotm.geobase.web.domain.Quiz;
+import fr.chaffotm.geobase.web.domain.QuizAnswers;
+import fr.chaffotm.geobase.web.domain.QuizConfiguration;
+import fr.chaffotm.geobase.web.domain.QuizResult;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 @RequestScoped
 @Transactional
 public class QuizService {
-
-    private static final Random RANDOM = new Random(System.currentTimeMillis());
 
     private final QuizRepository quizRepository;
 
