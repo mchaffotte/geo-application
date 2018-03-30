@@ -1,5 +1,6 @@
-export enum QuestionType {
-  CAPITAL, TOTAL_AREA
+export const enum QuestionType {
+  CAPITAL = 'CAPITAL',
+  TOTAL_AREA = 'TOTAL_AREA'
 }
 
 export class QuizConfiguration {

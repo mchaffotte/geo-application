@@ -37,10 +37,10 @@ export class QuizzesComponent implements OnInit {
   ngOnInit() {
     this.answerControl = new FormControl('');
     this.questionTypes = new Array<NgOption>(
-      {id: 1, label: this.translate.instant('model.question-type.capital'), type: QuestionType.CAPITAL, selected: true},
+      {id: 1, label: this.translate.instant('model.question-type.capital'), type: QuestionType.CAPITAL},
       {id: 2, label: this.translate.instant('model.question-type.total-area'), type: QuestionType.TOTAL_AREA}
     );
-    this.selectedQuestionType = this.questionTypes[0].type;
+    this.selectedQuestionType = QuestionType.CAPITAL;
     this.isMultipleChoice = true;
     this.shouldAnswer = true;
   }
