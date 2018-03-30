@@ -5,20 +5,37 @@ import fr.chaffotm.geobase.domain.QuizEntity;
 import fr.chaffotm.geobase.web.domain.Question;
 import fr.chaffotm.geobase.web.domain.Quiz;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public class QuizMapper {
+
+    private static final Random RANDOM = new Random(System.currentTimeMillis());
 
     public static Quiz map(final QuizEntity entity) {
         final Quiz quiz = new Quiz();
         quiz.setId(entity.getId());
         for (QuestionEntity questionEntity : entity.getQuestions()) {
-            final Question question = new Question();
-            question.setWording(questionEntity.getWording());
-            for (String suggestion : questionEntity.getSuggestions()) {
-                question.addSuggestion(suggestion);
-            }
+            final Question question = map(questionEntity);
             quiz.addQuestion(question);
         }
         return quiz;
+    }
+
+    private static Question map(final QuestionEntity entity) {
+        final Question question = new Question();
+        question.setWording(entity.getWording());
+        final List<String> suggestions = getRandomOrderSuggestions(entity);
+        question.setSuggestions(suggestions);
+       return question;
+    }
+
+    private static List<String> getRandomOrderSuggestions(final QuestionEntity entity) {
+        final List<String> suggestions = new ArrayList<>(entity.getSuggestions());
+        Collections.shuffle(suggestions, RANDOM);
+        return suggestions;
     }
 
 }

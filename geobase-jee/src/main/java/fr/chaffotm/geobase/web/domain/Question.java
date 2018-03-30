@@ -22,13 +22,8 @@ public class Question {
         return suggestions;
     }
 
-    // Used by JAX-RS
-    protected void setSuggestions(List<String> suggestions) {
+    public void setSuggestions(List<String> suggestions) {
         this.suggestions = suggestions;
-    }
-
-    public void addSuggestion(final String suggestion) {
-        this.suggestions.add(suggestion);
     }
 
     @Override

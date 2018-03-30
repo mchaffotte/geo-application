@@ -10,7 +10,10 @@
       "question" : "Question {{number}}",
       "result": "Résultat",
       "configuration": "Configuration",
-      "question-type": "Type"
+      "question-type": "Type",
+      "multiple-choice": "QCM",
+      "enter-answer": "Entrer votre réponse",
+      "next": "Suivant"
     }
   },
   "model": {

@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class RandomGenerator implements Generator {
 
     @Override
-    public List<MultipleChoice> generate(final List<CountryEntity> countries) {
+    public List<MultipleChoice> generate(final List<CountryEntity> countries, boolean addDistractors) {
         final int size = countries.size();
         final Set<Integer> excludeIds = new HashSet<>(exclude(size));
         final List<MultipleChoice> multipleChoices = new ArrayList<>();
@@ -20,10 +20,12 @@ public abstract class RandomGenerator implements Generator {
             final int countryIndex = getRandomIndex(size, excludeIds);
             excludeIds.add(countryIndex);
             final CountryEntity answer = countries.get(countryIndex);
-            final List<CountryEntity> distractors = findRandom(countries, countryIndex);
             final MultipleChoice multipleChoice = new MultipleChoice(answer);
-            for (CountryEntity distractor : distractors) {
-                multipleChoice.addDistractor(distractor);
+            if (addDistractors) {
+                final List<CountryEntity> distractors = findRandom(countries, countryIndex);
+                for (CountryEntity distractor : distractors) {
+                    multipleChoice.addDistractor(distractor);
+                }
             }
             multipleChoices.add(multipleChoice);
         }

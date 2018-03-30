@@ -6,6 +6,8 @@ export class QuizConfiguration {
 
   questionType: QuestionType;
 
+  multipleChoice: boolean;
+
 }
 
 export class Question {

@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface Generator {
 
-    List<MultipleChoice> generate(List<CountryEntity> countries);
+    List<MultipleChoice> generate(List<CountryEntity> countries, boolean addDistractors);
 
 }

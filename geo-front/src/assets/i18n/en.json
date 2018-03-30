@@ -10,7 +10,10 @@
       "question" : "Question {{number}}",
       "result": "Result",
       "configuration": "Configuration",
-      "question-type": "Type"
+      "question-type": "Type",
+      "multiple-choice": "Multiple choice",
+      "enter-answer": "Enter your answer",
+      "next": "Next"
     }
   },
   "model": {

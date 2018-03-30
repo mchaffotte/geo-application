@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { NgOption } from '@ng-select/ng-select';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -25,19 +26,29 @@ export class QuizzesComponent implements OnInit {
   questionTypes: Array<NgOption>;
   selectedQuestionType: QuestionType;
 
+  isMultipleChoice: boolean;
+
+  answerControl: FormControl;
+
+  shouldAnswer: boolean;
+
   constructor(private quizService: QuizService, private translate: TranslateService) { }
 
   ngOnInit() {
+    this.answerControl = new FormControl('');
     this.questionTypes = new Array<NgOption>(
       {id: 1, label: this.translate.instant('model.question-type.capital'), type: QuestionType.CAPITAL, selected: true},
       {id: 2, label: this.translate.instant('model.question-type.total-area'), type: QuestionType.TOTAL_AREA}
     );
     this.selectedQuestionType = this.questionTypes[0].type;
+    this.isMultipleChoice = true;
+    this.shouldAnswer = true;
   }
 
   createQuiz() {
     const configuration = new QuizConfiguration();
     configuration.questionType = this.selectedQuestionType;
+    configuration.multipleChoice = this.isMultipleChoice;
     this.quizService.createQuiz(configuration).subscribe(res => {
       this.quizService.getQuiz(res).subscribe(quiz => {
         this.quiz = quiz;
@@ -47,6 +58,13 @@ export class QuizzesComponent implements OnInit {
         this.result = null;
       });
     });
+  }
+
+  answer() {
+    this.shouldAnswer = false;
+    this.selectAnswer(this.answerControl.value);
+    this.shouldAnswer = true;
+    this.answerControl.reset();
   }
 
   selectAnswer(answer: string) {

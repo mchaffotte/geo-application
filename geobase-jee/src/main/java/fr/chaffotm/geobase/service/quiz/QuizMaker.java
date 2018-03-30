@@ -13,14 +13,11 @@ import fr.chaffotm.geobase.service.quiz.generator.GeneratorFactory;
 import fr.chaffotm.geobase.web.domain.QuestionType;
 import fr.chaffotm.geobase.web.domain.QuizConfiguration;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class QuizMaker {
 
-    private static final Random RANDOM = new Random(System.currentTimeMillis());
+
 
     private final CountryRepository countryRepository;
 
@@ -44,7 +41,7 @@ public class QuizMaker {
 
        final Sort sort = new Sort(descriptor.getSortColumn(), Order.DESC);
        final List<CountryEntity> countries = countryRepository.findAll(1, null, Collections.singletonList(sort));
-       final List<MultipleChoice> multipleChoices = generator.generate(countries);
+       final List<MultipleChoice> multipleChoices = generator.generate(countries, quizConfiguration.isMultipleChoice());
        final QuizEntity quiz = new QuizEntity();
        for (MultipleChoice multipleChoice : multipleChoices) {
            QuestionEntity question = buildQuestion(descriptor, multipleChoice);
@@ -56,19 +53,21 @@ public class QuizMaker {
    private QuizConfiguration buildDefaultConfiguration() {
        QuizConfiguration configuration = new QuizConfiguration();
        configuration.setQuestionType(QuestionType.CAPITAL);
+       configuration.setMultipleChoice(true);
        return  configuration;
    }
 
    private QuestionEntity buildQuestion(final QuestionDescriptor descriptor, final MultipleChoice multipleChoice) {
        final CountryEntity answer = multipleChoice.getAnswer();
-       final List<CountryEntity> possibleCountries = new ArrayList<>(multipleChoice.getDistractors());
-       possibleCountries.add(answer);
-       Collections.shuffle(possibleCountries, RANDOM);
        final QuestionEntity question = new QuestionEntity();
        question.setAnswer(descriptor.getAttributeValue(answer));
        question.setWording(descriptor.getQuestion(answer));
-       for (CountryEntity possibleCountry : possibleCountries) {
-           question.addSuggestion(descriptor.getAttributeValue(possibleCountry));
+       Set<CountryEntity> distractors = multipleChoice.getDistractors();
+       if (!distractors.isEmpty()) {
+           question.addSuggestion(descriptor.getAttributeValue(answer));
+           for (CountryEntity possibleCountry : distractors) {
+               question.addSuggestion(descriptor.getAttributeValue(possibleCountry));
+           }
        }
        return question;
    }

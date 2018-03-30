@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CountryService } from './country/country.service';
 import { QuizService } from './quiz/quiz.service';
+import { InputFocusDirective } from './ui/input-focus/input-focus.directive';
 
 @NgModule({
   imports: [
@@ -14,13 +15,15 @@ import { QuizService } from './quiz/quiz.service';
   exports: [
     CommonModule,
     TranslateModule,
-    NgbModule
+    NgbModule,
+    InputFocusDirective
   ],
   providers: [
     CountryService,
     QuizService
   ],
   declarations: [
+    InputFocusDirective
   ]
 })
 export class SharedModule {

@@ -120,7 +120,7 @@
     "directive-selector": [
       true,
       "attribute",
-      "geo",
+      "",
       "camelCase"
     ],
     "component-selector": [
