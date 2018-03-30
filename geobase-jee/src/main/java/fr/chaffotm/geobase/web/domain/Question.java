@@ -6,9 +6,19 @@ import java.util.Objects;
 
 public class Question {
 
+    private String imagePath;
+
     private String wording;
 
     private List<String> suggestions = new ArrayList<>();
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
     public String getWording() {
         return wording;
@@ -31,13 +41,14 @@ public class Question {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question = (Question) o;
-        return Objects.equals(wording, question.wording) &&
+        return Objects.equals(imagePath, question.imagePath) &&
+                Objects.equals(wording, question.wording) &&
                 Objects.equals(suggestions, question.suggestions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(wording, suggestions);
+        return Objects.hash(imagePath, wording, suggestions);
     }
 
 }

@@ -7,11 +7,16 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 @Path("quizzes")
 public class QuizEndpoint implements ResourceEndpoint {
+
+    @Context
+    private UriInfo uriInfo;
 
     private final QuizService quizService;
 
@@ -34,7 +39,7 @@ public class QuizEndpoint implements ResourceEndpoint {
     @GET
     @Path("{id}")
     public Quiz get(@PathParam("id") final long id) {
-        return quizService.get(id);
+        return quizService.get(id, uriInfo);
     }
 
     @PUT

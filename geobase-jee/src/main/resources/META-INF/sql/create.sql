@@ -9,7 +9,7 @@ ALTER TABLE country ADD CONSTRAINT fk_country_capital_id FOREIGN KEY(capital_id)
 CREATE SEQUENCE question_sequence INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE quiz_sequence INCREMENT BY 1 START WITH 1;
 CREATE TABLE suggestion (question_id BIGINT NOT NULL, suggestion VARCHAR(255));
-CREATE TABLE question (id BIGINT NOT NULL, wording VARCHAR(255), answer VARCHAR(50), quiz_id BIGINT, PRIMARY KEY(id));
+CREATE TABLE question (id BIGINT NOT NULL, image VARCHAR(6), wording VARCHAR(255), answer VARCHAR(50), quiz_id BIGINT, PRIMARY KEY(id));
 CREATE TABLE quiz (id BIGINT NOT NULL, PRIMARY KEY(id));
 ALTER TABLE suggestion ADD CONSTRAINT fk_suggestion_question FOREIGN KEY(question_id) REFERENCES question;
 ALTER TABLE question ADD CONSTRAINT fk_question_quiz FOREIGN KEY(quiz_id) REFERENCES quiz;

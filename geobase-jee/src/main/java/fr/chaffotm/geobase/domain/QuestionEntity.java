@@ -19,6 +19,8 @@ public class QuestionEntity {
     @JoinColumn(name = "quiz_id", foreignKey = @ForeignKey(name = "fk_question_quiz"))
     private QuizEntity quiz;
 
+    private String image;
+
     private String wording;
 
     private String answer;
@@ -42,6 +44,14 @@ public class QuestionEntity {
 
     public void setQuiz(QuizEntity quiz) {
         this.quiz = quiz;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getWording() {

@@ -37,7 +37,7 @@
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">{{ 'admin.quizzes.question' | translate:{number: index + 1} }}</h4>
       </div>
-      <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+      <geo-secured-image *ngIf="question.imagePath" [src]="getImageURL(question.imagePath)" class="mx-auto my-2 d-block"></geo-secured-image>
       <div class="card-body">
         <h5 class="card-title">{{ question.wording }}</h5>
         <button type="button" class="btn btn-lg btn-block btn-outline-primary" *ngFor="let suggestion of question.suggestions" (click)="selectAnswer(suggestion)">{{ suggestion }}</button>

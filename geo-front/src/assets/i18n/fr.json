@@ -19,7 +19,8 @@
   "model": {
     "question-type": {
       "capital": "Capitale",
-      "total-area": "Superficie totale"
+      "total-area": "Superficie totale",
+      "flag": "Drapeau"
     }
   }
 }

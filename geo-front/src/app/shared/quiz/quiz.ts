@@ -1,5 +1,6 @@
 export const enum QuestionType {
   CAPITAL = 'CAPITAL',
+  FLAG = 'FLAG',
   TOTAL_AREA = 'TOTAL_AREA'
 }
 
@@ -12,6 +13,8 @@ export class QuizConfiguration {
 }
 
 export class Question {
+
+  imagePath: string;
 
   wording: string;
 

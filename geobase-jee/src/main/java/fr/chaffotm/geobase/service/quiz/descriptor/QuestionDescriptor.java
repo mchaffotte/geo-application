@@ -9,6 +9,8 @@ public interface QuestionDescriptor {
 
     ColumnType getAttributeColumnType();
 
+    ImageType getImageType();
+
     String getQuestion(CountryEntity country);
 
     String getAttributeValue(CountryEntity country);

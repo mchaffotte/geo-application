@@ -16,6 +16,11 @@ public class TotalAreaQuestionDescriptor implements QuestionDescriptor {
     }
 
     @Override
+    public ImageType getImageType() {
+        return ImageType.NONE;
+    }
+
+    @Override
     public String getQuestion(final CountryEntity country) {
         return "Which country has the largest area?";
     }

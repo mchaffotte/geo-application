@@ -14,18 +14,21 @@ public class QuizMapper {
 
     private static final Random RANDOM = new Random(System.currentTimeMillis());
 
-    public static Quiz map(final QuizEntity entity) {
+    public static Quiz map(final QuizEntity entity, final String baseURI) {
         final Quiz quiz = new Quiz();
         quiz.setId(entity.getId());
         for (QuestionEntity questionEntity : entity.getQuestions()) {
-            final Question question = map(questionEntity);
+            final Question question = map(questionEntity, baseURI);
             quiz.addQuestion(question);
         }
         return quiz;
     }
 
-    private static Question map(final QuestionEntity entity) {
+    private static Question map(final QuestionEntity entity, final String baseURI) {
         final Question question = new Question();
+        if (entity.getImage() != null) {
+            question.setImagePath(baseURI + "flags/" + entity.getImage());
+        }
         question.setWording(entity.getWording());
         final List<String> suggestions = getRandomOrderSuggestions(entity);
         question.setSuggestions(suggestions);

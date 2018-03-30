@@ -16,6 +16,11 @@ public class CapitalQuestionDescriptor implements QuestionDescriptor {
     }
 
     @Override
+    public ImageType getImageType() {
+        return ImageType.NONE;
+    }
+
+    @Override
     public String getQuestion(final CountryEntity country) {
         return "What is the capital name of " + country.getName() + "?";
     }

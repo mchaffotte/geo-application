@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CountryService } from './country/country.service';
 import { QuizService } from './quiz/quiz.service';
 import { InputFocusDirective } from './ui/input-focus/input-focus.directive';
+import { SecuredImageComponent } from './ui/secured-image/secured-image.component';
 
 @NgModule({
   imports: [
@@ -16,14 +17,16 @@ import { InputFocusDirective } from './ui/input-focus/input-focus.directive';
     CommonModule,
     TranslateModule,
     NgbModule,
-    InputFocusDirective
+    InputFocusDirective,
+    SecuredImageComponent
   ],
   providers: [
     CountryService,
     QuizService
   ],
   declarations: [
-    InputFocusDirective
+    InputFocusDirective,
+    SecuredImageComponent
   ]
 })
 export class SharedModule {

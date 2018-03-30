@@ -2,6 +2,6 @@ package fr.chaffotm.geobase.web.domain;
 
 public enum QuestionType {
 
-    CAPITAL, TOTAL_AREA
+    CAPITAL, FLAG, TOTAL_AREA
 
 }

@@ -10,6 +10,8 @@ public class QuestionDescriptorFactory {
             descriptor = new CapitalQuestionDescriptor();
         } else if (QuestionType.TOTAL_AREA.equals(questionType)) {
             descriptor = new TotalAreaQuestionDescriptor();
+        } else if (QuestionType.FLAG.equals(questionType)) {
+            descriptor = new FlagQuestionDescriptor();
         } else {
             throw new IllegalArgumentException("Unknown question type:" + questionType);
         }

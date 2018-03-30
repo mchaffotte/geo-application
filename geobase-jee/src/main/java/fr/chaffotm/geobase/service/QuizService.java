@@ -14,6 +14,7 @@ import fr.chaffotm.geobase.web.domain.QuizResult;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 @RequestScoped
@@ -41,14 +42,13 @@ public class QuizService {
         return createdQuiz.getId();
     }
 
-    public Quiz get(final long id) {
+    public Quiz get(final long id, final UriInfo uriInfo) {
         final QuizEntity entity = quizRepository.get(id);
-        return QuizMapper.map(entity);
+        return QuizMapper.map(entity, uriInfo.getBaseUri().toString());
     }
 
     public QuizResult answer(final long id, final QuizAnswers answers) {
         final QuizEntity quizEntity = quizRepository.get(id);
-
         final List<QuestionEntity> questions = quizEntity.getQuestions();
         final List<String> answers1 = answers.getAnswers();
         int nbOfCorrectAnswers = 0;

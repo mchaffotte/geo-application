@@ -6,6 +6,7 @@ import fr.chaffotm.geobase.domain.QuizEntity;
 import fr.chaffotm.geobase.repository.CountryRepository;
 import fr.chaffotm.geobase.repository.Order;
 import fr.chaffotm.geobase.repository.Sort;
+import fr.chaffotm.geobase.service.quiz.descriptor.ImageType;
 import fr.chaffotm.geobase.service.quiz.descriptor.QuestionDescriptor;
 import fr.chaffotm.geobase.service.quiz.descriptor.QuestionDescriptorFactory;
 import fr.chaffotm.geobase.service.quiz.generator.Generator;
@@ -16,8 +17,6 @@ import fr.chaffotm.geobase.web.domain.QuizConfiguration;
 import java.util.*;
 
 public class QuizMaker {
-
-
 
     private final CountryRepository countryRepository;
 
@@ -61,6 +60,10 @@ public class QuizMaker {
        final CountryEntity answer = multipleChoice.getAnswer();
        final QuestionEntity question = new QuestionEntity();
        question.setAnswer(descriptor.getAttributeValue(answer));
+       final ImageType imageType = descriptor.getImageType();
+       if (ImageType.FLAG.equals(imageType)) {
+           question.setImage(answer.getCode());
+       }
        question.setWording(descriptor.getQuestion(answer));
        Set<CountryEntity> distractors = multipleChoice.getDistractors();
        if (!distractors.isEmpty()) {

@@ -19,7 +19,8 @@
   "model": {
     "question-type": {
       "capital": "Capital",
-      "total-area": "Total area"
+      "total-area": "Total area",
+      "flag": "Flag"
     }
   }
 }

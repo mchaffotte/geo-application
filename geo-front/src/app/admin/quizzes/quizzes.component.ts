@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { Question, Quiz, QuizAnswer, QuizResult, QuizConfiguration, QuestionType } from '../../shared/quiz/quiz';
 import { QuizService } from '../../shared/quiz/quiz.service';
+import { SafeUrl } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 @Component({
   selector: 'geo-quizzes',
@@ -38,7 +39,8 @@ export class QuizzesComponent implements OnInit {
     this.answerControl = new FormControl('');
     this.questionTypes = new Array<NgOption>(
       {id: 1, label: this.translate.instant('model.question-type.capital'), type: QuestionType.CAPITAL},
-      {id: 2, label: this.translate.instant('model.question-type.total-area'), type: QuestionType.TOTAL_AREA}
+      {id: 2, label: this.translate.instant('model.question-type.total-area'), type: QuestionType.TOTAL_AREA},
+      {id: 3, label: this.translate.instant('model.question-type.flag'), type: QuestionType.FLAG}
     );
     this.selectedQuestionType = QuestionType.CAPITAL;
     this.isMultipleChoice = true;
@@ -82,6 +84,12 @@ export class QuizzesComponent implements OnInit {
   private changeQuestion() {
     this.index++;
     this.question = this.quiz.questions[this.index];
+  }
+
+  getImageURL(imagePath: string): string {
+    const index = imagePath.lastIndexOf('/');
+    const imageId = imagePath.substring(index + 1);
+    return 'api/flags/' + imageId;
   }
 
 }
