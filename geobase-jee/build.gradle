@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        swarmVersion = '2018.3.3'
+        swarmVersion = '2018.4.1'
     }
 
     repositories {
@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE'
+        classpath 'io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE'
         classpath "org.wildfly.swarm:wildfly-swarm-gradle-plugin:$swarmVersion"
     }
 }
@@ -18,7 +18,7 @@ apply plugin: 'wildfly-swarm'
 apply plugin: 'war'
 
 ext {
-    resteasyVersion = '3.1.4.Final'
+    resteasyVersion = '3.5.0.Final'
 }
 
 dependencyManagement {
