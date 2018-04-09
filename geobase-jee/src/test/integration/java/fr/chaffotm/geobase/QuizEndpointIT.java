@@ -1,8 +1,6 @@
 package fr.chaffotm.geobase;
 
-import fr.chaffotm.geobase.web.domain.Quiz;
-import fr.chaffotm.geobase.web.domain.QuizAnswers;
-import fr.chaffotm.geobase.web.domain.QuizResult;
+import fr.chaffotm.geobase.web.domain.*;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -51,6 +49,36 @@ public class QuizEndpointIT {
         final Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         Response response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(null));
+
+        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CREATED);
+        final String location = response.getHeaderString("location");
+
+        final Response response1 = client.target(location).request(APPLICATION_JSON_TYPE).get();
+        assertThat(response1.getStatusInfo()).isEqualTo(Response.Status.OK);
+        final Quiz quiz = response1.readEntity(Quiz.class);
+        assertThat(quiz).isNotNull();
+        assertThat(quiz.getQuestions()).hasSize(10);
+
+        final QuizAnswers answers = new QuizAnswers();
+        answers.setAnswers(Arrays.asList("", "", "", "", "", "", "", "", "", ""));
+        final Response response2 = webTarget.path(String.valueOf(quiz.getId())).request(APPLICATION_JSON_TYPE).put(Entity.json(answers));
+        assertThat(response2.getStatusInfo()).isEqualTo(Response.Status.OK);
+
+        final QuizResult expected = new QuizResult();
+        expected.setNbOfCorrectAnswers(0);
+        expected.setNbOfQuestions(10);
+        final QuizResult result = response2.readEntity(QuizResult.class);
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    public void answerQuiz_should_check_user_answers_using_images() {
+        final Client client = ClientBuilder.newClient();
+        WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+        final QuizConfiguration configuration = new QuizConfiguration();
+        configuration.setMultipleChoice(true);
+        configuration.setQuestionType(QuestionType.FLAG);
+        Response response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(configuration));
 
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CREATED);
         final String location = response.getHeaderString("location");

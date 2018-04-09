@@ -27,7 +27,7 @@ public class QuizMapper {
     private static Question map(final QuestionEntity entity, final String baseURI) {
         final Question question = new Question();
         if (entity.getImage() != null) {
-            question.setImagePath(baseURI + "flags/" + entity.getImage());
+            question.setImagePath(baseURI + "images/" + entity.getImage().getUuid());
         }
         question.setWording(entity.getWording());
         final List<String> suggestions = getRandomOrderSuggestions(entity);

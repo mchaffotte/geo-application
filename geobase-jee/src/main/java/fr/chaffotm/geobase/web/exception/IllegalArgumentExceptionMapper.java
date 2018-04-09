@@ -9,6 +9,7 @@ public class IllegalArgumentExceptionMapper implements ExceptionMapper<IllegalAr
 
     @Override
     public Response toResponse(final IllegalArgumentException e) {
+        e.printStackTrace();
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
 

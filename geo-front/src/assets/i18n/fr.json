@@ -20,7 +20,8 @@
     "question-type": {
       "capital": "Capitale",
       "total-area": "Superficie totale",
-      "flag": "Drapeau"
+      "flag": "Drapeau",
+      "silhouette": "Silhouette"
     }
   }
 }

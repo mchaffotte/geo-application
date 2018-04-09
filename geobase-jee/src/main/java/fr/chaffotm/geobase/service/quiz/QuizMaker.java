@@ -1,6 +1,7 @@
 package fr.chaffotm.geobase.service.quiz;
 
 import fr.chaffotm.geobase.domain.CountryEntity;
+import fr.chaffotm.geobase.domain.ImageEntity;
 import fr.chaffotm.geobase.domain.QuestionEntity;
 import fr.chaffotm.geobase.domain.QuizEntity;
 import fr.chaffotm.geobase.repository.CountryRepository;
@@ -61,8 +62,12 @@ public class QuizMaker {
        final QuestionEntity question = new QuestionEntity();
        question.setAnswer(descriptor.getAttributeValue(answer));
        final ImageType imageType = descriptor.getImageType();
-       if (ImageType.FLAG.equals(imageType)) {
-           question.setImage(answer.getCode());
+       if (!ImageType.NONE.equals(imageType)) {
+           final ImageEntity image = new ImageEntity();
+           image.setUuid(UUID.randomUUID());
+           image.setCountry(answer);
+           image.setImageType(imageType);
+           question.setImage(image);
        }
        question.setWording(descriptor.getQuestion(answer));
        Set<CountryEntity> distractors = multipleChoice.getDistractors();

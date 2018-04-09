@@ -19,7 +19,9 @@ public class QuestionEntity {
     @JoinColumn(name = "quiz_id", foreignKey = @ForeignKey(name = "fk_question_quiz"))
     private QuizEntity quiz;
 
-    private String image;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id", foreignKey = @ForeignKey(name = "fk_question_image"))
+    private ImageEntity image;
 
     private String wording;
 
@@ -46,11 +48,11 @@ public class QuestionEntity {
         this.quiz = quiz;
     }
 
-    public String getImage() {
+    public ImageEntity getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(ImageEntity image) {
         this.image = image;
     }
 

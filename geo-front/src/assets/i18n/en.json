@@ -20,7 +20,8 @@
     "question-type": {
       "capital": "Capital",
       "total-area": "Total area",
-      "flag": "Flag"
+      "flag": "Flag",
+      "silhouette": "Silhouette"
     }
   }
 }
