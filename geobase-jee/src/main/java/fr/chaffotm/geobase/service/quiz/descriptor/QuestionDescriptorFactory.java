@@ -8,8 +8,6 @@ public class QuestionDescriptorFactory {
         final QuestionDescriptor descriptor;
         if(QuestionType.CAPITAL.equals(questionType)) {
             descriptor = new CapitalQuestionDescriptor();
-        } else if (QuestionType.TOTAL_AREA.equals(questionType)) {
-            descriptor = new TotalAreaQuestionDescriptor();
         } else if (QuestionType.FLAG.equals(questionType)) {
             descriptor = new FlagQuestionDescriptor();
         } else if (QuestionType.SILHOUETTE.equals(questionType)) {

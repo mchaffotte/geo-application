@@ -25,11 +25,12 @@ public class CountryEntity {
     @Column(name = "name", nullable = false, length = 25)
     private String name;
 
-    @Column(name = "total_area", nullable = false)
-    private int totalArea;
-
-    @Column(name = "population", nullable =false)
-    private int population;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "land", column = @Column(name = "land_area")),
+            @AttributeOverride(name = "water", column = @Column(name = "water_area"))
+    })
+    private AreaEntity area;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "capital_id", foreignKey = @ForeignKey(name = "fk_country_capital_id"))
@@ -55,20 +56,12 @@ public class CountryEntity {
         this.name = name;
     }
 
-    public int getTotalArea() {
-        return totalArea;
+    public AreaEntity getArea() {
+        return area;
     }
 
-    public void setTotalArea(final int totalArea) {
-        this.totalArea = totalArea;
-    }
-
-    public int getPopulation() {
-        return population;
-    }
-
-    public void setPopulation(final int population) {
-        this.population = population;
+    public void setArea(AreaEntity area) {
+        this.area = area;
     }
 
     public CityEntity getCapital() {

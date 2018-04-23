@@ -39,7 +39,6 @@ export class QuizzesComponent implements OnInit {
     this.answerControl = new FormControl('');
     this.questionTypes = new Array<NgOption>(
       {id: 1, label: this.translate.instant('model.question-type.capital'), type: QuestionType.CAPITAL},
-      {id: 2, label: this.translate.instant('model.question-type.total-area'), type: QuestionType.TOTAL_AREA},
       {id: 3, label: this.translate.instant('model.question-type.flag'), type: QuestionType.FLAG},
       {id: 4, label: this.translate.instant('model.question-type.silhouette'), type: QuestionType.SILHOUETTE}
     );

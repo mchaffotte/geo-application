@@ -1,5 +1,6 @@
 package fr.chaffotm.geobase;
 
+import fr.chaffotm.geobase.web.domain.Area;
 import fr.chaffotm.geobase.web.domain.City;
 import fr.chaffotm.geobase.web.domain.Country;
 import fr.chaffotm.geobase.web.domain.Frame;
@@ -58,11 +59,13 @@ public class CountryEndpointIT {
         assertThat(frame.getResources()).isEmpty();
 
 
-        Country france = new Country();
+        final Area area = new Area();
+        area.setLand(45.0);
+        area.setWater(20.1);
+        final Country france = new Country();
         france.setName("France");
         france.setCode("FR");
-        france.setTotalArea(465);
-        france.setPopulation(12);
+        france.setArea(area);
         City city = new City();
         city.setName("Paris");
         france.setCapital(city);
@@ -75,14 +78,14 @@ public class CountryEndpointIT {
 
         response = webTarget.path(id).request(APPLICATION_JSON_TYPE).get();
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
-        Country fr = response.readEntity(Country.class);
+        final Country fr = response.readEntity(Country.class);
         assertThat(fr).isEqualTo(france);
 
-        france.setPopulation(89796);
-        response = webTarget.path(id).request(APPLICATION_JSON_TYPE).put(Entity.json(france));
+        fr.getArea().setWater(15);
+        response = webTarget.path(id).request(APPLICATION_JSON_TYPE).put(Entity.json(fr));
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
-        Country fre = response.readEntity(Country.class);
-        assertThat(fre.getPopulation()).isEqualTo(89796);
+        final Country fre = response.readEntity(Country.class);
+        assertThat(fre.getArea().getTotal()).isEqualTo(60);
 
         response = webTarget.path(id).request(APPLICATION_JSON_TYPE).delete();
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.NO_CONTENT);

@@ -10,9 +10,7 @@ public class Country {
 
     private String name;
 
-    private int totalArea;
-
-    private int population;
+    private Area area;
 
     private City capital;
 
@@ -40,20 +38,12 @@ public class Country {
         this.name = name;
     }
 
-    public int getTotalArea() {
-        return totalArea;
+    public Area getArea() {
+        return area;
     }
 
-    public void setTotalArea(int totalArea) {
-        this.totalArea = totalArea;
-    }
-
-    public int getPopulation() {
-        return population;
-    }
-
-    public void setPopulation(int population) {
-        this.population = population;
+    public void setArea(Area area) {
+        this.area = area;
     }
 
     public City getCapital() {
@@ -69,17 +59,27 @@ public class Country {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Country country = (Country) o;
-        return totalArea == country.totalArea &&
-                population == country.population &&
-                Objects.equals(id, country.id) &&
+        return Objects.equals(id, country.id) &&
                 Objects.equals(code, country.code) &&
                 Objects.equals(name, country.name) &&
+                Objects.equals(area, country.area) &&
                 Objects.equals(capital, country.capital);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, name, totalArea, population, capital);
+        return Objects.hash(id, code, name, area, capital);
     }
 
+
+    @Override
+    public String toString() {
+        return "Country{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", area=" + area +
+                ", capital=" + capital +
+                '}';
+    }
 }

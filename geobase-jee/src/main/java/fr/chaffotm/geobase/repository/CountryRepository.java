@@ -79,8 +79,7 @@ public class CountryRepository {
         }
         final CountryEntity countryToUpdate = get(id);
         countryToUpdate.setName(country.getName());
-        countryToUpdate.setPopulation(country.getPopulation());
-        countryToUpdate.setTotalArea(country.getTotalArea());
+        countryToUpdate.setArea(country.getArea());
         return em.merge(countryToUpdate);
     }
 
