@@ -21,7 +21,9 @@
       "capital": "Capital",
       "total-area": "Total area",
       "flag": "Flag",
-      "silhouette": "Silhouette"
+      "silhouette": "Silhouette",
+      "land-area": "Land area",
+      "water-area": "Water area"
     }
   }
 }

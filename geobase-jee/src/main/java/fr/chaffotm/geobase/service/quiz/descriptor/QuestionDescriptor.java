@@ -1,11 +1,12 @@
 package fr.chaffotm.geobase.service.quiz.descriptor;
 
 import fr.chaffotm.geobase.domain.CountryEntity;
+import fr.chaffotm.geobase.repository.QueryCriteria;
 import fr.chaffotm.geobase.service.quiz.ColumnType;
 
 public interface QuestionDescriptor {
 
-    String getSortColumn();
+    QueryCriteria getQueryCriteria();
 
     ColumnType getAttributeColumnType();
 

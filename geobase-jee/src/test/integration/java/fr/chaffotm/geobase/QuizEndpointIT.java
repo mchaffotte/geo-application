@@ -46,38 +46,57 @@ public class QuizEndpointIT {
 
     @Test
     public void answerQuiz_should_check_user_answers() {
-        final Client client = ClientBuilder.newClient();
-        WebTarget webTarget = client.target(baseURL).path("api/quizzes");
-        Response response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(null));
-
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CREATED);
-        final String location = response.getHeaderString("location");
-
-        final Response response1 = client.target(location).request(APPLICATION_JSON_TYPE).get();
-        assertThat(response1.getStatusInfo()).isEqualTo(Response.Status.OK);
-        final Quiz quiz = response1.readEntity(Quiz.class);
-        assertThat(quiz).isNotNull();
-        assertThat(quiz.getQuestions()).hasSize(10);
-
-        final QuizAnswers answers = new QuizAnswers();
-        answers.setAnswers(Arrays.asList("", "", "", "", "", "", "", "", "", ""));
-        final Response response2 = webTarget.path(String.valueOf(quiz.getId())).request(APPLICATION_JSON_TYPE).put(Entity.json(answers));
-        assertThat(response2.getStatusInfo()).isEqualTo(Response.Status.OK);
-
-        final QuizResult expected = new QuizResult();
-        expected.setNbOfCorrectAnswers(0);
-        expected.setNbOfQuestions(10);
-        final QuizResult result = response2.readEntity(QuizResult.class);
-        assertThat(result).isEqualTo(expected);
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(null);
     }
 
     @Test
-    public void answerQuiz_should_check_user_answers_using_images() {
-        final Client client = ClientBuilder.newClient();
-        WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+    public void answerQuiz_should_check_user_answers_using_capitals() {
+        final QuizConfiguration configuration = new QuizConfiguration();
+        configuration.setMultipleChoice(true);
+        configuration.setQuestionType(QuestionType.CAPITAL);
+
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
+    }
+
+    @Test
+    public void answerQuiz_should_check_user_answers_using_flags() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setMultipleChoice(true);
         configuration.setQuestionType(QuestionType.FLAG);
+
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
+    }
+
+    @Test
+    public void answerQuiz_should_check_user_answers_using_silhouettes() {
+        final QuizConfiguration configuration = new QuizConfiguration();
+        configuration.setMultipleChoice(true);
+        configuration.setQuestionType(QuestionType.SILHOUETTE);
+
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
+    }
+
+    @Test
+    public void answerQuiz_should_check_user_answers_using_land_area() {
+        final QuizConfiguration configuration = new QuizConfiguration();
+        configuration.setMultipleChoice(true);
+        configuration.setQuestionType(QuestionType.LAND_AREA);
+
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
+    }
+
+    @Test
+    public void answerQuiz_should_check_user_answers_using_water_area() {
+        final QuizConfiguration configuration = new QuizConfiguration();
+        configuration.setMultipleChoice(true);
+        configuration.setQuestionType(QuestionType.WATER_AREA);
+
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
+    }
+
+    private void assertThatQuizIsCreatedAndAnswerWithEmptySolution(final QuizConfiguration configuration) {
+        final Client client = ClientBuilder.newClient();
+        WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         Response response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(configuration));
 
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CREATED);

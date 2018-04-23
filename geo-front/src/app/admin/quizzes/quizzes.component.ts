@@ -40,7 +40,9 @@ export class QuizzesComponent implements OnInit {
     this.questionTypes = new Array<NgOption>(
       {id: 1, label: this.translate.instant('model.question-type.capital'), type: QuestionType.CAPITAL},
       {id: 3, label: this.translate.instant('model.question-type.flag'), type: QuestionType.FLAG},
-      {id: 4, label: this.translate.instant('model.question-type.silhouette'), type: QuestionType.SILHOUETTE}
+      {id: 4, label: this.translate.instant('model.question-type.silhouette'), type: QuestionType.SILHOUETTE},
+      {id: 5, label: this.translate.instant('model.question-type.land-area'), type: QuestionType.LAND_AREA},
+      {id: 6, label: this.translate.instant('model.question-type.water-area'), type: QuestionType.WATER_AREA},
     );
     this.selectedQuestionType = QuestionType.CAPITAL;
     this.isMultipleChoice = true;

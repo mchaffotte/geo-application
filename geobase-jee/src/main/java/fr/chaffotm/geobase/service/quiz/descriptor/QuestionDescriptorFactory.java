@@ -8,6 +8,10 @@ public class QuestionDescriptorFactory {
         final QuestionDescriptor descriptor;
         if(QuestionType.CAPITAL.equals(questionType)) {
             descriptor = new CapitalQuestionDescriptor();
+        } else if (QuestionType.LAND_AREA.equals(questionType)) {
+            descriptor = new LandAreaQuestionDescriptor();
+        } else if (QuestionType.WATER_AREA.equals(questionType)) {
+            descriptor = new WaterAreaQuestionDescriptor();
         } else if (QuestionType.FLAG.equals(questionType)) {
             descriptor = new FlagQuestionDescriptor();
         } else if (QuestionType.SILHOUETTE.equals(questionType)) {

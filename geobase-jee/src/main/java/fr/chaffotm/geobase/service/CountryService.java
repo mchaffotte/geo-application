@@ -3,6 +3,7 @@ package fr.chaffotm.geobase.service;
 import fr.chaffotm.geobase.domain.CountryEntity;
 import fr.chaffotm.geobase.mapper.CountryMapper;
 import fr.chaffotm.geobase.repository.CountryRepository;
+import fr.chaffotm.geobase.repository.QueryCriteria;
 import fr.chaffotm.geobase.repository.Sort;
 import fr.chaffotm.geobase.repository.SortConverter;
 import fr.chaffotm.geobase.web.domain.Country;
@@ -34,7 +35,9 @@ public class CountryService {
 
     public Frame<Country> findAll(final int offset, final Integer limit, final String sort) {
         final List<Sort> sorts = converter.getAsList(sort);
-        final List<CountryEntity> countries = countryRepository.findAll(offset, limit, sorts);
+        QueryCriteria criteria = new QueryCriteria();
+        criteria.setSorts(sorts);
+        final List<CountryEntity> countries = countryRepository.findAll(offset, limit, criteria);
         final long nbElements = countryRepository.count();
         return new Frame<>(CountryMapper.map(countries), nbElements);
     }

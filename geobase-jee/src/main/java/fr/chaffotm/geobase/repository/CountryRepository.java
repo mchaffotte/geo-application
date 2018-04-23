@@ -1,5 +1,6 @@
 package fr.chaffotm.geobase.repository;
 
+import fr.chaffotm.geobase.domain.AreaEntity;
 import fr.chaffotm.geobase.domain.CountryEntity;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -8,10 +9,10 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @ApplicationScoped
 public class CountryRepository {
@@ -19,25 +20,37 @@ public class CountryRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public List<CountryEntity> findAll(final int offset, final Integer limit, List<Sort> sorts) {
+    public List<CountryEntity> findAll(final int offset, final Integer limit, final QueryCriteria criteria) {
         final CriteriaBuilder builder = em.getCriteriaBuilder();
         final CriteriaQuery<CountryEntity> query = builder.createQuery(CountryEntity.class);
         final Root<CountryEntity> entityRoot = query.from(CountryEntity.class);
         entityRoot.alias("c");
         query.select(entityRoot);
 
+        final Join<CountryEntity, AreaEntity> join;
+        if (criteria.getJoin() != null) {
+            join = entityRoot.join(criteria.getJoin().getEntityName());
+        } else {
+            join = null;
+        }
+
         final List<Order> orders = new ArrayList<>();
-        for (final Sort sort : sorts) {
-            final Path<Object> path = entityRoot.get(sort.getPropertyName());
-            if (fr.chaffotm.geobase.repository.Order.ASC.equals(sort.getOrder())) {
-                orders.add(builder.asc(path));
+        for (Sort sort : criteria.getSorts()) {
+            final Path<Object> path;
+            if (join != null) {
+                path = join.get(sort.getPropertyName());
             } else {
-                orders.add(builder.desc(path));
+                path = entityRoot.get(sort.getPropertyName());
             }
+            final Order order;
+            if (fr.chaffotm.geobase.repository.Order.ASC.equals(sort.getOrder())) {
+                order = builder.asc(path);
+            } else {
+                order = builder.desc(path);
+            }
+            orders.add(order);
         }
-        if (!orders.isEmpty()) {
-            query.orderBy(orders.toArray(new Order[0]));
-        }
+        query.orderBy(orders);
 
         final TypedQuery<CountryEntity> typedQuery = em.createQuery(query);
         typedQuery.setFirstResult(offset - 1);

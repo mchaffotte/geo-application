@@ -1,17 +1,19 @@
 package fr.chaffotm.geobase.service.quiz.descriptor;
 
 import fr.chaffotm.geobase.domain.CountryEntity;
+import fr.chaffotm.geobase.repository.Join;
 import fr.chaffotm.geobase.repository.Order;
 import fr.chaffotm.geobase.repository.QueryCriteria;
 import fr.chaffotm.geobase.repository.Sort;
 import fr.chaffotm.geobase.service.quiz.ColumnType;
 
-public class SilhouetteQuestionDescriptor implements QuestionDescriptor {
+public class WaterAreaQuestionDescriptor implements QuestionDescriptor {
 
     @Override
     public QueryCriteria getQueryCriteria() {
         final QueryCriteria criteria = new QueryCriteria();
-        criteria.addSort(new Sort("id", Order.DESC));
+        criteria.setJoin(new Join("area"));
+        criteria.addSort(new Sort("water", Order.DESC));
         return criteria;
     }
 
@@ -22,12 +24,12 @@ public class SilhouetteQuestionDescriptor implements QuestionDescriptor {
 
     @Override
     public ImageType getImageType() {
-        return ImageType.SILHOUETTE;
+        return ImageType.NONE;
     }
 
     @Override
     public String getQuestion(final CountryEntity country) {
-        return "What country does this silhouette belong to?";
+        return "Which country has the largest water area?";
     }
 
     @Override

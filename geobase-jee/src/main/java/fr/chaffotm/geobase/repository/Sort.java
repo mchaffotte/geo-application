@@ -32,7 +32,6 @@ public class Sort {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(propertyName, order);
     }
 

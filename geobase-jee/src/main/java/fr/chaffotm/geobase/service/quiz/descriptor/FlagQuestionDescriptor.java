@@ -1,13 +1,18 @@
 package fr.chaffotm.geobase.service.quiz.descriptor;
 
 import fr.chaffotm.geobase.domain.CountryEntity;
+import fr.chaffotm.geobase.repository.Order;
+import fr.chaffotm.geobase.repository.QueryCriteria;
+import fr.chaffotm.geobase.repository.Sort;
 import fr.chaffotm.geobase.service.quiz.ColumnType;
 
 public class FlagQuestionDescriptor implements QuestionDescriptor {
 
     @Override
-    public String getSortColumn() {
-        return "id";
+    public QueryCriteria getQueryCriteria() {
+        final QueryCriteria criteria = new QueryCriteria();
+        criteria.addSort(new Sort("id", Order.DESC));
+        return criteria;
     }
 
     @Override

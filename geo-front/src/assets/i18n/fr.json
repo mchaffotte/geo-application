@@ -21,7 +21,9 @@
       "capital": "Capitale",
       "total-area": "Superficie totale",
       "flag": "Drapeau",
-      "silhouette": "Silhouette"
+      "silhouette": "Silhouette",
+      "land-area": "Superficie des terres",
+      "water-area": "Superficie des eaux"
     }
   }
 }

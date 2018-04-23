@@ -1,7 +1,9 @@
 export const enum QuestionType {
   CAPITAL = 'CAPITAL',
   FLAG = 'FLAG',
-  SILHOUETTE = 'SILHOUETTE'
+  LAND_AREA = 'LAND_AREA',
+  SILHOUETTE = 'SILHOUETTE',
+  WATER_AREA = 'WATER_AREA'
 }
 
 export class QuizConfiguration {

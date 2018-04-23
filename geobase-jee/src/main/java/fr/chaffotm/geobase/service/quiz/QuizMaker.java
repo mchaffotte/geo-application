@@ -5,8 +5,6 @@ import fr.chaffotm.geobase.domain.ImageEntity;
 import fr.chaffotm.geobase.domain.QuestionEntity;
 import fr.chaffotm.geobase.domain.QuizEntity;
 import fr.chaffotm.geobase.repository.CountryRepository;
-import fr.chaffotm.geobase.repository.Order;
-import fr.chaffotm.geobase.repository.Sort;
 import fr.chaffotm.geobase.service.quiz.descriptor.ImageType;
 import fr.chaffotm.geobase.service.quiz.descriptor.QuestionDescriptor;
 import fr.chaffotm.geobase.service.quiz.descriptor.QuestionDescriptorFactory;
@@ -15,7 +13,9 @@ import fr.chaffotm.geobase.service.quiz.generator.GeneratorFactory;
 import fr.chaffotm.geobase.web.domain.QuestionType;
 import fr.chaffotm.geobase.web.domain.QuizConfiguration;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 public class QuizMaker {
 
@@ -38,9 +38,7 @@ public class QuizMaker {
        }
        final QuestionDescriptor descriptor = descriptorFactory.getDescriptor(quizConfiguration.getQuestionType());
        final Generator generator = generatorFactory.getGenerator(descriptor.getAttributeColumnType());
-
-       final Sort sort = new Sort(descriptor.getSortColumn(), Order.DESC);
-       final List<CountryEntity> countries = countryRepository.findAll(1, null, Collections.singletonList(sort));
+       final List<CountryEntity> countries = countryRepository.findAll(1, null, descriptor.getQueryCriteria());
        final List<MultipleChoice> multipleChoices = generator.generate(countries, quizConfiguration.isMultipleChoice());
        final QuizEntity quiz = new QuizEntity();
        for (MultipleChoice multipleChoice : multipleChoices) {
