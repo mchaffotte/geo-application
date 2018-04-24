@@ -16,4 +16,6 @@ public interface QuestionDescriptor {
 
     String getAttributeValue(CountryEntity country);
 
+    boolean isMultipleChoiceOnly();
+
 }

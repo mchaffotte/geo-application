@@ -37,4 +37,9 @@ public class LandAreaQuestionDescriptor implements QuestionDescriptor {
         return country.getName();
     }
 
+    @Override
+    public boolean isMultipleChoiceOnly() {
+        return true;
+    }
+
 }

@@ -37,4 +37,9 @@ public class WaterAreaQuestionDescriptor implements QuestionDescriptor {
         return country.getName();
     }
 
+    @Override
+    public boolean isMultipleChoiceOnly() {
+        return true;
+    }
+
 }

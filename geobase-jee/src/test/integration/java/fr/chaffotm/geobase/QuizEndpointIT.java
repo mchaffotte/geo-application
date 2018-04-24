@@ -94,6 +94,20 @@ public class QuizEndpointIT {
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
     }
 
+    @Test
+    public void answerQuiz_should_not_generate_a_quiz_due_to_a_misconfiguration_with_using_water_area() {
+        final QuizConfiguration configuration = new QuizConfiguration();
+        configuration.setMultipleChoice(false);
+        configuration.setQuestionType(QuestionType.WATER_AREA);
+
+        final Client client = ClientBuilder.newClient();
+        WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+        Response response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(configuration));
+
+        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
+        assertThat(response.readEntity(String.class)).isEmpty();
+    }
+
     private void assertThatQuizIsCreatedAndAnswerWithEmptySolution(final QuizConfiguration configuration) {
         final Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");

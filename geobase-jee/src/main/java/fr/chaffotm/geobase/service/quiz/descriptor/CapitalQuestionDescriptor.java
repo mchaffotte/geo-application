@@ -35,4 +35,9 @@ public class CapitalQuestionDescriptor implements QuestionDescriptor {
         return country.getCapital().getName();
     }
 
+    @Override
+    public boolean isMultipleChoiceOnly() {
+        return false;
+    }
+
 }

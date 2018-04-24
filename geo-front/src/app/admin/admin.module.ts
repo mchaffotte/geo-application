@@ -9,6 +9,7 @@ import { CountriesComponent } from './countries/countries.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { QuizzesComponent } from './quizzes/quizzes.component';
+import { QuizConfigurationComponent } from './quizzes/quiz-configuration/quiz-configuration.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { QuizzesComponent } from './quizzes/quizzes.component';
     AdminComponent,
     CountriesComponent,
     DashboardComponent,
-    QuizzesComponent
+    QuizzesComponent,
+    QuizConfigurationComponent
   ]
 })
 export class AdminModule { }

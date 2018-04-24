@@ -1,0 +1,29 @@
+<div class="card my-3">
+  <div class="card-header">
+    <h4 class="my-0 font-weight-normal">{{ 'admin.quizzes.configuration' | translate }}</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="quizConfigurationForm" (ngSubmit)="createQuiz()">
+      <div class="form-group row">
+        <label for="questionType" class="col-sm-3 col-form-label">{{ 'admin.quizzes.question-type' | translate }}</label>
+        <div class="col-sm-9">
+          <ng-select name="questionType" [items]="questionTypes" bindValue="type" [clearable]="false"
+            [searchable]="false" formControlName="questionType"></ng-select>
+        </div>
+      </div>
+      <div class="form-check row">
+        <div class="custom-control custom-checkbox offset-sm-3">
+          <input class="custom-control-input" id="multipleChoice" type="checkbox" name="multipleChoice" formControlName="mulitpleChoice">
+          <label class="custom-control-label" for="multipleChoice">{{ 'admin.quizzes.multiple-choice' | translate }}</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col">
+          <button type="submit" class="btn btn-primary float-right" [disabled]="!quizConfigurationForm.valid">
+            {{ 'admin.quizzes.play' | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

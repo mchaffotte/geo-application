@@ -35,4 +35,9 @@ public class FlagQuestionDescriptor implements QuestionDescriptor {
         return country.getName();
     }
 
+    @Override
+    public boolean isMultipleChoiceOnly() {
+        return false;
+    }
+
 }

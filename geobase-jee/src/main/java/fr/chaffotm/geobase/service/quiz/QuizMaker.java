@@ -37,6 +37,9 @@ public class QuizMaker {
            quizConfiguration = buildDefaultConfiguration();
        }
        final QuestionDescriptor descriptor = descriptorFactory.getDescriptor(quizConfiguration.getQuestionType());
+       if (descriptor.isMultipleChoiceOnly() && !quizConfiguration.isMultipleChoice()) {
+           throw new IllegalArgumentException("Quiz supports only multiple choice");
+       }
        final Generator generator = generatorFactory.getGenerator(descriptor.getAttributeColumnType());
        final List<CountryEntity> countries = countryRepository.findAll(1, null, descriptor.getQueryCriteria());
        final List<MultipleChoice> multipleChoices = generator.generate(countries, quizConfiguration.isMultipleChoice());
