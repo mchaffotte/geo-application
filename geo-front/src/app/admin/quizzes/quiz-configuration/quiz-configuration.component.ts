@@ -37,7 +37,6 @@ export class QuizConfigurationComponent implements OnInit {
   ngOnInit() {
     this.quizConfigurationForm.get('questionType').valueChanges.subscribe(
       (questionType: QuestionType) => {
-        console.log(questionType);
         if (this.quizService.isMultipleChoiceOnly(questionType)) {
           this.quizConfigurationForm.get('mulitpleChoice').disable();
         } else {
@@ -48,12 +47,8 @@ export class QuizConfigurationComponent implements OnInit {
   }
 
   createQuiz() {
-    let multipleChoice: boolean;
-    if (this.quizConfigurationForm.get('mulitpleChoice').disabled) {
-      multipleChoice = true;
-    } else {
-      multipleChoice = this.quizConfigurationForm.get('mulitpleChoice').value;
-    }
+    const choiceControl = this.quizConfigurationForm.get('mulitpleChoice');
+    const multipleChoice = choiceControl.disabled ? true : choiceControl.value;
     const configuration = new QuizConfiguration();
     configuration.questionType = this.quizConfigurationForm.get('questionType').value;
     configuration.multipleChoice = multipleChoice;
