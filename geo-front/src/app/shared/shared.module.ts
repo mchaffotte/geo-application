@@ -5,7 +5,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CountryService } from './country/country.service';
 import { QuizService } from './quiz/quiz.service';
-import { InputFocusDirective } from './ui/input-focus/input-focus.directive';
 import { SecuredImageComponent } from './ui/secured-image/secured-image.component';
 
 @NgModule({
@@ -17,7 +16,6 @@ import { SecuredImageComponent } from './ui/secured-image/secured-image.componen
     CommonModule,
     TranslateModule,
     NgbModule,
-    InputFocusDirective,
     SecuredImageComponent
   ],
   providers: [
@@ -25,7 +23,6 @@ import { SecuredImageComponent } from './ui/secured-image/secured-image.componen
     QuizService
   ],
   declarations: [
-    InputFocusDirective,
     SecuredImageComponent
   ]
 })

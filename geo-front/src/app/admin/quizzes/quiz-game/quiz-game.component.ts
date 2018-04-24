@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { Question, Quiz, QuizAnswer, QuizResult } from '../../../shared/quiz/quiz';
 import { QuizService } from '../../../shared/quiz/quiz.service';
@@ -21,16 +21,16 @@ export class QuizGameComponent implements OnInit {
 
   result: QuizResult;
 
-  answerControl: FormControl;
+  quizGameForm: FormGroup;
+  @ViewChild('question_answer') answerRef: ElementRef;
 
-  shouldAnswer: boolean;
-
-  constructor(private fb: FormBuilder, private quizService: QuizService) { }
-
-  ngOnInit() {
-    this.answerControl = new FormControl('');
-    this.shouldAnswer = true;
+  constructor(private fb: FormBuilder, private quizService: QuizService) {
+    this.quizGameForm = this.fb.group({
+      answer: ''
+    });
   }
+
+  ngOnInit() { }
 
   @Input()
   set quiz(quiz: Quiz) {
@@ -40,14 +40,16 @@ export class QuizGameComponent implements OnInit {
       this.changeQuestion();
       this.answers = new QuizAnswer;
       this.result = null;
+      if (this.question.suggestions.length === 0) {
+        setTimeout(() => this.answerRef.nativeElement.focus(), 5);
+      }
     }
   }
 
   answer() {
-    this.shouldAnswer = false;
-    this.selectAnswer(this.answerControl.value);
-    this.shouldAnswer = true;
-    this.answerControl.reset();
+    this.selectAnswer(this.quizGameForm.get('answer').value);
+    this.answerRef.nativeElement.focus();
+    this.quizGameForm.reset();
   }
 
   selectAnswer(answer: string) {
