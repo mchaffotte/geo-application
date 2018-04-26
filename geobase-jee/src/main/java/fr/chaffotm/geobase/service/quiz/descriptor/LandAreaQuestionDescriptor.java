@@ -19,7 +19,7 @@ public class LandAreaQuestionDescriptor implements QuestionDescriptor {
 
     @Override
     public ColumnType getAttributeColumnType() {
-        return ColumnType.VARCHAR;
+        return ColumnType.NUMERIC;
     }
 
     @Override
