@@ -95,6 +95,15 @@ public class QuizEndpointIT {
     }
 
     @Test
+    public void answerQuiz_should_check_user_answers_using_total_area() {
+        final QuizConfiguration configuration = new QuizConfiguration();
+        configuration.setMultipleChoice(true);
+        configuration.setQuestionType(QuestionType.TOTAL_AREA);
+
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
+    }
+
+    @Test
     public void answerQuiz_should_not_generate_a_quiz_due_to_a_misconfiguration_with_using_water_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setMultipleChoice(false);

@@ -1,5 +1,8 @@
 package fr.chaffotm.geobase.repository;
 
+import fr.chaffotm.geobase.repository.criteria.Order;
+import fr.chaffotm.geobase.repository.criteria.Sort;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

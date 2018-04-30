@@ -1,4 +1,4 @@
-package fr.chaffotm.geobase.repository;
+package fr.chaffotm.geobase.repository.criteria;
 
 import java.util.Objects;
 

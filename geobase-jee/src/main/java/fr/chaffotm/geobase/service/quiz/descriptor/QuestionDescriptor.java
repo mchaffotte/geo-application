@@ -1,12 +1,14 @@
 package fr.chaffotm.geobase.service.quiz.descriptor;
 
 import fr.chaffotm.geobase.domain.CountryEntity;
-import fr.chaffotm.geobase.repository.QueryCriteria;
+import fr.chaffotm.geobase.repository.CountryRepository;
 import fr.chaffotm.geobase.service.quiz.ColumnType;
+
+import java.util.List;
 
 public interface QuestionDescriptor {
 
-    QueryCriteria getQueryCriteria();
+    List<CountryEntity> getQuizCountries(CountryRepository countryRepository);
 
     ColumnType getAttributeColumnType();
 
@@ -15,7 +17,5 @@ public interface QuestionDescriptor {
     String getQuestion(CountryEntity country);
 
     String getAttributeValue(CountryEntity country);
-
-    boolean isMultipleChoiceOnly();
 
 }

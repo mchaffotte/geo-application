@@ -1,18 +1,20 @@
 package fr.chaffotm.geobase.repository;
 
-import fr.chaffotm.geobase.domain.AreaEntity;
 import fr.chaffotm.geobase.domain.CountryEntity;
+import fr.chaffotm.geobase.repository.criteria.QueryBuilder;
+import fr.chaffotm.geobase.repository.criteria.Sort;
+import fr.chaffotm.geobase.repository.criteria.SumFunction;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Order;
-import java.util.ArrayList;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class CountryRepository {
@@ -22,44 +24,44 @@ public class CountryRepository {
 
     public List<CountryEntity> findAll(final int offset, final Integer limit, final QueryCriteria criteria) {
         final CriteriaBuilder builder = em.getCriteriaBuilder();
-        final CriteriaQuery<CountryEntity> query = builder.createQuery(CountryEntity.class);
-        final Root<CountryEntity> entityRoot = query.from(CountryEntity.class);
-        entityRoot.alias("c");
-        query.select(entityRoot);
-
-        final Join<CountryEntity, AreaEntity> join;
+        final QueryBuilder<CountryEntity, CountryEntity> queryBuilder = new QueryBuilder<>(builder, CountryEntity.class, CountryEntity.class);
         if (criteria.getJoin() != null) {
-            join = entityRoot.join(criteria.getJoin().getEntityName());
-        } else {
-            join = null;
+            queryBuilder.addJoin(criteria.getJoin());
         }
-
-        final List<Order> orders = new ArrayList<>();
-        for (Sort sort : criteria.getSorts()) {
-            final Path<Object> path;
-            if (join != null) {
-                path = join.get(sort.getPropertyName());
-            } else {
-                path = entityRoot.get(sort.getPropertyName());
-            }
-            final Order order;
-            if (fr.chaffotm.geobase.repository.Order.ASC.equals(sort.getOrder())) {
-                order = builder.asc(path);
-            } else {
-                order = builder.desc(path);
-            }
-            orders.add(order);
+        final List<Sort> sorts = criteria.getSorts();
+        for (Sort sort : sorts) {
+            queryBuilder.addSort(sort);
         }
-        query.orderBy(orders);
+        final CriteriaQuery<CountryEntity> query = queryBuilder.build();
+        return getResultList(query, offset, limit);
+    }
 
-        final TypedQuery<CountryEntity> typedQuery = em.createQuery(query);
+    public List<CountryEntity> findAll(final int offset, final Integer limit, final FunctionCriteria criteria) {
+        final CriteriaBuilder builder = em.getCriteriaBuilder();
+        final QueryBuilder<FunctionCountryEntity, CountryEntity> queryBuilder = new QueryBuilder<>(builder, FunctionCountryEntity.class, CountryEntity.class);
+        if (criteria.getJoin() != null) {
+            queryBuilder.addJoin(criteria.getJoin());
+        }
+        final SumFunction function = criteria.getFunction();
+        queryBuilder.setFunction(function, criteria.getJoin());
+        final List<Sort> sorts = criteria.getSorts();
+        for (Sort sort : sorts) {
+            queryBuilder.addSort(sort);
+        }
+        final CriteriaQuery<FunctionCountryEntity> query = queryBuilder.build();
+        final List<FunctionCountryEntity> arithmeticCountries = getResultList(query, offset, limit);
+        return arithmeticCountries.stream().map(FunctionCountryEntity::getEntity).collect(Collectors.toList());
+    }
+
+    private <T> List<T> getResultList(final CriteriaQuery<T> query, final int offset, final Integer limit) {
+        final TypedQuery<T> typedQuery = em.createQuery(query);
         typedQuery.setFirstResult(offset - 1);
         if (limit != null) {
             typedQuery.setMaxResults(limit);
         }
         return typedQuery.getResultList();
     }
- 
+
     public long count() {
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Long> query = cb.createQuery(Long.class);

@@ -22,6 +22,7 @@ export class QuizConfigurationComponent implements OnInit {
   constructor(private fb: FormBuilder, private quizService: QuizService, private translate: TranslateService) {
     this.questionTypes = new Array<NgOption>(
       {id: 1, label: this.translate.instant('model.question-type.capital'), type: QuestionType.CAPITAL},
+      {id: 2, label: this.translate.instant('model.question-type.total-area'), type: QuestionType.TOTAL_AREA},
       {id: 3, label: this.translate.instant('model.question-type.flag'), type: QuestionType.FLAG},
       {id: 4, label: this.translate.instant('model.question-type.silhouette'), type: QuestionType.SILHOUETTE},
       {id: 5, label: this.translate.instant('model.question-type.land-area'), type: QuestionType.LAND_AREA},
@@ -52,8 +53,8 @@ export class QuizConfigurationComponent implements OnInit {
     const configuration = new QuizConfiguration();
     configuration.questionType = this.quizConfigurationForm.get('questionType').value;
     configuration.multipleChoice = multipleChoice;
-    this.quizService.createQuiz(configuration).subscribe(res => {
-      this.quizService.getQuiz(res).subscribe(quiz => {
+    this.quizService.createQuiz(configuration).subscribe(quizId => {
+      this.quizService.getQuiz(quizId).subscribe(quiz => {
         this.quizCreated.emit(quiz);
       });
     });

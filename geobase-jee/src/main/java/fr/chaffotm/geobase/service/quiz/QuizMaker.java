@@ -37,11 +37,11 @@ public class QuizMaker {
            quizConfiguration = buildDefaultConfiguration();
        }
        final QuestionDescriptor descriptor = descriptorFactory.getDescriptor(quizConfiguration.getQuestionType());
-       if (descriptor.isMultipleChoiceOnly() && !quizConfiguration.isMultipleChoice()) {
+       if (ColumnType.NUMERIC.equals(descriptor.getAttributeColumnType()) && !quizConfiguration.isMultipleChoice()) {
            throw new IllegalArgumentException("Quiz supports only multiple choice");
        }
        final Generator generator = generatorFactory.getGenerator(descriptor.getAttributeColumnType());
-       final List<CountryEntity> countries = countryRepository.findAll(1, null, descriptor.getQueryCriteria());
+       final List<CountryEntity> countries = descriptor.getQuizCountries(countryRepository);
        final List<MultipleChoice> multipleChoices = generator.generate(countries, quizConfiguration.isMultipleChoice());
        final QuizEntity quiz = new QuizEntity();
        for (MultipleChoice multipleChoice : multipleChoices) {

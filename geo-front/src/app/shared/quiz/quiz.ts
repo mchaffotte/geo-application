@@ -3,6 +3,7 @@ export const enum QuestionType {
   FLAG = 'FLAG',
   LAND_AREA = 'LAND_AREA',
   SILHOUETTE = 'SILHOUETTE',
+  TOTAL_AREA = 'TOTAL_AREA',
   WATER_AREA = 'WATER_AREA'
 }
 

@@ -28,7 +28,8 @@ export class QuizService {
   }
 
   isMultipleChoiceOnly(questionType: QuestionType): boolean {
-    return QuestionType.LAND_AREA === questionType || QuestionType.WATER_AREA === questionType;
+    return QuestionType.LAND_AREA === questionType || QuestionType.WATER_AREA === questionType
+      || QuestionType.TOTAL_AREA === questionType;
   }
 
 }

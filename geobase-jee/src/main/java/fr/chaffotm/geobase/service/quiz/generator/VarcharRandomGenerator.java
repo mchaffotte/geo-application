@@ -1,7 +1,5 @@
 package fr.chaffotm.geobase.service.quiz.generator;
 
-import fr.chaffotm.geobase.repository.Order;
-
 import java.util.Collections;
 import java.util.Set;
 
