@@ -5,6 +5,12 @@
 
     <persistence-unit name="default" transaction-type="JTA">
         <jta-data-source>java:jboss/datasources/worldDS</jta-data-source>
+        <class>fr.chaffotm.geobase.domain.AreaEntity</class>
+        <class>fr.chaffotm.geobase.domain.CityEntity</class>
+        <class>fr.chaffotm.geobase.domain.CountryEntity</class>
+        <class>fr.chaffotm.geobase.domain.ImageEntity</class>
+        <class>fr.chaffotm.geobase.domain.QuestionEntity</class>
+        <class>fr.chaffotm.geobase.domain.QuizEntity</class>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
