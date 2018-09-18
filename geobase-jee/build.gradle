@@ -34,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    compile project(':geodata')
+    compile project(':geoquiz')
 
     compile 'org.wildfly.swarm:microprofile'
     compile 'org.wildfly.swarm:jpa'
