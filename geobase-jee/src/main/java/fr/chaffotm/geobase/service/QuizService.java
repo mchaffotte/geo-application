@@ -3,9 +3,8 @@ package fr.chaffotm.geobase.service;
 import fr.chaffotm.geobase.domain.QuestionEntity;
 import fr.chaffotm.geobase.domain.QuizEntity;
 import fr.chaffotm.geobase.mapper.QuizMapper;
-import fr.chaffotm.geobase.repository.CountryRepository;
+import fr.chaffotm.geobase.repository.QuizMakerRepository;
 import fr.chaffotm.geobase.repository.QuizRepository;
-import fr.chaffotm.geobase.service.quiz.QuizMaker;
 import fr.chaffotm.geobase.web.domain.Quiz;
 import fr.chaffotm.geobase.web.domain.QuizAnswers;
 import fr.chaffotm.geobase.web.domain.QuizConfiguration;
@@ -23,7 +22,7 @@ public class QuizService {
 
     private final QuizRepository quizRepository;
 
-    private final QuizMaker quizMaker;
+    private final QuizMakerRepository quizMakerRepository;
 
     // Used by CDI
     protected QuizService() {
@@ -31,13 +30,13 @@ public class QuizService {
     }
 
     @Inject
-    public QuizService(final CountryRepository countryRepository, final QuizRepository quizRepository) {
+    public QuizService(final QuizRepository quizRepository, final QuizMakerRepository quizMakerRepository) {
         this.quizRepository = quizRepository;
-        quizMaker = new QuizMaker(countryRepository);
+        this.quizMakerRepository = quizMakerRepository;
     }
 
     public long create(final QuizConfiguration configuration) {
-        final QuizEntity newQuiz = quizMaker.build(configuration);
+        final QuizEntity newQuiz = quizMakerRepository.build(configuration);
         final QuizEntity createdQuiz = quizRepository.create(newQuiz);
         return createdQuiz.getId();
     }

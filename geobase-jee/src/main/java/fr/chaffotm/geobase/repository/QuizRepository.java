@@ -2,8 +2,10 @@ package fr.chaffotm.geobase.repository;
 
 import fr.chaffotm.geobase.domain.ImageEntity;
 import fr.chaffotm.geobase.domain.QuizEntity;
+import fr.chaffotm.geobase.service.quiz.QuizMaker;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;

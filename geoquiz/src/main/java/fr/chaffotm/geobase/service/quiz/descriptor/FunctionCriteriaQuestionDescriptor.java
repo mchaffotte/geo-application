@@ -1,8 +1,8 @@
 package fr.chaffotm.geobase.service.quiz.descriptor;
 
 import fr.chaffotm.geobase.domain.CountryEntity;
-import fr.chaffotm.geobase.repository.CountryRepository;
 import fr.chaffotm.geobase.repository.FunctionCriteria;
+import fr.chaffotm.geobase.repository.Repository;
 import fr.chaffotm.geobase.service.quiz.ColumnType;
 
 import java.util.List;
@@ -12,8 +12,8 @@ public abstract class FunctionCriteriaQuestionDescriptor implements QuestionDesc
     abstract FunctionCriteria getFunctionCriteria();
 
     @Override
-    public List<CountryEntity> getQuizCountries(final CountryRepository countryRepository) {
-        return countryRepository.findAll(1, null, getFunctionCriteria());
+    public List<CountryEntity> getQuizCountries(final Repository repository) {
+        return repository.findAll(1, null, getFunctionCriteria());
     }
 
     @Override

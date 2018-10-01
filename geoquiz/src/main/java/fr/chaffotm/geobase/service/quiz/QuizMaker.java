@@ -4,7 +4,7 @@ import fr.chaffotm.geobase.domain.CountryEntity;
 import fr.chaffotm.geobase.domain.ImageEntity;
 import fr.chaffotm.geobase.domain.QuestionEntity;
 import fr.chaffotm.geobase.domain.QuizEntity;
-import fr.chaffotm.geobase.repository.CountryRepository;
+import fr.chaffotm.geobase.repository.Repository;
 import fr.chaffotm.geobase.service.quiz.descriptor.ImageType;
 import fr.chaffotm.geobase.service.quiz.descriptor.QuestionDescriptor;
 import fr.chaffotm.geobase.service.quiz.descriptor.QuestionDescriptorFactory;
@@ -19,14 +19,14 @@ import java.util.UUID;
 
 public class QuizMaker {
 
-    private final CountryRepository countryRepository;
+    private final Repository repository;
 
     private final QuestionDescriptorFactory descriptorFactory;
 
     private final GeneratorFactory generatorFactory;
 
-   public QuizMaker(final CountryRepository countryRepository) {
-       this.countryRepository = countryRepository;
+   public QuizMaker(final Repository repository) {
+       this.repository = repository;
        descriptorFactory = new QuestionDescriptorFactory();
        generatorFactory = new GeneratorFactory();
    }
@@ -41,7 +41,7 @@ public class QuizMaker {
            throw new IllegalArgumentException("Quiz supports only multiple choice");
        }
        final Generator generator = generatorFactory.getGenerator(descriptor.getAttributeColumnType());
-       final List<CountryEntity> countries = descriptor.getQuizCountries(countryRepository);
+       final List<CountryEntity> countries = descriptor.getQuizCountries(repository);
        final List<MultipleChoice> multipleChoices = generator.generate(countries, quizConfiguration.isMultipleChoice());
        final QuizEntity quiz = new QuizEntity();
        for (MultipleChoice multipleChoice : multipleChoices) {

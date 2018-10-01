@@ -1,4 +1,5 @@
 rootProject.name = 'geo-application'
+include 'text-to-query'
 include 'geodata'
 include 'geoquiz'
 include 'geobase-jee'

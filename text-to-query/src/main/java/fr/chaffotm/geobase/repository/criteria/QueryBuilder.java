@@ -93,7 +93,7 @@ public class QueryBuilder<T, R> {
         if (functionExpression != null) {
             query.multiselect(mainEntity, functionExpression);
         } else {
-            query.select((Selection<? extends T>) mainEntity);
+            query.select((Selection<T>) mainEntity);
         }
         query.orderBy(orders);
         return query;
