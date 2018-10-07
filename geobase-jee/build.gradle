@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        swarmVersion = '2018.5.0'
+        thorntailVersion = '2.2.0.Final'
     }
 
     repositories {
@@ -8,8 +8,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE'
-        classpath "org.wildfly.swarm:wildfly-swarm-gradle-plugin:$swarmVersion"
+        classpath 'io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE'
+        classpath "io.thorntail:thorntail-gradle-plugin:$thorntailVersion"
     }
 }
 
@@ -23,7 +23,7 @@ ext {
 
 dependencyManagement {
     imports {
-        mavenBom "org.wildfly.swarm:bom-all:$swarmVersion"
+        mavenBom "io.thorntail:bom-all:$thorntailVersion"
     }
 }
 
@@ -36,11 +36,11 @@ repositories {
 dependencies {
     compile project(':geoquiz')
 
-    compile 'org.wildfly.swarm:microprofile'
-    compile 'org.wildfly.swarm:jpa'
+    compile 'io.thorntail:microprofile'
+    compile 'io.thorntail:jpa'
     compile 'org.slf4j:slf4j-simple:1.7.25'
 
-    integrationTestCompile ("org.wildfly.swarm:arquillian-adapter:$swarmVersion") {
+    integrationTestCompile ("io.thorntail:arquillian-adapter:$thorntailVersion") {
         exclude group: 'junit'
     }
     integrationTestCompile 'org.gradle:gradle-tooling-api:3.0'

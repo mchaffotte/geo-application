@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import javax.persistence.EntityNotFoundException;
+import javax.ws.rs.NotFoundException;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -90,6 +92,26 @@ public class QuizServiceTest {
         final QuizResult result = quizService.answer(quizId, quizAnswers);
         assertThat(result.getNbOfCorrectAnswers()).isEqualTo(1);
         assertThat(result.getNbOfQuestions()).isEqualTo(1);
+    }
+
+    @Test(expected = EntityNotFoundException.class)
+    public void answer_should_fail_if_id_is_unknown() {
+        final long quizId = 465;
+        when(quizRepository.get(quizId)).thenThrow(EntityNotFoundException.class);
+        final QuizAnswers quizAnswers = new QuizAnswers();
+        quizAnswers.setAnswers(Collections.singletonList("London"));
+
+        quizService.answer(quizId, quizAnswers);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void answer_should_fail_if_quiz_is_null() {
+        final long quizId = 465;
+        when(quizRepository.get(quizId)).thenReturn(null);
+        final QuizAnswers quizAnswers = new QuizAnswers();
+        quizAnswers.setAnswers(Collections.singletonList("London"));
+
+        quizService.answer(quizId, quizAnswers);
     }
 
     private QuestionEntity build(String answer) {
