@@ -1,8 +1,67 @@
 package fr.chaffotm.geobase.repository;
 
-import fr.chaffotm.geobase.model.Country;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import fr.chaffotm.geobase.domain.CountryEntity;
+import org.springframework.stereotype.Service;
 
-public interface CountryRepository extends PagingAndSortingRepository<Country, Long> {
+import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
+
+@Service
+public class CountryRepository {
+
+    @PersistenceContext
+    private EntityManager em;
+
+    public List<CountryEntity> findAll(final int offset, final Integer limit, final QueryCriteria criteria) {
+        final Repository repository = new Repository(em);
+        return repository.findAll(offset, limit, criteria);
+    }
+
+    public long count() {
+        final CriteriaBuilder cb = em.getCriteriaBuilder();
+        final CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        final Root<CountryEntity> entity = query.from(CountryEntity.class);
+        entity.alias("c");
+        query.select(cb.count(entity));
+        final TypedQuery<Long> typedQuery = em.createQuery(query);
+        return typedQuery.getSingleResult();
+    }
+
+    public CountryEntity create(final CountryEntity country) {
+        if (country.getId() != null) {
+            throw new IllegalArgumentException("id is already set");
+        }
+        em.persist(country);
+        return country;
+    }
+
+    public CountryEntity get(final long id) {
+        final CountryEntity country = em.find(CountryEntity.class, id);
+        if (country == null) {
+            throw new EntityNotFoundException("Country not found with id" + id);
+        }
+        return country;
+    }
+
+    public CountryEntity update(final long id, final CountryEntity country) {
+        if (country.getId() != null && country.getId() != id) {
+            throw new IllegalArgumentException("ids are not the same");
+        }
+        final CountryEntity countryToUpdate = get(id);
+        countryToUpdate.setName(country.getName());
+        countryToUpdate.setArea(country.getArea());
+        return em.merge(countryToUpdate);
+    }
+
+    public void delete(final long id) {
+        final CountryEntity country = em.getReference(CountryEntity.class, id);
+        em.remove(country);
+    }
 
 }
