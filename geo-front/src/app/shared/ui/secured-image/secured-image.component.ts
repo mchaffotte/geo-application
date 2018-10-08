@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable ,  BehaviorSubject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -35,7 +34,8 @@ export class SecuredImageComponent implements OnChanges  {
     return this.httpClient
       .get(url, {responseType: 'blob'})
       .pipe(
-        map(e => this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(e))));
+        map(e => this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(e)))
+      );
   }
 
 }

@@ -22,12 +22,11 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   imports: [
     NgSelectModule,
-    NgbModule.forRoot(),
+    NgbModule,
     NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    TranslateModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({
