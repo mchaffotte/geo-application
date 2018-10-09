@@ -131,9 +131,9 @@ public class QuizEndpointIT {
         assertThat(quiz).isNotNull();
         assertThat(quiz.getQuestions()).hasSize(10);
 
-        final QuizAnswers answers = new QuizAnswers();
-        answers.setAnswers(Arrays.asList("", "", "", "", "", "", "", "", "", ""));
-        final Response response2 = webTarget.path(String.valueOf(quiz.getId())).request(APPLICATION_JSON_TYPE).put(Entity.json(answers));
+        final QuizResponse quizResponse = new QuizResponse();
+        quizResponse.setAnswers(Arrays.asList("", "", "", "", "", "", "", "", "", ""));
+        final Response response2 = webTarget.path(String.valueOf(quiz.getId())).request(APPLICATION_JSON_TYPE).put(Entity.json(quizResponse));
         assertThat(response2.getStatusInfo()).isEqualTo(Response.Status.OK);
 
         final QuizResult expected = new QuizResult();

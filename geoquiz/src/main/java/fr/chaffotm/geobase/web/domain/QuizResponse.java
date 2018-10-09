@@ -2,7 +2,7 @@ package fr.chaffotm.geobase.web.domain;
 
 import java.util.List;
 
-public class QuizAnswers {
+public class QuizResponse {
 
     private List<String> answers;
 

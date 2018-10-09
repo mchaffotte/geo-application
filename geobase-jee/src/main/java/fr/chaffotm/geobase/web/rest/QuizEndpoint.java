@@ -44,8 +44,8 @@ public class QuizEndpoint implements ResourceEndpoint {
 
     @PUT
     @Path("{id}")
-    public QuizResult answer(@PathParam("id") final long id, @NotNull final QuizAnswers answers) {
-        return quizService.answer(id, answers);
+    public QuizResult answer(@PathParam("id") final long id, @NotNull final QuizResponse response) {
+        return quizService.answer(id, response);
     }
 
 }

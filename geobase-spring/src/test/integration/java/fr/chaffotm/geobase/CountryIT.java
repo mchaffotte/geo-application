@@ -1,9 +1,12 @@
 package fr.chaffotm.geobase;
 
+import fr.chaffotm.geobase.interceptor.JsonInterceptor;
+import fr.chaffotm.geobase.interceptor.LoggingInterceptor;
 import fr.chaffotm.geobase.web.Frame;
 import fr.chaffotm.geobase.web.domain.Area;
 import fr.chaffotm.geobase.web.domain.City;
 import fr.chaffotm.geobase.web.domain.Country;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.URI;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,12 +28,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CountryIT {
 
+    private static final String API_COUNTRIES = "/api/countries";
+
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Before
+    public void setUp() {
+        restTemplate.getRestTemplate().setInterceptors(Arrays.asList(new LoggingInterceptor(), new JsonInterceptor()));
+    }
+
     @Test
-    public void getCountries_should_return_the_all_list() throws Exception {
-        ResponseEntity<Frame<Country>> response = restTemplate.exchange("/api/countries", HttpMethod.GET, null, new ParameterizedTypeReference<Frame<Country>>() {});
+    public void getCountries_should_return_the_all_list() {
+        ResponseEntity<Frame<Country>> response = restTemplate.exchange(API_COUNTRIES, HttpMethod.GET, null, new ParameterizedTypeReference<Frame<Country>>() {});
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody().getResources()).hasSize(45);
@@ -37,7 +48,7 @@ public class CountryIT {
 
     @Test
     public void crud_Country() {
-        ResponseEntity<Frame<Country>> response = restTemplate.exchange("/api/countries", HttpMethod.GET, null, new ParameterizedTypeReference<Frame<Country>>() {});
+        ResponseEntity<Frame<Country>> response = restTemplate.exchange(API_COUNTRIES, HttpMethod.GET, null, new ParameterizedTypeReference<Frame<Country>>() {});
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody().getResources()).hasSize(45);
@@ -52,7 +63,7 @@ public class CountryIT {
         City city = new City();
         city.setName("Paris");
         france.setCapital(city);
-        final ResponseEntity<Void> response1 = restTemplate.postForEntity("/api/countries", france, Void.class);
+        final ResponseEntity<Void> response1 = restTemplate.postForEntity(API_COUNTRIES, france, Void.class);
         assertThat(response1.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         final URI location = response1.getHeaders().getLocation();
 

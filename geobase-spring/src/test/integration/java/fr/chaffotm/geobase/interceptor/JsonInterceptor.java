@@ -1,21 +1,22 @@
-package fr.chaffotm.geobase;
+package fr.chaffotm.geobase.interceptor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 
 import java.io.IOException;
+import java.util.Collections;
 
-public class LoggingInterceptor implements ClientHttpRequestInterceptor {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingInterceptor.class);
+public class JsonInterceptor implements ClientHttpRequestInterceptor {
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-        LOGGER.debug(request.getMethod() + " " + request.getURI() + "##### " + new String(body));
+        final HttpHeaders headers = request.getHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         return execution.execute(request, body);
     }
 

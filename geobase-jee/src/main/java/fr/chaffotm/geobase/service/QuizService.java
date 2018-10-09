@@ -1,12 +1,12 @@
 package fr.chaffotm.geobase.service;
 
-import fr.chaffotm.geobase.domain.QuestionEntity;
 import fr.chaffotm.geobase.domain.QuizEntity;
 import fr.chaffotm.geobase.mapper.QuizMapper;
 import fr.chaffotm.geobase.repository.QuizMakerRepository;
 import fr.chaffotm.geobase.repository.QuizRepository;
+import fr.chaffotm.geobase.service.quiz.QuizResponseChecker;
 import fr.chaffotm.geobase.web.domain.Quiz;
-import fr.chaffotm.geobase.web.domain.QuizAnswers;
+import fr.chaffotm.geobase.web.domain.QuizResponse;
 import fr.chaffotm.geobase.web.domain.QuizConfiguration;
 import fr.chaffotm.geobase.web.domain.QuizResult;
 
@@ -14,8 +14,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.UriInfo;
-import java.text.Collator;
-import java.util.List;
 
 @RequestScoped
 @Transactional
@@ -25,7 +23,7 @@ public class QuizService {
 
     private final QuizMakerRepository quizMakerRepository;
 
-    private final Collator insensitiveStringComparator;
+    private final QuizResponseChecker checker;
 
     // Used by CDI
     protected QuizService() {
@@ -36,8 +34,7 @@ public class QuizService {
     public QuizService(final QuizRepository quizRepository, final QuizMakerRepository quizMakerRepository) {
         this.quizRepository = quizRepository;
         this.quizMakerRepository = quizMakerRepository;
-        insensitiveStringComparator = Collator.getInstance();
-        insensitiveStringComparator.setStrength(Collator.PRIMARY);
+        checker = new QuizResponseChecker();
     }
 
     public long create(final QuizConfiguration configuration) {
@@ -51,26 +48,9 @@ public class QuizService {
         return QuizMapper.map(entity, uriInfo.getBaseUri().toString());
     }
 
-    public QuizResult answer(final long id, final QuizAnswers quizAnswers) {
+    public QuizResult answer(final long id, final QuizResponse response) {
         final QuizEntity quizEntity = quizRepository.get(id);
-        final List<QuestionEntity> questions = quizEntity.getQuestions();
-        final List<String> answers = quizAnswers.getAnswers();
-        int nbOfCorrectAnswers = 0;
-        for (int i = 0; i < questions.size(); i++) {
-            final QuestionEntity question = questions.get(i);
-            final String answer = answers.get(i);
-            if (isSame(question.getAnswer(), answer)) {
-                nbOfCorrectAnswers++;
-            }
-        }
-        final QuizResult result = new QuizResult();
-        result.setNbOfCorrectAnswers(nbOfCorrectAnswers);
-        result.setNbOfQuestions(questions.size());
-        return result;
-    }
-
-    private boolean isSame(final String answer1, final String answer2) {
-        return insensitiveStringComparator.compare(answer1, answer2) == 0;
+        return checker.score(quizEntity, response);
     }
 
 }

@@ -21,7 +21,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent
   ],
   imports: [
-    NgSelectModule,
     NgbModule,
     NgSelectModule,
     FormsModule,

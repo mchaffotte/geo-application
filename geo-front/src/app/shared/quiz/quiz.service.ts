@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Quiz, QuizAnswer, QuizConfiguration, QuizResult, QuestionType } from './quiz';
+import { Quiz, QuizConfiguration, QuizResponse, QuizResult, QuestionType } from './quiz';
 
 @Injectable()
 export class QuizService {
@@ -23,8 +23,8 @@ export class QuizService {
     return this.http.get<Quiz>('api/quizzes/' + quizId);
   }
 
-  answer(quizId: number, answers: QuizAnswer): Observable<QuizResult> {
-    return this.http.put<QuizResult>('api/quizzes/' + quizId, answers);
+  answer(quizId: number, response: QuizResponse): Observable<QuizResult> {
+    return this.http.put<QuizResult>('api/quizzes/' + quizId, response);
   }
 
   isMultipleChoiceOnly(questionType: QuestionType): boolean {

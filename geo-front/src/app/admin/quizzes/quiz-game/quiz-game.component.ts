@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { Question, Quiz, QuizAnswer, QuizResult } from '../../../shared/quiz/quiz';
+import { Question, Quiz, QuizResponse, QuizResult } from '../../../shared/quiz/quiz';
 import { QuizService } from '../../../shared/quiz/quiz.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class QuizGameComponent implements OnInit {
 
   private _quiz: Quiz;
 
-  private answers: QuizAnswer;
+  private response: QuizResponse;
 
   index: number;
 
@@ -38,7 +38,7 @@ export class QuizGameComponent implements OnInit {
       this._quiz = quiz;
       this.index = -1;
       this.changeQuestion();
-      this.answers = new QuizAnswer;
+      this.response = new QuizResponse;
       this.result = null;
       if (this.question.suggestions.length === 0) {
         setTimeout(() => this.answerRef.nativeElement.focus(), 5);
@@ -53,11 +53,11 @@ export class QuizGameComponent implements OnInit {
   }
 
   selectAnswer(answer: string) {
-    this.answers.answers.push(answer);
+    this.response.answers.push(answer);
     if (this.index + 1 < this._quiz.questions.length) {
       this.changeQuestion();
     } else {
-      this.quizService.answer(this._quiz.id, this.answers).subscribe(res => {
+      this.quizService.answer(this._quiz.id, this.response).subscribe(res => {
         this.question = null;
         this.result = res;
       });

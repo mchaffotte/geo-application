@@ -2,7 +2,7 @@ package fr.chaffotm.geobase.web;
 
 import fr.chaffotm.geobase.service.QuizService;
 import fr.chaffotm.geobase.web.domain.Quiz;
-import fr.chaffotm.geobase.web.domain.QuizAnswers;
+import fr.chaffotm.geobase.web.domain.QuizResponse;
 import fr.chaffotm.geobase.web.domain.QuizConfiguration;
 import fr.chaffotm.geobase.web.domain.QuizResult;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +38,8 @@ public class QuizRestController {
     }
 
     @PutMapping(value = "{id}")
-    public QuizResult answer(@PathVariable("id") final long id, @RequestBody final QuizAnswers answers) {
-        return quizService.answer(id, answers);
+    public QuizResult answer(@PathVariable("id") final long id, @RequestBody final QuizResponse response) {
+        return quizService.answer(id, response);
     }
 
 }

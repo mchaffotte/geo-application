@@ -33,7 +33,7 @@ export class Quiz {
 
 }
 
-export class QuizAnswer {
+export class QuizResponse {
 
   answers: string[] = [];
 

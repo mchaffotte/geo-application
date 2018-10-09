@@ -1,5 +1,7 @@
 package fr.chaffotm.geobase;
 
+import fr.chaffotm.geobase.interceptor.JsonInterceptor;
+import fr.chaffotm.geobase.interceptor.LoggingInterceptor;
 import fr.chaffotm.geobase.web.domain.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,12 +9,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.URI;
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,14 +29,7 @@ public class QuizIT {
 
     @Before
     public void setUp() {
-        restTemplate.getRestTemplate().setInterceptors(
-                Collections.singletonList((request, body, execution) -> {
-                    request.getHeaders()
-                            .setContentType(MediaType.APPLICATION_JSON);
-                    request.getHeaders()
-                            .setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-                    return execution.execute(request, body);
-                }));
+        restTemplate.getRestTemplate().setInterceptors(Arrays.asList(new LoggingInterceptor(), new JsonInterceptor()));
     }
 
     @Test
@@ -118,9 +115,9 @@ public class QuizIT {
         assertThat(quiz).isNotNull();
         assertThat(quiz.getQuestions()).hasSize(10);
 
-        final QuizAnswers answers = new QuizAnswers();
-        answers.setAnswers(Arrays.asList("", "", "", "", "", "", "", "", "", ""));
-        final ResponseEntity<QuizResult> response2 = restTemplate.exchange("/api/quizzes/" + quiz.getId(), HttpMethod.PUT, new HttpEntity<>(answers), QuizResult.class);
+        final QuizResponse quizResponse = new QuizResponse();
+        quizResponse.setAnswers(Arrays.asList("", "", "", "", "", "", "", "", "", ""));
+        final ResponseEntity<QuizResult> response2 = restTemplate.exchange("/api/quizzes/" + quiz.getId(), HttpMethod.PUT, new HttpEntity<>(quizResponse), QuizResult.class);
         assertThat(response2.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         final QuizResult expected = new QuizResult();
@@ -139,14 +136,14 @@ public class QuizIT {
     @Test
     public void answerQuiz_should_not_validate_null_body() {
         HttpEntity<Quiz> entity = new HttpEntity<>((Quiz) null);
-        final ResponseEntity<Quiz> response = restTemplate.exchange("/api/quizzes/45", HttpMethod.PUT, entity, Quiz.class);
+        final ResponseEntity<Quiz> response = restTemplate.exchange("/api/quizzes/54", HttpMethod.PUT, entity, Quiz.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
     @Test
     public void answerQuiz_should_not_validate_empty_body() {
         HttpEntity<String> entity = new HttpEntity<>("");
-        final ResponseEntity<Quiz> response = restTemplate.exchange("/api/quizzes/45", HttpMethod.PUT, entity, Quiz.class);
+        final ResponseEntity<Quiz> response = restTemplate.exchange("/api/quizzes/78", HttpMethod.PUT, entity, Quiz.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
