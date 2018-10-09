@@ -24,4 +24,7 @@ public final class AreaUnits {
 
     public static final Unit SQUARE_FOOT = new Unit("foot", "square foot", 0.3048);
 
+    private AreaUnits() {
+    }
+
 }

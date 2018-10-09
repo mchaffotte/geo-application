@@ -11,6 +11,9 @@ public class AreaMapper {
 
     private static AreaConverter areaConverter = new AreaConverter(2);
 
+    private AreaMapper() {
+    }
+
     public static Area map(final AreaEntity entity) {
         final Area area = new Area();
         area.setLand(areaConverter.convert(entity.getLand(), SQUARE_HECTOMETER, SQUARE_KILOMETER));

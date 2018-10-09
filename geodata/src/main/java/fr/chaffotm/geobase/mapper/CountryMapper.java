@@ -8,6 +8,9 @@ import java.util.List;
 
 public class CountryMapper {
 
+    private CountryMapper() {
+    }
+
     public static List<Country> map(final List<CountryEntity> entities) {
         final List<Country> countries = new ArrayList<>();
         for (CountryEntity entity : entities) {

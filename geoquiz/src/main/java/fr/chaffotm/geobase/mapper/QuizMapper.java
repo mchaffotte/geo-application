@@ -14,6 +14,9 @@ public class QuizMapper {
 
     private static final Random RANDOM = new Random(System.currentTimeMillis());
 
+    private QuizMapper() {
+    }
+
     public static Quiz map(final QuizEntity entity, final String baseURI) {
         final Quiz quiz = new Quiz();
         quiz.setId(entity.getId());

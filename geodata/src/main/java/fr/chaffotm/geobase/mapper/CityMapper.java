@@ -5,6 +5,9 @@ import fr.chaffotm.geobase.web.domain.City;
 
 public class CityMapper {
 
+    private CityMapper() {
+    }
+
     public static City map(final CityEntity entity) {
         final City city = new City();
         city.setName(entity.getName());
