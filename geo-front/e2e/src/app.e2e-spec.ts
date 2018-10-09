@@ -9,6 +9,6 @@ describe('geo-front App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to geo-front!');
+    expect(page.getParagraphText()).toEqual('GeoAdmin');
   });
 });
