@@ -6,6 +6,20 @@ export class Page<T> {
 
 }
 
+export class Area {
+
+  land: number;
+
+  water: number;
+
+}
+
+export class City {
+
+  name: string;
+
+}
+
 export class Country {
 
   id: number;
@@ -14,6 +28,8 @@ export class Country {
 
   name: string;
 
-  totalArea: number;
+  area: Area;
+
+  capital: City;
 
 }
