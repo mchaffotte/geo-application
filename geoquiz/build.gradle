@@ -1,9 +1,9 @@
 dependencies {
-    compile project(':geodata')
-    compile project(':text-to-query')
+    api project(':geodata')
+    api project(':text-to-query')
 
     compileOnly 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
     compileOnly 'javax.validation:validation-api:1.1.0.Final'
 
-    integrationTestCompile 'org.hibernate:hibernate-entitymanager:5.2.12.Final'
+    integrationTestImplementation 'org.hibernate:hibernate-entitymanager:5.2.12.Final'
 }

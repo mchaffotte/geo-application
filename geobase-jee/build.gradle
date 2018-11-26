@@ -8,23 +8,15 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE'
         classpath "io.thorntail:thorntail-gradle-plugin:$thorntailVersion"
     }
 }
 
-apply plugin: 'io.spring.dependency-management'
 apply plugin: 'wildfly-swarm'
 apply plugin: 'war'
 
 ext {
     resteasyVersion = '3.5.0.Final'
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "io.thorntail:bom-all:$thorntailVersion"
-    }
 }
 
 repositories {
@@ -34,18 +26,19 @@ repositories {
 }
 
 dependencies {
-    compile project(':geoquiz')
+    implementation "io.thorntail:bom-all:$thorntailVersion"
+    implementation project(':geoquiz')
 
-    compile 'io.thorntail:microprofile'
-    compile 'io.thorntail:jpa'
-    compile 'org.slf4j:slf4j-simple:1.7.25'
+    implementation 'io.thorntail:microprofile'
+    implementation 'io.thorntail:jpa'
+    implementation 'org.slf4j:slf4j-simple:1.7.25'
 
-    integrationTestCompile ("io.thorntail:arquillian-adapter:$thorntailVersion") {
+    integrationTestImplementation ("io.thorntail:arquillian-adapter:$thorntailVersion") {
         exclude group: 'junit'
     }
-    integrationTestCompile 'org.gradle:gradle-tooling-api:3.0'
-    integrationTestCompile "org.jboss.resteasy:resteasy-client:$resteasyVersion"
-    integrationTestCompile "org.jboss.resteasy:resteasy-jackson-provider:$resteasyVersion"
+    integrationTestImplementation 'org.gradle:gradle-tooling-api:3.0'
+    integrationTestImplementation "org.jboss.resteasy:resteasy-client:$resteasyVersion"
+    integrationTestImplementation "org.jboss.resteasy:resteasy-jackson-provider:$resteasyVersion"
 }
 
 swarm {
