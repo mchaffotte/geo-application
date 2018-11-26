@@ -78,25 +78,31 @@ public class SortConverterTest {
                         new Sort("surname", Order.ASC));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getAsList_should_not_validate_the_expression_two_properties_without_pipe() {
         final SortConverter converter = new SortConverter();
 
-        converter.getAsList("name age");
+        final Throwable thrown = catchThrowable(() -> converter.getAsList("name age"));
+
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getAsList_should_not_validate_the_expression_property_with_a_pipe_but_nothing_after() {
         final SortConverter converter = new SortConverter();
 
-        converter.getAsList("name |");
+        final Throwable thrown = catchThrowable(() ->  converter.getAsList("name |"));
+
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getAsList_should_not_validate_the_expression_property_with_plus_prefix() {
         final SortConverter converter = new SortConverter();
 
-        converter.getAsList("+name");
+        final Throwable thrown = catchThrowable(() -> converter.getAsList("+name"));
+
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

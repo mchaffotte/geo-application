@@ -11,6 +11,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import javax.persistence.EntityNotFoundException;
 import java.util.Collections;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -22,24 +24,28 @@ public class QuizServiceTest {
     @InjectMocks
     private QuizService quizService;
 
-    @Test(expected = EntityNotFoundException.class)
+    @Test
     public void answer_should_fail_if_id_is_unknown() {
         final long quizId = 465;
         when(quizRepository.get(quizId)).thenThrow(EntityNotFoundException.class);
         final QuizResponse quizResponse = new QuizResponse();
         quizResponse.setAnswers(Collections.singletonList("London"));
 
-        quizService.answer(quizId, quizResponse);
+        final Throwable thrown = catchThrowable(() -> quizService.answer(quizId, quizResponse));
+
+        assertThat(thrown).isInstanceOf(EntityNotFoundException.class);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void answer_should_fail_if_quiz_is_null() {
         final long quizId = 465;
         when(quizRepository.get(quizId)).thenReturn(null);
         final QuizResponse quizResponse = new QuizResponse();
         quizResponse.setAnswers(Collections.singletonList("London"));
 
-        quizService.answer(quizId, quizResponse);
+        final Throwable thrown = catchThrowable(() -> quizService.answer(quizId, quizResponse));
+
+        assertThat(thrown).isInstanceOf(NullPointerException.class);
     }
 
 }
