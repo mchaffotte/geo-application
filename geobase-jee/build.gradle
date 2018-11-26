@@ -40,10 +40,3 @@ dependencies {
     integrationTestImplementation "org.jboss.resteasy:resteasy-client:$resteasyVersion"
     integrationTestImplementation "org.jboss.resteasy:resteasy-jackson-provider:$resteasyVersion"
 }
-
-swarm {
-    properties {
-        swarm.http.port = 8181
-        swarm.context.path = 'geobase'
-    }
-}
