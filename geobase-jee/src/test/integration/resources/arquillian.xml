@@ -3,9 +3,10 @@
             xmlns="http://jboss.org/schema/arquillian"
             xsi:schemaLocation="http://jboss.org/schema/arquillian http://www.jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
-    <container qualifier="wildfly-swarm" default="true">
+    <container qualifier="daemon" default="true">
         <configuration>
-            <property name="port">8090</property>
+            <property name="port">${swarm.arquillian.daemon.port:8090}</property>
+            <property name="javaVmArguments">${swarm.arquillian.jvm.args:-Dswarm.http.port=8090}</property>
         </configuration>
     </container>
 

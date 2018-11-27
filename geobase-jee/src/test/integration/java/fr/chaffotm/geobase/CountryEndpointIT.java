@@ -31,9 +31,7 @@ public class CountryEndpointIT {
 
     @Deployment(testable = false)
     public static Archive createDeployment() {
-        System.setProperty("swarm.http.port", "8090");
-
-        JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
+        final JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
         deployment.addPackages(true, "fr.chaffotm.geobase");
         deployment.addPackages(true, "fr.chaffotm.measurement");
         deployment.addAsResource("META-INF/persistence-test.xml", "META-INF/persistence.xml");

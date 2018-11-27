@@ -29,9 +29,7 @@ public class QuizEndpointIT {
 
     @Deployment(testable = false)
     public static Archive createDeployment() {
-        System.setProperty("swarm.http.port", "8090");
-
-        JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
+        final JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
         deployment.addPackages(true, "fr.chaffotm.geobase");
         deployment.addAsResource("META-INF/persistence.xml");
         deployment.addAsResource("META-INF/sql/create.sql");

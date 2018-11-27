@@ -25,8 +25,6 @@ public class ExceptionEndpointIT {
 
     @Deployment(testable = false)
     public static Archive createDeployment() {
-        System.setProperty("swarm.http.port", "8090");
-
         final JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
         deployment.addPackages(true, "fr.chaffotm.geobase");
         deployment.addAsResource("META-INF/persistence-test.xml", "META-INF/persistence.xml");
