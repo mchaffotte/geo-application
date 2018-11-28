@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        thorntailVersion = '2.2.0.Final'
+        thorntailVersion = '2.2.1.Final'
     }
 
     repositories {
@@ -12,7 +12,7 @@ buildscript {
     }
 }
 
-apply plugin: 'wildfly-swarm'
+apply plugin: 'thorntail'
 apply plugin: 'war'
 
 ext {
@@ -29,14 +29,13 @@ dependencies {
     implementation "io.thorntail:bom-all:$thorntailVersion"
     implementation project(':geoquiz')
 
+    implementation 'io.thorntail:jpa-eclipselink' //TODO replace with 'io.thorntail:jpa' as soon as packaging phase includes missing swarm classes
     implementation 'io.thorntail:microprofile'
-    implementation 'io.thorntail:jpa'
     implementation 'org.slf4j:slf4j-simple:1.7.25'
 
-    integrationTestImplementation ("io.thorntail:arquillian-adapter:$thorntailVersion") {
+    integrationTestImplementation ("io.thorntail:gradle-arquillian-adapter:$thorntailVersion") {
         exclude group: 'junit'
     }
-    integrationTestImplementation 'org.gradle:gradle-tooling-api:3.0'
     integrationTestImplementation "org.jboss.resteasy:resteasy-client:$resteasyVersion"
     integrationTestImplementation "org.jboss.resteasy:resteasy-jackson-provider:$resteasyVersion"
 }

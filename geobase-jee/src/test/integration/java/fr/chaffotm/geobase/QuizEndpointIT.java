@@ -35,7 +35,7 @@ public class QuizEndpointIT {
         deployment.addAsResource("META-INF/sql/create.sql");
         deployment.addAsResource("META-INF/sql/data.sql");
         deployment.addAsResource("META-INF/sql/drop.sql");
-        deployment.addAsResource("project-defaults.yml");
+        deployment.addAsResource("project-defaults-test.yml", "project-defaults.yml");
         return deployment;
     }
 

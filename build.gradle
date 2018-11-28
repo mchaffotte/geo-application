@@ -42,7 +42,7 @@ subprojects {
     version '0.1-SNAPSHOT'
 
     dependencies {
-        compile 'com.h2database:h2:1.4.197'
+        implementation 'com.h2database:h2:1.4.197'
 
         testImplementation 'junit:junit:4.12'
         testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.3.1'

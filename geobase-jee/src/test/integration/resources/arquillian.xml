@@ -6,7 +6,7 @@
     <container qualifier="daemon" default="true">
         <configuration>
             <property name="port">${swarm.arquillian.daemon.port:8090}</property>
-            <property name="javaVmArguments">${swarm.arquillian.jvm.args:-Dswarm.http.port=8090}</property>
+            <property name="javaVmArguments">${Dthorntail.arquillian.jvm.args:-Dthorntail.http.port=8090}</property>
         </configuration>
     </container>
 

@@ -30,7 +30,7 @@ public class ExceptionEndpointIT {
         deployment.addAsResource("META-INF/persistence-test.xml", "META-INF/persistence.xml");
         deployment.addAsResource("META-INF/sql/create.sql");
         deployment.addAsResource("META-INF/sql/drop.sql");
-        deployment.addAsResource("project-defaults.yml");
+        deployment.addAsResource("project-defaults-test.yml", "project-defaults.yml");
         return deployment;
     }
 
