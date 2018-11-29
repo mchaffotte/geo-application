@@ -1,4 +1,2 @@
 rootProject.name = 'geo-application'
 include 'text-to-query', 'geodata', 'geoquiz', 'geobase-jee', 'geobase-spring'
-
-enableFeaturePreview('IMPROVED_POM_SUPPORT')

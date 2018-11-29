@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-    implementation "io.thorntail:bom-all:$thorntailVersion"
+    implementation platform("io.thorntail:bom-all:$thorntailVersion")
     implementation project(':geoquiz')
 
     implementation 'io.thorntail:jpa-eclipselink' //TODO replace with 'io.thorntail:jpa' as soon as packaging phase includes missing swarm classes
