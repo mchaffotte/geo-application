@@ -27,7 +27,7 @@ check.dependsOn integrationTest
 
 idea {
     module {
-        resourceDirs += file('src/main/integration/resources')
-        testResourceDirs += file('src/test/integration/resources')
+        testSourceDirs += project.sourceSets.integrationTest.java.srcDirs
+        testResourceDirs += project.sourceSets.integrationTest.resources.srcDirs
     }
 }
