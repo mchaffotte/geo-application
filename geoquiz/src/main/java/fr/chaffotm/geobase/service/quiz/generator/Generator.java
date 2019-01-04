@@ -2,11 +2,12 @@ package fr.chaffotm.geobase.service.quiz.generator;
 
 import fr.chaffotm.geobase.domain.CountryEntity;
 import fr.chaffotm.geobase.service.quiz.MultipleChoice;
+import fr.chaffotm.geobase.web.domain.ResponseType;
 
 import java.util.List;
 
 public interface Generator {
 
-    List<MultipleChoice> generate(List<CountryEntity> countries, boolean addDistractors);
+    List<MultipleChoice> generate(List<CountryEntity> countries, ResponseType responseType);
 
 }

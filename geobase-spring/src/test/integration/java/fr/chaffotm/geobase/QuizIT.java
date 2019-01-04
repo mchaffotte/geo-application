@@ -40,7 +40,7 @@ public class QuizIT {
     @Test
     public void answerQuiz_should_check_user_answers_using_capitals() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setMultipleChoice(true);
+        configuration.setResponseType(ResponseType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.CAPITAL);
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
@@ -49,7 +49,7 @@ public class QuizIT {
     @Test
     public void answerQuiz_should_check_user_answers_using_flags() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setMultipleChoice(true);
+        configuration.setResponseType(ResponseType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.FLAG);
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
@@ -58,7 +58,7 @@ public class QuizIT {
     @Test
     public void answerQuiz_should_check_user_answers_using_silhouettes() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setMultipleChoice(true);
+        configuration.setResponseType(ResponseType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.SILHOUETTE);
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
@@ -67,7 +67,7 @@ public class QuizIT {
     @Test
     public void answerQuiz_should_check_user_answers_using_land_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setMultipleChoice(true);
+        configuration.setResponseType(ResponseType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.LAND_AREA);
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
@@ -76,7 +76,7 @@ public class QuizIT {
     @Test
     public void answerQuiz_should_check_user_answers_using_water_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setMultipleChoice(true);
+        configuration.setResponseType(ResponseType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.WATER_AREA);
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
@@ -85,7 +85,7 @@ public class QuizIT {
     @Test
     public void answerQuiz_should_check_user_answers_using_total_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setMultipleChoice(true);
+        configuration.setResponseType(ResponseType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.TOTAL_AREA);
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
@@ -94,7 +94,7 @@ public class QuizIT {
     @Test
     public void answerQuiz_should_not_generate_a_quiz_due_to_a_misconfiguration_with_using_water_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setMultipleChoice(false);
+        configuration.setResponseType(ResponseType.ANSWER);
         configuration.setQuestionType(QuestionType.WATER_AREA);
 
         final ResponseEntity<String> response = restTemplate.postForEntity("/api/quizzes", configuration, String.class);

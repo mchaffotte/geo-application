@@ -3,18 +3,24 @@
     <h4 class="my-0 font-weight-normal">{{ 'admin.quizzes.configuration' | translate }}</h4>
   </div>
   <div class="card-body">
-    <form [formGroup]="quizConfigurationForm" (ngSubmit)="createQuiz()">
+    <form #quizConfigurationForm="ngForm" (ngSubmit)="createQuiz()">
       <div class="form-group row">
-        <label for="questionType" class="col-sm-3 col-form-label">{{ 'admin.quizzes.question-type' | translate }}</label>
-        <div class="col-sm-9">
-          <ng-select name="questionType" [items]="questionTypes" bindValue="type" [clearable]="false"
-            [searchable]="false" formControlName="questionType"></ng-select>
+        <label for="questionType" class="col-sm-4 col-form-label">{{ 'admin.quizzes.question-type' | translate }}</label>
+        <div class="col-sm-8">
+          <ng-select name="questionType" required [items]="questionTypes" bindValue="questionType" [clearable]="false" [searchable]="false" [(ngModel)]="configuration.questionType" (change)="updateQuestion($event)"></ng-select>
         </div>
       </div>
-      <div class="form-check row">
-        <div class="custom-control custom-checkbox offset-sm-3">
-          <input class="custom-control-input" id="multipleChoice" type="checkbox" name="multipleChoice" formControlName="mulitpleChoice">
-          <label class="custom-control-label" for="multipleChoice">{{ 'admin.quizzes.multiple-choice' | translate }}</label>
+      <div class="form-group row">
+        <label for="responseType" class="col-sm-4 col-form-label">{{ 'admin.quizzes.response-type' | translate }}</label>
+        <div class="col-sm-8">
+          <div class="btn-group btn-group-toggle" ngbRadioGroup name="responseType" [(ngModel)]="configuration.responseType">
+            <label class="btn-outline-primary" ngbButtonLabel>
+              <input type="radio" name="answer" ngbButton [value]="ResponseType.ANSWER" [disabled]="!choice.answer" > {{ 'admin.quizzes.answer' | translate }}
+            </label>
+            <label class="btn-outline-primary" ngbButtonLabel>
+              <input type="radio" name="multipleChoice" ngbButton [value]="ResponseType.MULTIPLE_CHOICE" [disabled]="!choice.multipleChoice"> {{ 'admin.quizzes.multiple-choice' | translate }}
+            </label>
+          </div>
         </div>
       </div>
       <div class="form-group row">

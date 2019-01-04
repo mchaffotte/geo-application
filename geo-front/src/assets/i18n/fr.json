@@ -6,11 +6,13 @@
       "quizzes": "Quiz"
     },
     "quizzes": {
-      "play" : "Jouer",
-      "question" : "Question {{number}}",
+      "play": "Jouer",
+      "question": "Question {{number}}",
       "result": "Résultat",
       "configuration": "Configuration",
-      "question-type": "Type",
+      "question-type": "Type de question",
+      "response-type": "Type de réponse",
+      "answer": "Réponse",
       "multiple-choice": "QCM",
       "enter-answer": "Entrer votre réponse",
       "next": "Suivant"
@@ -18,12 +20,12 @@
   },
   "model": {
     "question-type": {
-      "capital": "Capitale",
-      "total-area": "Superficie totale",
-      "flag": "Drapeau",
-      "silhouette": "Silhouette",
-      "land-area": "Superficie des terres",
-      "water-area": "Superficie des eaux"
+      "CAPITAL": "Capitale",
+      "TOTAL_AREA": "Superficie totale",
+      "FLAG": "Drapeau",
+      "SILHOUETTE": "Silhouette",
+      "LAND_AREA": "Superficie des terres",
+      "WATER_AREA": "Superficie des eaux"
     }
   }
 }

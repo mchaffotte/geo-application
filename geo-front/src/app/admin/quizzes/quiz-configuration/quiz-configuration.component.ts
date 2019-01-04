@@ -1,10 +1,15 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgOption } from '@ng-select/ng-select';
 import { TranslateService } from '@ngx-translate/core';
 
-import { QuestionType, Quiz, QuizConfiguration } from '../../../shared/quiz/quiz';
+import { Quiz, QuizConfiguration, ResponseType, QuizType } from '../../../shared/quiz/quiz';
 import { QuizService } from '../../../shared/quiz/quiz.service';
+import { QuizTypeService } from 'src/app/shared/quiz/quiz-type.service';
+
+export class ResponseChoice {
+  answer: boolean;
+  multipleChoice: boolean;
+}
 
 @Component({
   selector: 'geo-quiz-configuration',
@@ -13,47 +18,62 @@ import { QuizService } from '../../../shared/quiz/quiz.service';
 })
 export class QuizConfigurationComponent implements OnInit {
 
-  quizConfigurationForm: FormGroup;
+  @Output() quizCreated = new EventEmitter<Quiz>();
 
   questionTypes: Array<NgOption>;
 
-  @Output() quizCreated  = new EventEmitter<Quiz>();
+  choice: ResponseChoice;
 
-  constructor(private fb: FormBuilder, private quizService: QuizService, private translate: TranslateService) {
-    this.questionTypes = new Array<NgOption>(
-      {id: 1, label: this.translate.instant('model.question-type.capital'), type: QuestionType.CAPITAL},
-      {id: 2, label: this.translate.instant('model.question-type.total-area'), type: QuestionType.TOTAL_AREA},
-      {id: 3, label: this.translate.instant('model.question-type.flag'), type: QuestionType.FLAG},
-      {id: 4, label: this.translate.instant('model.question-type.silhouette'), type: QuestionType.SILHOUETTE},
-      {id: 5, label: this.translate.instant('model.question-type.land-area'), type: QuestionType.LAND_AREA},
-      {id: 6, label: this.translate.instant('model.question-type.water-area'), type: QuestionType.WATER_AREA},
-    );
+  configuration: QuizConfiguration;
 
-    this.quizConfigurationForm = this.fb.group({
-      questionType: QuestionType.CAPITAL,
-      mulitpleChoice: true,
-    });
-   }
+  ResponseType = ResponseType;
+
+  constructor(private quizService: QuizService, private quizTypeService: QuizTypeService, private translate: TranslateService) {
+    this.choice = { answer: true, multipleChoice: true};
+
+    this.configuration = new QuizConfiguration;
+    this.configuration.responseType = ResponseType.MULTIPLE_CHOICE;
+  }
 
   ngOnInit() {
-    this.quizConfigurationForm.get('questionType').valueChanges.subscribe(
-      (questionType: QuestionType) => {
-        if (this.quizService.isMultipleChoiceOnly(questionType)) {
-          this.quizConfigurationForm.get('mulitpleChoice').disable();
-        } else {
-          this.quizConfigurationForm.get('mulitpleChoice').enable();
-        }
+    this.questionTypes = [];
+    this.quizTypeService.getQuizTypes().subscribe(types => {
+      let i = 1;
+      const questionTypes = [];
+      types.forEach(type => {
+        questionTypes.push({
+          index: i,
+          label: this.translate.instant('model.question-type.' + type.questionType),
+          questionType: type.questionType,
+          responseTypes: type.responseTypes
+        });
+        i++;
+      });
+      this.questionTypes = questionTypes;
+      if (this.questionTypes.length > 0) {
+        this.configuration.questionType = this.questionTypes[0].questionType;
+        this.updateQuestion(questionTypes[0]);
       }
-    );
+    });
+  }
+
+  private contains(questionOption: NgOption, responseType: ResponseType): boolean {
+    const response = questionOption.responseTypes.find((type: ResponseType) => type === responseType);
+    return !!response;
+  }
+
+  updateQuestion(event: NgOption) {
+    const questionOption = this.questionTypes.find(option => option.questionType === event.questionType);
+    this.choice.multipleChoice = this.contains(questionOption, ResponseType.MULTIPLE_CHOICE);
+    this.choice.answer = this.contains(questionOption, ResponseType.ANSWER);
+
+    if (this.configuration.responseType === ResponseType.ANSWER && !this.choice.answer) {
+      this.configuration.responseType = ResponseType.MULTIPLE_CHOICE;
+    }
   }
 
   createQuiz() {
-    const choiceControl = this.quizConfigurationForm.get('mulitpleChoice');
-    const multipleChoice = choiceControl.disabled ? true : choiceControl.value;
-    const configuration = new QuizConfiguration();
-    configuration.questionType = this.quizConfigurationForm.get('questionType').value;
-    configuration.multipleChoice = multipleChoice;
-    this.quizService.createQuiz(configuration).subscribe(quizId => {
+    this.quizService.createQuiz(this.configuration).subscribe(quizId => {
       this.quizService.getQuiz(quizId).subscribe(quiz => {
         this.quizCreated.emit(quiz);
       });

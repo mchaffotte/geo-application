@@ -27,9 +27,4 @@ export class QuizService {
     return this.http.put<QuizResult>('api/quizzes/' + quizId, response);
   }
 
-  isMultipleChoiceOnly(questionType: QuestionType): boolean {
-    return QuestionType.LAND_AREA === questionType || QuestionType.WATER_AREA === questionType
-      || QuestionType.TOTAL_AREA === questionType;
-  }
-
 }

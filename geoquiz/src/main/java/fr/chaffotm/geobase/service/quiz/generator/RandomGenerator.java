@@ -2,6 +2,7 @@ package fr.chaffotm.geobase.service.quiz.generator;
 
 import fr.chaffotm.geobase.domain.CountryEntity;
 import fr.chaffotm.geobase.service.quiz.MultipleChoice;
+import fr.chaffotm.geobase.web.domain.ResponseType;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class RandomGenerator implements Generator {
 
     @Override
-    public List<MultipleChoice> generate(final List<CountryEntity> countries, boolean addDistractors) {
+    public List<MultipleChoice> generate(final List<CountryEntity> countries, final ResponseType responseType) {
         final int size = countries.size();
         final Set<Integer> excludeIds = new HashSet<>(exclude(size));
         final List<MultipleChoice> multipleChoices = new ArrayList<>();
@@ -21,7 +22,7 @@ public abstract class RandomGenerator implements Generator {
             excludeIds.add(countryIndex);
             final CountryEntity answer = countries.get(countryIndex);
             final MultipleChoice multipleChoice = new MultipleChoice(answer);
-            if (addDistractors) {
+            if (ResponseType.MULTIPLE_CHOICE.equals(responseType)) {
                 final List<CountryEntity> distractors = findRandom(countries, countryIndex);
                 for (CountryEntity distractor : distractors) {
                     multipleChoice.addDistractor(distractor);

@@ -4,13 +4,17 @@ import fr.chaffotm.geobase.domain.QuizEntity;
 import fr.chaffotm.geobase.mapper.QuizMapper;
 import fr.chaffotm.geobase.repository.QuizMakerRepository;
 import fr.chaffotm.geobase.repository.QuizRepository;
+import fr.chaffotm.geobase.service.quiz.ColumnType;
 import fr.chaffotm.geobase.service.quiz.QuizResponseChecker;
-import fr.chaffotm.geobase.web.domain.Quiz;
-import fr.chaffotm.geobase.web.domain.QuizResponse;
-import fr.chaffotm.geobase.web.domain.QuizConfiguration;
-import fr.chaffotm.geobase.web.domain.QuizResult;
+import fr.chaffotm.geobase.service.quiz.descriptor.QuestionDescriptor;
+import fr.chaffotm.geobase.service.quiz.descriptor.QuestionDescriptorService;
+import fr.chaffotm.geobase.web.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -22,10 +26,13 @@ public class QuizService {
 
     private final QuizResponseChecker checker;
 
+    private final QuestionDescriptorService questionService;
+
     public QuizService(final QuizRepository quizRepository, final QuizMakerRepository quizMakerRepository) {
         this.quizRepository = quizRepository;
         this.quizMakerRepository = quizMakerRepository;
         checker = new QuizResponseChecker();
+        questionService = new QuestionDescriptorService();
     }
 
     public long create(final QuizConfiguration configuration) {
@@ -42,6 +49,23 @@ public class QuizService {
     public QuizResult answer(final long id, final QuizResponse response) {
         final QuizEntity quizEntity = quizRepository.get(id);
         return checker.score(quizEntity, response);
+    }
+
+    public List<QuizType> getQuizTypes() {
+        final Map<QuestionType, QuestionDescriptor> descriptors = questionService.getDescriptors();
+        final List<QuizType> quizTypes = new ArrayList<>();
+        for (Map.Entry<QuestionType, QuestionDescriptor> descriptor : descriptors.entrySet()) {
+            final List<ResponseType> responseTypes = new ArrayList<>();
+            if (!ColumnType.NUMERIC.equals(descriptor.getValue().getAttributeColumnType())) {
+                responseTypes.add(ResponseType.ANSWER);
+            }
+            responseTypes.add(ResponseType.MULTIPLE_CHOICE);
+            final QuizType quizType = new QuizType();
+            quizType.setQuestionType(descriptor.getKey());
+            quizType.setResponseTypes(responseTypes);
+            quizTypes.add(quizType);
+        }
+        return quizTypes;
     }
 
 }

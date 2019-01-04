@@ -8,7 +8,8 @@ public class QuizConfiguration {
     @NotNull
     private QuestionType questionType;
 
-    private boolean multipleChoice;
+    @NotNull
+    private ResponseType responseType;
 
     public QuestionType getQuestionType() {
         return questionType;
@@ -18,12 +19,12 @@ public class QuizConfiguration {
         this.questionType = questionType;
     }
 
-    public boolean isMultipleChoice() {
-        return multipleChoice;
+    public ResponseType getResponseType() {
+        return responseType;
     }
 
-    public void setMultipleChoice(boolean multipleChoice) {
-        this.multipleChoice = multipleChoice;
+    public void setResponseType(ResponseType responseType) {
+        this.responseType = responseType;
     }
 
     @Override
@@ -31,13 +32,13 @@ public class QuizConfiguration {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         QuizConfiguration that = (QuizConfiguration) o;
-        return multipleChoice == that.multipleChoice &&
-                questionType == that.questionType;
+        return questionType == that.questionType &&
+                responseType == that.responseType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(questionType, multipleChoice);
+        return Objects.hash(questionType, responseType);
     }
 
 }

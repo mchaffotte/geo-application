@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CountryService } from './country/country.service';
 import { QuizService } from './quiz/quiz.service';
+import { QuizTypeService } from './quiz/quiz-type.service';
 import { SecuredImageComponent } from './ui/secured-image/secured-image.component';
 
 @NgModule({
@@ -20,7 +21,8 @@ import { SecuredImageComponent } from './ui/secured-image/secured-image.componen
   ],
   providers: [
     CountryService,
-    QuizService
+    QuizService,
+    QuizTypeService
   ],
   declarations: [
     SecuredImageComponent

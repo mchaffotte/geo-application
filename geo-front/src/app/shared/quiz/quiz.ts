@@ -7,11 +7,24 @@ export const enum QuestionType {
   WATER_AREA = 'WATER_AREA'
 }
 
+export enum ResponseType {
+  ANSWER = 'ANSWER',
+  MULTIPLE_CHOICE = 'MULTIPLE_CHOICE'
+}
+
+export class QuizType {
+
+  questionType: QuestionType;
+
+  responseTypes: ResponseType[];
+
+}
+
 export class QuizConfiguration {
 
   questionType: QuestionType;
 
-  multipleChoice: boolean;
+  responseType: ResponseType;
 
 }
 

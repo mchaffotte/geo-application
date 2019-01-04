@@ -1,19 +1,19 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { QuizService } from './quiz.service';
+import { QuizTypeService } from './quiz-type.service';
 
-describe('QuizService', () => {
+describe('QuizTypeService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule
       ],
-      providers: [QuizService]
+      providers: [QuizTypeService]
     });
   });
 
-  it('should be created', inject([QuizService], (service: QuizService) => {
+  it('should be created', inject([QuizTypeService], (service: QuizTypeService) => {
     expect(service).toBeTruthy();
   }));
 });

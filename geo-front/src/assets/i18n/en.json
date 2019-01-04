@@ -6,11 +6,13 @@
       "quizzes": "Quizzes"
     },
     "quizzes": {
-      "play" : "Play",
-      "question" : "Question {{number}}",
+      "play": "Play",
+      "question": "Question {{number}}",
       "result": "Result",
       "configuration": "Configuration",
-      "question-type": "Type",
+      "question-type": "Question type",
+      "response-type": "Response type",
+      "answer": "Answer",
       "multiple-choice": "Multiple choice",
       "enter-answer": "Enter your answer",
       "next": "Next"
@@ -18,12 +20,12 @@
   },
   "model": {
     "question-type": {
-      "capital": "Capital",
-      "total-area": "Total area",
-      "flag": "Flag",
-      "silhouette": "Silhouette",
-      "land-area": "Land area",
-      "water-area": "Water area"
+      "CAPITAL": "Capital",
+      "TOTAL_AREA": "Total area",
+      "FLAG": "Flag",
+      "SILHOUETTE": "Silhouette",
+      "LAND_AREA": "Land area",
+      "WATER_AREA": "Water area"
     }
   }
 }
