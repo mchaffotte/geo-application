@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CountryIT {
+public class CountryRestControllerIT {
 
     private static final String API_COUNTRIES = "/api/countries";
 

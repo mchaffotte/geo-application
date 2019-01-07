@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class QuizTypeIT {
+public class QuizTypeRestControllerIT {
 
     @Autowired
     private TestRestTemplate restTemplate;

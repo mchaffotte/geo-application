@@ -20,7 +20,6 @@ tasks.register("integrationTest", Test) {
     classpath = sourceSets.integrationTest.runtimeClasspath
     testClassesDirs = sourceSets.integrationTest.output.classesDirs
     mustRunAfter test
-    outputs.upToDateWhen { false }
 }
 
 check.dependsOn integrationTest
