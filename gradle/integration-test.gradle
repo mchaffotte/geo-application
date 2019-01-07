@@ -14,7 +14,7 @@ sourceSets {
     }
 }
 
-task integrationTest(type: Test) {
+tasks.register("integrationTest", Test) {
     description = 'Runs the integration tests.'
     group = 'verification'
     classpath = sourceSets.integrationTest.runtimeClasspath
