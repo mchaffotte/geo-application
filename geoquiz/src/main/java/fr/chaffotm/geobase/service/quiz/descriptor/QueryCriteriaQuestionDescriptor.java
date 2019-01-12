@@ -13,7 +13,7 @@ public abstract class QueryCriteriaQuestionDescriptor implements QuestionDescrip
 
     @Override
     public List<CountryEntity> getQuizCountries(final Repository repository) {
-        return repository.findAll(1, null, getQueryCriteria());
+        return repository.findAll(1, null, getQueryCriteria(), CountryEntity.class);
     }
 
     @Override

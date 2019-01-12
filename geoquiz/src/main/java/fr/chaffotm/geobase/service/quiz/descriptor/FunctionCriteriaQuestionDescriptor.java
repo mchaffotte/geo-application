@@ -13,7 +13,7 @@ public abstract class FunctionCriteriaQuestionDescriptor implements QuestionDesc
 
     @Override
     public List<CountryEntity> getQuizCountries(final Repository repository) {
-        return repository.findAll(1, null, getFunctionCriteria());
+        return repository.findAll(1, null, getFunctionCriteria(), CountryEntity.class);
     }
 
     @Override

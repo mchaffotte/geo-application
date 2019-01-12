@@ -20,7 +20,7 @@ public class CountryRepository {
 
     public List<CountryEntity> findAll(final int offset, final Integer limit, final QueryCriteria criteria) {
         final Repository repository = new Repository(em);
-        return repository.findAll(offset, limit, criteria);
+        return repository.findAll(offset, limit, criteria, CountryEntity.class);
     }
 
     public long count() {

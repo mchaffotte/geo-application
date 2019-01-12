@@ -1,6 +1,5 @@
 package fr.chaffotm.geobase.repository;
 
-import fr.chaffotm.geobase.domain.CountryEntity;
 import fr.chaffotm.geobase.repository.criteria.QueryBuilder;
 import fr.chaffotm.geobase.repository.criteria.Sort;
 import fr.chaffotm.geobase.repository.criteria.SumFunction;
@@ -20,9 +19,9 @@ public class Repository {
         this.em = em;
     }
 
-    public List<CountryEntity> findAll(final int offset, final Integer limit, final QueryCriteria criteria) {
+    public <T> List<T> findAll(final int offset, final Integer limit, final QueryCriteria criteria, final Class<T> entityClass) {
         final CriteriaBuilder builder = em.getCriteriaBuilder();
-        final QueryBuilder<CountryEntity, CountryEntity> queryBuilder = new QueryBuilder<>(builder, CountryEntity.class, CountryEntity.class);
+        final QueryBuilder<T, T> queryBuilder = new QueryBuilder<>(builder, entityClass, entityClass);
         if (criteria.getJoin() != null) {
             queryBuilder.addJoin(criteria.getJoin());
         }
@@ -30,13 +29,13 @@ public class Repository {
         for (Sort sort : sorts) {
             queryBuilder.addSort(sort);
         }
-        final CriteriaQuery<CountryEntity> query = queryBuilder.build();
+        final CriteriaQuery<T> query = queryBuilder.build();
         return getResultList(query, offset, limit);
     }
 
-    public List<CountryEntity> findAll(final int offset, final Integer limit, final FunctionCriteria criteria) {
+    public <T> List<T> findAll(final int offset, final Integer limit, final FunctionCriteria criteria, final Class<T> entityClass) {
         final CriteriaBuilder builder = em.getCriteriaBuilder();
-        final QueryBuilder<FunctionCountryEntity, CountryEntity> queryBuilder = new QueryBuilder<>(builder, FunctionCountryEntity.class, CountryEntity.class);
+        final QueryBuilder<FunctionEntity, T> queryBuilder = new QueryBuilder<>(builder, FunctionEntity.class, entityClass);
         if (criteria.getJoin() != null) {
             queryBuilder.addJoin(criteria.getJoin());
         }
@@ -46,9 +45,9 @@ public class Repository {
         for (Sort sort : sorts) {
             queryBuilder.addSort(sort);
         }
-        final CriteriaQuery<FunctionCountryEntity> query = queryBuilder.build();
-        final List<FunctionCountryEntity> arithmeticCountries = getResultList(query, offset, limit);
-        return arithmeticCountries.stream().map(FunctionCountryEntity::getEntity).collect(Collectors.toList());
+        final CriteriaQuery<FunctionEntity> query = queryBuilder.build();
+        final List<FunctionEntity> arithmeticCountries = getResultList(query, offset, limit);
+        return arithmeticCountries.stream().map(entity -> (T) entity.getEntity()).collect(Collectors.toList());
     }
 
     private <T> List<T> getResultList(final CriteriaQuery<T> query, final int offset, final Integer limit) {

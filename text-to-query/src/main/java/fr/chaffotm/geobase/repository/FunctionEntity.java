@@ -1,28 +1,26 @@
 package fr.chaffotm.geobase.repository;
 
-import fr.chaffotm.geobase.domain.CountryEntity;
+public class FunctionEntity {
 
-public class FunctionCountryEntity {
-
-    private CountryEntity entity;
+    private Object entity;
 
     private double value;
 
-    public FunctionCountryEntity(CountryEntity entity, double value) {
+    public FunctionEntity(Object entity, double value) {
         this.entity = entity;
         this.value = value;
     }
 
-    public FunctionCountryEntity(CountryEntity entity, int value) {
+    public FunctionEntity(Object entity, int value) {
         this.entity = entity;
         this.value = value;
     }
 
-    public CountryEntity getEntity() {
+    public Object getEntity() {
         return entity;
     }
 
-    public void setEntity(CountryEntity entity) {
+    public void setEntity(Object entity) {
         this.entity = entity;
     }
 
