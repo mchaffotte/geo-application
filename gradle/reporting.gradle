@@ -7,10 +7,9 @@ jacoco {
 
 sonarqube {
     properties {
-        properties['sonar.tests'] += sourceSets.integrationTest.allSource.srcDirs
-
+        properties['sonar.tests'] += sourceSets.integTest.allSource.srcDirs
         property 'sonar.sourceEncoding', 'UTF-8'
-        property 'sonar.jacoco.itReportPath', 'build/jacoco/integrationTest.exec'
+        property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/test.exec"
     }
 }
 

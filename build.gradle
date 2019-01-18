@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2'
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7'
     }
 }
 
@@ -25,7 +25,7 @@ subprojects {
         options.encoding = 'UTF-8'
     }
 
-    compileIntegrationTestJava {
+    compileIntegTestJava {
         options.encoding = 'UTF-8'
     }
 
@@ -48,6 +48,10 @@ subprojects {
         testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.3.2'
         testImplementation 'org.assertj:assertj-core:3.11.1'
         testImplementation 'org.mockito:mockito-core:2.23.4'
+
+        integTestImplementation 'junit:junit:4.12'
+        integTestRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.3.2'
+        integTestImplementation 'org.assertj:assertj-core:3.11.1'
     }
 
     test {

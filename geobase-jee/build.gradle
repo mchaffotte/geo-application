@@ -33,9 +33,9 @@ dependencies {
     implementation 'io.thorntail:microprofile'
     implementation 'org.slf4j:slf4j-simple:1.7.25'
 
-    integrationTestImplementation ("io.thorntail:gradle-arquillian-adapter:$thorntailVersion") {
+    integTestImplementation ("io.thorntail:gradle-arquillian-adapter:$thorntailVersion") {
         exclude group: 'junit'
     }
-    integrationTestImplementation "org.jboss.resteasy:resteasy-client:$resteasyVersion"
-    integrationTestImplementation "org.jboss.resteasy:resteasy-jackson-provider:$resteasyVersion"
+    integTestImplementation "org.jboss.resteasy:resteasy-client:$resteasyVersion"
+    integTestImplementation "org.jboss.resteasy:resteasy-jackson-provider:$resteasyVersion"
 }

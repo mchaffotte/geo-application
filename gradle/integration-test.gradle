@@ -1,32 +1,31 @@
 apply plugin: 'idea'
 
 sourceSets {
-    test {
-        java.srcDir file('src/test/unit/java')
-        resources.srcDir file('src/test/unit/resources')
-    }
-
-    integrationTest {
-        java.srcDir file('src/test/integration/java')
-        resources.srcDir file('src/test/integration/resources')
-        compileClasspath += sourceSets.main.output + configurations.testRuntimeClasspath
-        runtimeClasspath += output + compileClasspath
+    integTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
     }
 }
 
-tasks.register("integrationTest", Test) {
-    description = 'Runs the integration tests.'
+configurations {
+    integTestImplementation.extendsFrom implementation
+    integTestRuntimeOnly.extendsFrom runtimeOnly
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs integration tests.'
     group = 'verification'
-    classpath = sourceSets.integrationTest.runtimeClasspath
-    testClassesDirs = sourceSets.integrationTest.output.classesDirs
-    mustRunAfter test
+
+    testClassesDirs = sourceSets.integTest.output.classesDirs
+    classpath = sourceSets.integTest.runtimeClasspath
+    shouldRunAfter test
 }
 
 check.dependsOn integrationTest
 
 idea {
     module {
-        testSourceDirs += project.sourceSets.integrationTest.java.srcDirs
-        testResourceDirs += project.sourceSets.integrationTest.resources.srcDirs
+        testSourceDirs += project.sourceSets.integTest.java.srcDirs
+        testResourceDirs += project.sourceSets.integTest.resources.srcDirs
     }
 }

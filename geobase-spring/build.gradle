@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.1.1.RELEASE'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.1.2.RELEASE'
     }
 
 }
@@ -17,7 +17,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 
-    integrationTestImplementation('org.springframework.boot:spring-boot-starter-test') {
+    integTestImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'junit'
         exclude group: 'org.assertj'
         exclude group: 'org.mockito'
