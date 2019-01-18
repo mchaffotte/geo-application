@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        thorntailVersion = '2.2.1.Final'
+        thorntailVersion = '2.3.0.Final'
     }
 
     repositories {
@@ -16,7 +16,7 @@ apply plugin: 'thorntail'
 apply plugin: 'war'
 
 ext {
-    resteasyVersion = '3.5.0.Final'
+    resteasyVersion = '3.6.2.Final'
 }
 
 repositories {
@@ -29,7 +29,7 @@ dependencies {
     implementation platform("io.thorntail:bom-all:$thorntailVersion")
     implementation project(':geoquiz')
 
-    implementation 'io.thorntail:jpa-eclipselink' //TODO replace with 'io.thorntail:jpa' as soon as packaging phase includes missing swarm classes
+    implementation 'io.thorntail:jpa'
     implementation 'io.thorntail:microprofile'
     implementation 'org.slf4j:slf4j-simple:1.7.25'
 
