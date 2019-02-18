@@ -1,10 +1,12 @@
 package fr.chaffotm.geobase.web.domain;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class QuizResponse {
 
-    private List<String> answers;
+    @NotNull
+    private List<@NotNull String> answers;
 
     public List<String> getAnswers() {
         return answers;

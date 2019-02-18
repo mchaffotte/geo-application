@@ -129,21 +129,39 @@ public class QuizRestControllerIT {
 
     @Test
     public void answerQuiz_should_not_recognize_null_body() {
-        final ResponseEntity<Quiz> response = restTemplate.exchange("/api/quizzes/45", HttpMethod.PUT, null, Quiz.class);
+        final ResponseEntity<QuizResult> response = restTemplate.exchange("/api/quizzes/45", HttpMethod.PUT, null, QuizResult.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
     @Test
     public void answerQuiz_should_not_validate_null_body() {
-        HttpEntity<Quiz> entity = new HttpEntity<>((Quiz) null);
-        final ResponseEntity<Quiz> response = restTemplate.exchange("/api/quizzes/54", HttpMethod.PUT, entity, Quiz.class);
+        HttpEntity<QuizResponse> entity = new HttpEntity<>((QuizResponse) null);
+        final ResponseEntity<QuizResult> response = restTemplate.exchange("/api/quizzes/54", HttpMethod.PUT, entity, QuizResult.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
     @Test
     public void answerQuiz_should_not_validate_empty_body() {
         HttpEntity<String> entity = new HttpEntity<>("");
-        final ResponseEntity<Quiz> response = restTemplate.exchange("/api/quizzes/78", HttpMethod.PUT, entity, Quiz.class);
+        final ResponseEntity<QuizResult> response = restTemplate.exchange("/api/quizzes/78", HttpMethod.PUT, entity, QuizResult.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void answerQuiz_should_not_validate_null_list_of_answers() {
+        final QuizResponse quizResponse = new QuizResponse();
+        quizResponse.setAnswers(null);
+        HttpEntity<QuizResponse> entity = new HttpEntity<>(quizResponse);
+        final ResponseEntity<QuizResult> response = restTemplate.exchange("/api/quizzes/54", HttpMethod.PUT, entity, QuizResult.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void answerQuiz_should_not_validate_null_element_in_list_of_answers() {
+        final QuizResponse quizResponse = new QuizResponse();
+        quizResponse.setAnswers(Arrays.asList(null, "", null));
+        HttpEntity<QuizResponse> entity = new HttpEntity<>(quizResponse);
+        final ResponseEntity<QuizResult> response = restTemplate.exchange("/api/quizzes/54", HttpMethod.PUT, entity, QuizResult.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 

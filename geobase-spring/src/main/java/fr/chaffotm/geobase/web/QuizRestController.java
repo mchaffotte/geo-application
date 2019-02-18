@@ -38,7 +38,7 @@ public class QuizRestController {
     }
 
     @PutMapping(value = "{id}")
-    public QuizResult answer(@PathVariable("id") final long id, @RequestBody final QuizResponse response) {
+    public QuizResult answer(@PathVariable("id") final long id, @RequestBody @Valid final QuizResponse response) {
         return quizService.answer(id, response);
     }
 

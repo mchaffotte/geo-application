@@ -147,6 +147,7 @@ public class QuizEndpointIT {
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
 
         final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(null);
+
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.UNSUPPORTED_MEDIA_TYPE);
     }
 
@@ -156,6 +157,7 @@ public class QuizEndpointIT {
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
 
         final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(null));
+
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
     }
 
@@ -165,6 +167,32 @@ public class QuizEndpointIT {
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
 
         final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(""));
+
+        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
+    }
+
+
+    @Test
+    public void answerQuiz_should_not_validate_null_list_of_answers() {
+        final QuizResponse quizResponse = new QuizResponse();
+        quizResponse.setAnswers(null);
+        final Client client = ClientBuilder.newClient();
+        WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+
+        final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(quizResponse));
+
+        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
+    }
+
+    @Test
+    public void answerQuiz_should_not_validate_null_element_in_list_of_answers() {
+        final QuizResponse quizResponse = new QuizResponse();
+        quizResponse.setAnswers(Arrays.asList("", null));
+        final Client client = ClientBuilder.newClient();
+        WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+
+        final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(quizResponse));
+
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
     }
 

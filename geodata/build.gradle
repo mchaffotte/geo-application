@@ -1,6 +1,6 @@
 dependencies {
     compileOnly 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
-    compileOnly 'javax.validation:validation-api:1.1.0.Final'
+    compileOnly 'javax.validation:validation-api:2.0.1.Final'
 
     integTestImplementation 'org.hibernate:hibernate-entitymanager:5.2.12.Final'
 }

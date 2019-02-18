@@ -5,6 +5,7 @@ import fr.chaffotm.geobase.domain.QuizEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.UUID;
@@ -24,7 +25,11 @@ public class QuizRepository {
     }
 
     public QuizEntity get(final long id) {
-        return em.find(QuizEntity.class, id);
+        final QuizEntity quiz = em.find(QuizEntity.class, id);
+        if (quiz == null) {
+            throw new EntityNotFoundException("Quiz not found with id" + id);
+        }
+        return quiz;
     }
 
     public ImageEntity getQuestionImage(final UUID imageUuid) {
