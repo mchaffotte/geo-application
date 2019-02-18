@@ -19,7 +19,7 @@ export class CountryService {
     if (sort) {
       params = params.append('sort', sort);
     }
-    return this.http.get<Page<Country>>('api/countries', { params: params });
+    return this.http.get<Page<Country>>('api/countries', { params });
   }
 
 }

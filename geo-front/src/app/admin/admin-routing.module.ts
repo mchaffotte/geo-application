@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { Country } from '../shared/country/country';
 import { CountriesComponent } from './countries/countries.component';
 import { QuizzesComponent } from './quizzes/quizzes.component';
 

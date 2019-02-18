@@ -31,7 +31,7 @@ export class QuizConfigurationComponent implements OnInit {
   constructor(private quizService: QuizService, private quizTypeService: QuizTypeService, private translate: TranslateService) {
     this.choice = { answer: true, multipleChoice: true};
 
-    this.configuration = new QuizConfiguration;
+    this.configuration = new QuizConfiguration();
     this.configuration.responseType = ResponseType.MULTIPLE_CHOICE;
   }
 

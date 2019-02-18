@@ -11,7 +11,7 @@ import { QuizService } from '../../../shared/quiz/quiz.service';
 })
 export class QuizGameComponent implements OnInit {
 
-  private _quiz: Quiz;
+  private innerQuiz: Quiz;
 
   private response: QuizResponse;
 
@@ -35,10 +35,10 @@ export class QuizGameComponent implements OnInit {
   @Input()
   set quiz(quiz: Quiz) {
     if (quiz) {
-      this._quiz = quiz;
+      this.innerQuiz = quiz;
       this.index = -1;
       this.changeQuestion();
-      this.response = new QuizResponse;
+      this.response = new QuizResponse();
       this.result = null;
       if (this.question.suggestions.length === 0) {
         setTimeout(() => this.answerRef.nativeElement.focus(), 5);
@@ -47,17 +47,21 @@ export class QuizGameComponent implements OnInit {
   }
 
   answer() {
-    this.selectAnswer(this.quizGameForm.get('answer').value);
+    let value = this.quizGameForm.get('answer').value;
+    if (value == null) {
+      value = '';
+    }
+    this.selectAnswer(value);
     this.answerRef.nativeElement.focus();
     this.quizGameForm.reset();
   }
 
   selectAnswer(answer: string) {
     this.response.answers.push(answer);
-    if (this.index + 1 < this._quiz.questions.length) {
+    if (this.index + 1 < this.innerQuiz.questions.length) {
       this.changeQuestion();
     } else {
-      this.quizService.answer(this._quiz.id, this.response).subscribe(res => {
+      this.quizService.answer(this.innerQuiz.id, this.response).subscribe(res => {
         this.question = null;
         this.result = res;
       });
@@ -66,7 +70,7 @@ export class QuizGameComponent implements OnInit {
 
   private changeQuestion() {
     this.index++;
-    this.question = this._quiz.questions[this.index];
+    this.question = this.innerQuiz.questions[this.index];
   }
 
   getImageURL(imagePath: string): string {

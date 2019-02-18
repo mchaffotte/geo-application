@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable ,  BehaviorSubject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'geo-secured-image',
