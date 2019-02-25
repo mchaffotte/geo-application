@@ -1,56 +1,49 @@
 package fr.chaffotm.geobase.web.rest;
 
 import fr.chaffotm.geobase.web.rest.domain.Todo;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 
-@Path("exceptions")
-public class ExceptionEndpoint implements ResourceEndpoint {
+@RestController
+@RequestMapping(
+        value = "/api/exceptions"
+)
+public class ExceptionRestController {
 
-    @GET
-    @Path("exception")
+    @GetMapping("exception")
     public void getException() throws Exception {
         throw new Exception();
     }
 
-    @GET
-    @Path("runtime-exception")
+    @GetMapping("runtime-exception")
     public void RuntimeException() {
         throw new RuntimeException("It does not work");
     }
 
-    @GET
-    @Path("illegal-argument-exception")
+    @GetMapping("illegal-argument-exception")
     public void getIllegalArgumentException() {
         throw new IllegalArgumentException("wrong argument");
     }
 
-    @GET
-    @Path("entity-exists-exception")
+    @GetMapping("entity-exists-exception")
     public void getEntityExistsException() {
         throw new EntityExistsException("resource with id 5 does not exist");
     }
 
-    @GET
-    @Path("entity-not-found-exception")
+    @GetMapping("entity-not-found-exception")
     public void getEntityNotFoundException() {
         throw new EntityNotFoundException();
     }
 
-    @POST
-    @Path("todos")
-    public void createTodo(@Valid final Todo todo) {
+    @PostMapping("todos")
+    public void createTodo(@RequestBody @Valid final Todo todo) {
     }
 
-    @GET
-    @Path("todos/{id}")
-    public Todo getTodo(@PathParam("id") final long id) {
+    @GetMapping("todos/{id}")
+    public Todo getTodo(@PathVariable("id") final long id) {
         return new Todo();
     }
 

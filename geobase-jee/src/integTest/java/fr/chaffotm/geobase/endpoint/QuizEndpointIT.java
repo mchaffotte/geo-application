@@ -1,6 +1,8 @@
-package fr.chaffotm.geobase;
+package fr.chaffotm.geobase.endpoint;
 
+import fr.chaffotm.geobase.assertion.ResponseAssert;
 import fr.chaffotm.geobase.web.domain.*;
+import fr.chaffotm.geobase.web.exception.BadRequestBody;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -16,11 +18,11 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
-
 import java.net.URI;
 import java.util.Arrays;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
+import static javax.ws.rs.core.Response.Status.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
@@ -106,71 +108,90 @@ public class QuizEndpointIT {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setResponseType(ResponseType.ANSWER);
         configuration.setQuestionType(QuestionType.WATER_AREA);
-
         final Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("Quiz supports only multiple choice");
+
         Response response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(configuration));
 
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
-        assertThat(response.readEntity(String.class)).isEmpty();
+        ResponseAssert.assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasBody(errorBody);
     }
 
     private void assertThatQuizIsCreatedAndAnswerWithEmptySolution(final QuizConfiguration configuration) {
         final Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+
         Response response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(configuration));
 
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CREATED);
-        final String location = response.getHeaderString("location");
+        ResponseAssert.assertThat(response)
+                .hasStatus(CREATED)
+                .hasNoBody();
 
+        final String location = response.getHeaderString("location");
         final Response response1 = client.target(location).request(APPLICATION_JSON_TYPE).get();
-        assertThat(response1.getStatusInfo()).isEqualTo(Response.Status.OK);
+        ResponseAssert.assertThat(response1).hasStatus(OK);
         final Quiz quiz = response1.readEntity(Quiz.class);
         assertThat(quiz).isNotNull();
         assertThat(quiz.getQuestions()).hasSize(10);
 
         final QuizResponse quizResponse = new QuizResponse();
         quizResponse.setAnswers(Arrays.asList("", "", "", "", "", "", "", "", "", ""));
-        final Response response2 = webTarget.path(String.valueOf(quiz.getId())).request(APPLICATION_JSON_TYPE).put(Entity.json(quizResponse));
-        assertThat(response2.getStatusInfo()).isEqualTo(Response.Status.OK);
-
         final QuizResult expected = new QuizResult();
         expected.setNbOfCorrectAnswers(0);
         expected.setNbOfQuestions(10);
-        final QuizResult result = response2.readEntity(QuizResult.class);
-        assertThat(result).isEqualTo(expected);
+
+        final Response response2 = webTarget.path(String.valueOf(quiz.getId())).request(APPLICATION_JSON_TYPE).put(Entity.json(quizResponse));
+
+        ResponseAssert.assertThat(response2)
+                .hasStatus(OK)
+                .withBody(QuizResult.class)
+                .isEqualTo(expected);
     }
 
     @Test
     public void answerQuiz_should_not_recognize_null_body() {
         final Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("<list element> must not be null");
 
         final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(null);
 
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.UNSUPPORTED_MEDIA_TYPE);
+        ResponseAssert.assertThat(response)
+                .hasStatus(UNSUPPORTED_MEDIA_TYPE)
+                .hasNoBody();
     }
 
     @Test
     public void answerQuiz_should_not_validate_null_body() {
         final Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("arg1 must not be null");
 
         final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(null));
 
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
+        ResponseAssert.assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasBody(errorBody);
     }
 
     @Test
     public void answerQuiz_should_not_validate_empty_body() {
         final Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("arg1 must not be null");
 
         final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(""));
 
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
+        ResponseAssert.assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasBody(errorBody);
     }
-
 
     @Test
     public void answerQuiz_should_not_validate_null_list_of_answers() {
@@ -178,22 +199,30 @@ public class QuizEndpointIT {
         quizResponse.setAnswers(null);
         final Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("answers must not be null");
 
         final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(quizResponse));
 
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
+        ResponseAssert.assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasBody(errorBody);
     }
 
     @Test
     public void answerQuiz_should_not_validate_null_element_in_list_of_answers() {
         final QuizResponse quizResponse = new QuizResponse();
-        quizResponse.setAnswers(Arrays.asList("", null));
+        quizResponse.setAnswers(Arrays.asList(null, "", null));
         final Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("<list element> must not be null");
 
         final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(quizResponse));
 
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
+        ResponseAssert.assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasBody(errorBody);
     }
 
 }

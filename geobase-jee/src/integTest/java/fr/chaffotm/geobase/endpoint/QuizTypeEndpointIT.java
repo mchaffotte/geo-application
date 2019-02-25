@@ -1,4 +1,4 @@
-package fr.chaffotm.geobase;
+package fr.chaffotm.geobase.endpoint;
 
 import fr.chaffotm.geobase.web.domain.QuestionType;
 import fr.chaffotm.geobase.web.domain.QuizType;
@@ -16,14 +16,13 @@ import org.wildfly.swarm.jaxrs.JAXRSArchive;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.Arrays;
-import java.util.List;
 
+import static fr.chaffotm.geobase.assertion.ResponseAssert.assertThat;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
-import static org.assertj.core.api.Assertions.assertThat;
+import static javax.ws.rs.core.Response.Status.OK;
 
 @RunWith(Arquillian.class)
 @RunAsClient
@@ -57,10 +56,9 @@ public class QuizTypeEndpointIT {
         WebTarget webTarget = client.target(baseURL).path("api/quiz-types");
         Response response = webTarget.request(APPLICATION_JSON_TYPE).get();
 
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
-
-        List<QuizType> quizTypes = response.readEntity(new GenericType<List<QuizType>>() {});
-        assertThat(quizTypes)
+        assertThat(response)
+                .hasStatus(OK)
+                .withBodyList(QuizType.class)
                 .containsExactlyInAnyOrder(
                         build(QuestionType.CAPITAL, ResponseType.ANSWER, ResponseType.MULTIPLE_CHOICE),
                         build(QuestionType.TOTAL_AREA, ResponseType.MULTIPLE_CHOICE),

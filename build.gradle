@@ -58,7 +58,7 @@ subprojects {
         useJUnitPlatform()
         exclude '**/*Tests.class'
         beforeTest { descriptor ->
-            logger.lifecycle("Running:" + descriptor)
+            logger.lifecycle("Running " + descriptor)
         }
     }
     test.outputs.upToDateWhen { false }
@@ -67,7 +67,7 @@ subprojects {
         useJUnitPlatform()
         exclude '**/*Tests.class'
         beforeTest { descriptor ->
-            logger.lifecycle("Running:" + descriptor)
+            logger.lifecycle("Running " + descriptor)
         }
     }
     integrationTest.outputs.upToDateWhen { false }

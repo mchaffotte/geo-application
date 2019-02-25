@@ -14,9 +14,11 @@ public class LoggingInterceptor implements ClientHttpRequestInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingInterceptor.class);
 
     @Override
-    public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+    public ClientHttpResponse intercept(final HttpRequest request, final byte[] body,
+                                        final ClientHttpRequestExecution execution) throws IOException {
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("{} {} ##### {}", request.getMethod(), request.getURI(), new String(body));
+            LOGGER.info("{} {} #PAYLOAD# {} |HEADERS| {}", request.getMethod(), request.getURI(),
+                    new String(body), request.getHeaders());
         }
         return execution.execute(request, body);
     }

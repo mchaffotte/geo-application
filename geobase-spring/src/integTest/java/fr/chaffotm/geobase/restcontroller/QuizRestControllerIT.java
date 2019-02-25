@@ -1,5 +1,7 @@
-package fr.chaffotm.geobase;
+package fr.chaffotm.geobase.restcontroller;
 
+import fr.chaffotm.geobase.assertion.ResponseEntityAssert;
+import fr.chaffotm.geobase.configuration.BadRequestBody;
 import fr.chaffotm.geobase.interceptor.JsonInterceptor;
 import fr.chaffotm.geobase.interceptor.LoggingInterceptor;
 import fr.chaffotm.geobase.web.domain.*;
@@ -11,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -19,6 +20,7 @@ import java.net.URI;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.http.HttpStatus.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -97,72 +99,107 @@ public class QuizRestControllerIT {
         configuration.setResponseType(ResponseType.ANSWER);
         configuration.setQuestionType(QuestionType.WATER_AREA);
 
-        final ResponseEntity<String> response = restTemplate.postForEntity("/api/quizzes", configuration, String.class);
+        final ResponseEntity<Void> response = restTemplate.postForEntity("/api/quizzes", configuration, Void.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(response.getBody()).isNull();
+        ResponseEntityAssert.assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasNoBody();
     }
 
     private void assertThatQuizIsCreatedAndAnswerWithEmptySolution(QuizConfiguration configuration) {
         final ResponseEntity<String> response = restTemplate.postForEntity("/api/quizzes", configuration, String.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        ResponseEntityAssert.assertThat(response)
+                .hasStatus(CREATED)
+                .hasNoBody();
         final URI location = response.getHeaders().getLocation();
 
         final ResponseEntity<Quiz> response1 = restTemplate.getForEntity(location, Quiz.class);
-        assertThat(response1.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response1.getStatusCode()).isEqualTo(OK);
         final Quiz quiz = response1.getBody();
         assertThat(quiz).isNotNull();
         assertThat(quiz.getQuestions()).hasSize(10);
 
         final QuizResponse quizResponse = new QuizResponse();
         quizResponse.setAnswers(Arrays.asList("", "", "", "", "", "", "", "", "", ""));
-        final ResponseEntity<QuizResult> response2 = restTemplate.exchange("/api/quizzes/" + quiz.getId(), HttpMethod.PUT, new HttpEntity<>(quizResponse), QuizResult.class);
-        assertThat(response2.getStatusCode()).isEqualTo(HttpStatus.OK);
-
         final QuizResult expected = new QuizResult();
         expected.setNbOfCorrectAnswers(0);
         expected.setNbOfQuestions(10);
-        final QuizResult result = response2.getBody();
-        assertThat(result).isEqualTo(expected);
+
+        final ResponseEntity<QuizResult> response2 = restTemplate.exchange("/api/quizzes/" + quiz.getId(), HttpMethod.PUT, new HttpEntity<>(quizResponse), QuizResult.class);
+
+        ResponseEntityAssert.assertThat(response2)
+                .hasStatus(OK)
+                .hasBody(expected);
     }
 
     @Test
     public void answerQuiz_should_not_recognize_null_body() {
-        final ResponseEntity<QuizResult> response = restTemplate.exchange("/api/quizzes/45", HttpMethod.PUT, null, QuizResult.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("Required request body is missing");
+
+        final ResponseEntity<BadRequestBody> response = restTemplate.exchange("/api/quizzes/45", HttpMethod.PUT, null, BadRequestBody.class);
+
+        ResponseEntityAssert.assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasBody(errorBody);
     }
 
     @Test
     public void answerQuiz_should_not_validate_null_body() {
-        HttpEntity<QuizResponse> entity = new HttpEntity<>((QuizResponse) null);
-        final ResponseEntity<QuizResult> response = restTemplate.exchange("/api/quizzes/54", HttpMethod.PUT, entity, QuizResult.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        final HttpEntity<QuizResponse> entity = new HttpEntity<>((QuizResponse) null);
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("Required request body is missing");
+
+        final ResponseEntity<BadRequestBody> response = restTemplate.exchange("/api/quizzes/54", HttpMethod.PUT, entity, BadRequestBody.class);
+
+        ResponseEntityAssert.assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasBody(errorBody);
     }
 
     @Test
     public void answerQuiz_should_not_validate_empty_body() {
-        HttpEntity<String> entity = new HttpEntity<>("");
-        final ResponseEntity<QuizResult> response = restTemplate.exchange("/api/quizzes/78", HttpMethod.PUT, entity, QuizResult.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        final HttpEntity<String> entity = new HttpEntity<>("");
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("Required request body is missing");
+
+        final ResponseEntity<BadRequestBody> response = restTemplate.exchange("/api/quizzes/78", HttpMethod.PUT, entity, BadRequestBody.class);
+
+        ResponseEntityAssert.assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasBody(errorBody);
     }
 
     @Test
     public void answerQuiz_should_not_validate_null_list_of_answers() {
         final QuizResponse quizResponse = new QuizResponse();
         quizResponse.setAnswers(null);
-        HttpEntity<QuizResponse> entity = new HttpEntity<>(quizResponse);
-        final ResponseEntity<QuizResult> response = restTemplate.exchange("/api/quizzes/54", HttpMethod.PUT, entity, QuizResult.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        final HttpEntity<QuizResponse> entity = new HttpEntity<>(quizResponse);
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("answers must not be null");
+
+        final ResponseEntity<BadRequestBody> response = restTemplate.exchange("/api/quizzes/54", HttpMethod.PUT, entity, BadRequestBody.class);
+
+        ResponseEntityAssert.assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasBody(errorBody);
     }
 
     @Test
     public void answerQuiz_should_not_validate_null_element_in_list_of_answers() {
         final QuizResponse quizResponse = new QuizResponse();
         quizResponse.setAnswers(Arrays.asList(null, "", null));
-        HttpEntity<QuizResponse> entity = new HttpEntity<>(quizResponse);
-        final ResponseEntity<QuizResult> response = restTemplate.exchange("/api/quizzes/54", HttpMethod.PUT, entity, QuizResult.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        final HttpEntity<QuizResponse> entity = new HttpEntity<>(quizResponse);
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("answers[0] must not be null");
+        errorBody.addMessage("answers[2] must not be null");
+
+        final ResponseEntity<BadRequestBody> response = restTemplate.exchange("/api/quizzes/54", HttpMethod.PUT, entity, BadRequestBody.class);
+
+        ResponseEntityAssert.assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasBody(errorBody);
     }
 
 }

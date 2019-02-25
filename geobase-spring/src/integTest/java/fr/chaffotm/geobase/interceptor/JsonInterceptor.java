@@ -13,7 +13,8 @@ import java.util.Collections;
 public class JsonInterceptor implements ClientHttpRequestInterceptor {
 
     @Override
-    public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+    public ClientHttpResponse intercept(final HttpRequest request, final byte[] body,
+                                        final ClientHttpRequestExecution execution) throws IOException {
         final HttpHeaders headers = request.getHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));

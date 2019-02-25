@@ -1,5 +1,6 @@
-package fr.chaffotm.geobase;
+package fr.chaffotm.geobase.endpoint;
 
+import fr.chaffotm.geobase.assertion.ResponseAssert;
 import fr.chaffotm.geobase.web.domain.Area;
 import fr.chaffotm.geobase.web.domain.City;
 import fr.chaffotm.geobase.web.domain.Country;
@@ -18,11 +19,11 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
+import static javax.ws.rs.core.Response.Status.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
@@ -49,14 +50,13 @@ public class CountryEndpointIT {
     public void crud_Country() {
         final Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(baseURL).path("api/countries");
+        Frame<Country> countries = new Frame<>();
 
-        Response response = webTarget.request(APPLICATION_JSON_TYPE)
-                .get();
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
-        Frame<Country> frame = response.readEntity(new GenericType<Frame<Country>>() {});
-        assertThat(frame.getTotal()).isEqualTo(0);
-        assertThat(frame.getResources()).isEmpty();
-
+        Response response = webTarget.request(APPLICATION_JSON_TYPE).get();
+        ResponseAssert.assertThat(response)
+                .hasStatus(OK)
+                .withBodyFrame(Country.class)
+                .isEqualTo(countries);
 
         final Area area = new Area();
         area.setLand(45.0);
@@ -69,27 +69,33 @@ public class CountryEndpointIT {
         city.setName("Paris");
         france.setCapital(city);
         response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(france));
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CREATED);
+        ResponseAssert.assertThat(response)
+                .hasStatus(CREATED)
+                .hasNoBody();
+
         final String location = response.getHeaderString("Location");
         assertThat(location).startsWith(baseURL + "api/countries/");
         String id = location.substring(location.lastIndexOf('/') + 1);
         france.setId(Long.valueOf(id));
 
         response = webTarget.path(id).request(APPLICATION_JSON_TYPE).get();
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
+        assertThat(response.getStatusInfo()).isEqualTo(OK);
         final Country fr = response.readEntity(Country.class);
         assertThat(fr).isEqualTo(france);
 
         fr.getArea().setWater(15);
         response = webTarget.path(id).request(APPLICATION_JSON_TYPE).put(Entity.json(fr));
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
+        assertThat(response.getStatusInfo()).isEqualTo(OK);
         final Country fre = response.readEntity(Country.class);
         assertThat(fre.getArea().getTotal()).isEqualTo(60);
 
         response = webTarget.path(id).request(APPLICATION_JSON_TYPE).delete();
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.NO_CONTENT);
+        ResponseAssert.assertThat(response)
+                .hasStatus(NO_CONTENT);
         response = webTarget.path(id).request(APPLICATION_JSON_TYPE).delete();
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.NOT_FOUND);
+        ResponseAssert.assertThat(response)
+                .hasStatus(NOT_FOUND)
+                .hasNoBody();
     }
 
 }
