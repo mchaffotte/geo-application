@@ -16,7 +16,7 @@ public class CapitalQuestionDescriptor extends QueryCriteriaQuestionDescriptor {
 
     @Override
     public String getQuestion(final CountryEntity country) {
-        return "What is the capital name of " + country.getName() + "?";
+        return "What is the capital of " + country.getName() + "?";
     }
 
     @Override

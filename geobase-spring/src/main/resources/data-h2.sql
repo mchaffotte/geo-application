@@ -83,7 +83,7 @@ INSERT INTO city (id, name) VALUES (28, 'Podgorica');
 INSERT INTO country (id, code, name, land_area, water_area, capital_id) VALUES (28, 'ME', 'Montenegro', 1345200, 36000, 28);
 
 INSERT INTO city (id, name) VALUES (29, 'Amsterdam');
-INSERT INTO country (id, code, name, land_area, water_area, capital_id) VALUES (29, 'NL', 'Netherlands', 3389300, 765000, 29);
+INSERT INTO country (id, code, name, land_area, water_area, capital_id) VALUES (29, 'NL', 'The Netherlands', 3389300, 765000, 29);
 
 INSERT INTO city (id, name) VALUES (30, 'Oslo');
 INSERT INTO country (id, code, name, land_area, water_area, capital_id) VALUES (30, 'NO', 'Norway', 30428200, 1952000, 30);
