@@ -47,27 +47,24 @@ public class ExceptionEndpointIT {
     public void if_an_exception_occurs_an_internal_server_error_is_returned() {
         final Client client = ClientBuilder.newClient();
         final WebTarget webTarget = client.target(baseURL).path("api/exceptions/exception");
-        final ErrorBody errorBody = new ErrorBody();
 
         final Response response = webTarget.request(APPLICATION_JSON_TYPE).get();
 
         assertThat(response)
                 .hasStatus(INTERNAL_SERVER_ERROR)
-                .hasBody(errorBody);
+                .hasNoBody();
     }
 
     @Test
     public void if_a_runtime_exception_occurs_an_internal_server_error_is_returned() {
         final Client client = ClientBuilder.newClient();
         final WebTarget webTarget = client.target(baseURL).path("api/exceptions/runtime-exception");
-        final ErrorBody errorBody = new ErrorBody();
-        errorBody.setMessage("It does not work");
 
         final Response response = webTarget.request(APPLICATION_JSON_TYPE).get();
 
         assertThat(response)
                 .hasStatus(INTERNAL_SERVER_ERROR)
-                .hasBody(errorBody);
+                .hasNoBody();
     }
 
     @Test

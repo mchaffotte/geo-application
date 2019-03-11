@@ -1,6 +1,5 @@
 package fr.chaffotm.geobase.restcontroller;
 
-import fr.chaffotm.geobase.assertion.ResponseEntityAssert;
 import fr.chaffotm.geobase.interceptor.JsonInterceptor;
 import fr.chaffotm.geobase.interceptor.LoggingInterceptor;
 import fr.chaffotm.geobase.web.Frame;
@@ -24,7 +23,6 @@ import java.net.URI;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.http.HttpStatus.OK;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

@@ -15,9 +15,7 @@ public class GlobalExceptionMapper implements ExceptionMapper<Exception> {
     @Override
     public Response toResponse(final Exception e) {
         LOGGER.error("exception occurs: ", e);
-        final ErrorBody body = new ErrorBody();
-        body.setMessage(e.getMessage());
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(body).build();
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
 }

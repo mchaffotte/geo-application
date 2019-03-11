@@ -5,7 +5,6 @@ import fr.chaffotm.geobase.configuration.ErrorBody;
 import fr.chaffotm.geobase.interceptor.JsonInterceptor;
 import fr.chaffotm.geobase.interceptor.LoggingInterceptor;
 import fr.chaffotm.geobase.web.rest.domain.Todo;
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,25 +43,20 @@ public class ExceptionRestControllerIT {
 
     @Test
     public void if_an_exception_occurs_an_internal_server_error_is_returned() {
-        final ErrorBody errorBody = new ErrorBody();
-
         final ResponseEntity<ErrorBody> response = restTemplate.getForEntity("/api/exceptions/exception", ErrorBody.class);
 
         assertThat(response)
                 .hasStatus(INTERNAL_SERVER_ERROR)
-                .hasBody(errorBody);
+                .hasNoBody();
     }
 
     @Test
     public void if_a_runtime_exception_occurs_an_internal_server_error_is_returned() {
-        final ErrorBody errorBody = new ErrorBody();
-        errorBody.setMessage("It does not work");
-
         final ResponseEntity<ErrorBody> response = restTemplate.getForEntity("/api/exceptions/runtime-exception", ErrorBody.class);
 
         assertThat(response)
                 .hasStatus(INTERNAL_SERVER_ERROR)
-                .hasBody(errorBody);
+                .hasNoBody();
     }
 
     @Test

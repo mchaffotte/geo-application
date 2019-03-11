@@ -23,40 +23,6 @@ public class ExceptionHandlingController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandlingController.class);
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity handleException(final HttpMessageNotReadableException ex) {
-        LOGGER.warn(ex.getMessage(), ex);
-        if (ex.getMessage().startsWith("Required request body is missing")
-                || MismatchedInputException.class.equals(ex.getCause())) {
-            final BadRequestBody entity = new BadRequestBody();
-            entity.addMessage("Required request body is missing");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(entity);
-        }
-        return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).build();
-    }
-
-    @ExceptionHandler(EntityExistsException.class)
-    public ResponseEntity<ErrorBody> handleException(final EntityExistsException ex) {
-        LOGGER.warn(ex.getMessage(), ex);
-        final ErrorBody entity = new ErrorBody();
-        entity.setMessage(ex.getMessage());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(entity);
-    }
-
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Void> handleException(final EntityNotFoundException ex) {
-        LOGGER.warn(ex.getMessage(), ex);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorBody> handleException(final Exception ex) {
-        LOGGER.error("exception occurs", ex);
-        final ErrorBody entity = new ErrorBody();
-        entity.setMessage(ex.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(entity);
-    }
-
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<BadRequestBody> handleException(IllegalArgumentException ex) {
         LOGGER.warn(ex.getMessage(), ex);
@@ -85,6 +51,38 @@ public class ExceptionHandlingController {
             entity.addMessage(builder.toString());
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(entity);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Void> handleException(final EntityNotFoundException ex) {
+        LOGGER.warn(ex.getMessage(), ex);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<ErrorBody> handleException(final EntityExistsException ex) {
+        LOGGER.warn(ex.getMessage(), ex);
+        final ErrorBody entity = new ErrorBody();
+        entity.setMessage(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(entity);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity handleException(final HttpMessageNotReadableException ex) {
+        LOGGER.warn(ex.getMessage(), ex);
+        if (ex.getMessage().startsWith("Required request body is missing")
+                || MismatchedInputException.class.equals(ex.getCause().getClass())) {
+            final BadRequestBody entity = new BadRequestBody();
+            entity.addMessage("Required request body is missing");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(entity);
+        }
+        return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).build();
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorBody> handleException(final Exception ex) {
+        LOGGER.error("exception occurs", ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
 }
