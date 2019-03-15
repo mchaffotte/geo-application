@@ -1,14 +1,14 @@
 package fr.chaffotm.geobase.service;
 
-import fr.chaffotm.geobase.domain.QuizEntity;
-import fr.chaffotm.geobase.mapper.QuizMapper;
+import fr.chaffotm.geoquiz.entity.QuizEntity;
+import fr.chaffotm.geoquiz.mapper.QuizMapper;
 import fr.chaffotm.geobase.repository.QuizMakerRepository;
 import fr.chaffotm.geobase.repository.QuizRepository;
-import fr.chaffotm.geobase.service.quiz.ColumnType;
-import fr.chaffotm.geobase.service.quiz.QuizResponseChecker;
-import fr.chaffotm.geobase.service.quiz.descriptor.QuestionDescriptor;
-import fr.chaffotm.geobase.service.quiz.descriptor.QuestionDescriptorService;
-import fr.chaffotm.geobase.web.domain.*;
+import fr.chaffotm.geoquiz.resource.*;
+import fr.chaffotm.geoquiz.service.ColumnType;
+import fr.chaffotm.geoquiz.service.QuizResponseChecker;
+import fr.chaffotm.geoquiz.service.descriptor.QuestionDescriptor;
+import fr.chaffotm.geoquiz.service.descriptor.QuestionDescriptorService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;

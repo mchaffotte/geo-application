@@ -1,7 +1,7 @@
 package fr.chaffotm.geobase.service;
 
 import fr.chaffotm.geobase.repository.QuizRepository;
-import fr.chaffotm.geobase.web.domain.QuizResponse;
+import fr.chaffotm.geoquiz.resource.QuizResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

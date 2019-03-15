@@ -2,10 +2,10 @@ package fr.chaffotm.geobase.restcontroller;
 
 import fr.chaffotm.geobase.interceptor.JsonInterceptor;
 import fr.chaffotm.geobase.interceptor.LoggingInterceptor;
-import fr.chaffotm.geobase.web.Frame;
-import fr.chaffotm.geobase.web.domain.Area;
-import fr.chaffotm.geobase.web.domain.City;
-import fr.chaffotm.geobase.web.domain.Country;
+import fr.chaffotm.geobase.web.resource.Frame;
+import fr.chaffotm.geodata.resource.Area;
+import fr.chaffotm.geodata.resource.City;
+import fr.chaffotm.geodata.resource.Country;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

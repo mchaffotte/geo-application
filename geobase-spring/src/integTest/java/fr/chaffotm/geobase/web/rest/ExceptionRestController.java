@@ -1,6 +1,6 @@
 package fr.chaffotm.geobase.web.rest;
 
-import fr.chaffotm.geobase.web.rest.domain.Todo;
+import fr.chaffotm.geobase.web.resource.Todo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;

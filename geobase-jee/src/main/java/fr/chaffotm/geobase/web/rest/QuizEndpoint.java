@@ -1,10 +1,10 @@
 package fr.chaffotm.geobase.web.rest;
 
 import fr.chaffotm.geobase.service.QuizService;
-import fr.chaffotm.geobase.web.domain.Quiz;
-import fr.chaffotm.geobase.web.domain.QuizConfiguration;
-import fr.chaffotm.geobase.web.domain.QuizResponse;
-import fr.chaffotm.geobase.web.domain.QuizResult;
+import fr.chaffotm.geoquiz.resource.Quiz;
+import fr.chaffotm.geoquiz.resource.QuizConfiguration;
+import fr.chaffotm.geoquiz.resource.QuizResponse;
+import fr.chaffotm.geoquiz.resource.QuizResult;
 
 import javax.inject.Inject;
 import javax.validation.Valid;

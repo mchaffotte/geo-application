@@ -1,10 +1,10 @@
 package fr.chaffotm.geobase.restcontroller;
 
 import fr.chaffotm.geobase.assertion.ResponseEntityAssert;
-import fr.chaffotm.geobase.configuration.BadRequestBody;
 import fr.chaffotm.geobase.interceptor.JsonInterceptor;
 import fr.chaffotm.geobase.interceptor.LoggingInterceptor;
-import fr.chaffotm.geobase.web.domain.*;
+import fr.chaffotm.geobase.web.exception.BadRequestBody;
+import fr.chaffotm.geoquiz.resource.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

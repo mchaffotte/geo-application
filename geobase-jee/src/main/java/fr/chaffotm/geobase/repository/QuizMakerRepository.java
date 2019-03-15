@@ -1,8 +1,9 @@
 package fr.chaffotm.geobase.repository;
 
-import fr.chaffotm.geobase.domain.QuizEntity;
-import fr.chaffotm.geobase.service.quiz.QuizMaker;
-import fr.chaffotm.geobase.web.domain.QuizConfiguration;
+import fr.chaffotm.geoquiz.entity.QuizEntity;
+import fr.chaffotm.geoquiz.service.QuizMaker;
+import fr.chaffotm.geoquiz.resource.QuizConfiguration;
+import fr.chaffotm.query.Repository;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;

@@ -1,13 +1,13 @@
 package fr.chaffotm.geobase.service;
 
-import fr.chaffotm.geobase.domain.CountryEntity;
-import fr.chaffotm.geobase.mapper.CountryMapper;
+import fr.chaffotm.geodata.entity.CountryEntity;
+import fr.chaffotm.geodata.mapper.CountryMapper;
 import fr.chaffotm.geobase.repository.CountryRepository;
-import fr.chaffotm.geobase.repository.QueryCriteria;
-import fr.chaffotm.geobase.repository.SortConverter;
-import fr.chaffotm.geobase.repository.criteria.Sort;
-import fr.chaffotm.geobase.web.Frame;
-import fr.chaffotm.geobase.web.domain.Country;
+import fr.chaffotm.query.QueryCriteria;
+import fr.chaffotm.query.SortConverter;
+import fr.chaffotm.query.criteria.Sort;
+import fr.chaffotm.geobase.web.resource.Frame;
+import fr.chaffotm.geodata.resource.Country;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

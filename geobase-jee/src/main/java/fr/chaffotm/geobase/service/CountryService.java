@@ -1,13 +1,13 @@
 package fr.chaffotm.geobase.service;
 
-import fr.chaffotm.geobase.domain.CountryEntity;
-import fr.chaffotm.geobase.mapper.CountryMapper;
+import fr.chaffotm.geodata.entity.CountryEntity;
+import fr.chaffotm.geodata.mapper.CountryMapper;
 import fr.chaffotm.geobase.repository.CountryRepository;
-import fr.chaffotm.geobase.repository.QueryCriteria;
-import fr.chaffotm.geobase.repository.criteria.Sort;
-import fr.chaffotm.geobase.repository.SortConverter;
-import fr.chaffotm.geobase.web.domain.Country;
-import fr.chaffotm.geobase.web.domain.Frame;
+import fr.chaffotm.query.QueryCriteria;
+import fr.chaffotm.query.criteria.Sort;
+import fr.chaffotm.query.SortConverter;
+import fr.chaffotm.geodata.resource.Country;
+import fr.chaffotm.geobase.web.resource.Frame;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;

@@ -1,6 +1,8 @@
 package fr.chaffotm.geobase.repository;
 
-import fr.chaffotm.geobase.domain.CountryEntity;
+import fr.chaffotm.geodata.entity.CountryEntity;
+import fr.chaffotm.query.QueryCriteria;
+import fr.chaffotm.query.Repository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;

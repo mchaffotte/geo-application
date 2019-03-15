@@ -1,7 +1,7 @@
 package fr.chaffotm.geobase.web.rest;
 
 import fr.chaffotm.geobase.service.QuizService;
-import fr.chaffotm.geobase.web.domain.QuizType;
+import fr.chaffotm.geoquiz.resource.QuizType;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;

@@ -1,10 +1,10 @@
 package fr.chaffotm.geobase.endpoint;
 
 import fr.chaffotm.geobase.assertion.ResponseAssert;
-import fr.chaffotm.geobase.web.domain.Area;
-import fr.chaffotm.geobase.web.domain.City;
-import fr.chaffotm.geobase.web.domain.Country;
-import fr.chaffotm.geobase.web.domain.Frame;
+import fr.chaffotm.geodata.resource.Area;
+import fr.chaffotm.geodata.resource.City;
+import fr.chaffotm.geodata.resource.Country;
+import fr.chaffotm.geobase.web.resource.Frame;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -33,8 +33,7 @@ public class CountryEndpointIT {
     @Deployment(testable = false)
     public static Archive createDeployment() {
         final JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
-        deployment.addPackages(true, "fr.chaffotm.geobase");
-        deployment.addPackages(true, "fr.chaffotm.measurement");
+        deployment.addPackages(true, "fr.chaffotm");
         deployment.addAsResource("META-INF/persistence-test.xml", "META-INF/persistence.xml");
         deployment.addAsResource("META-INF/sql/create.sql");
         deployment.addAsResource("META-INF/sql/data.sql");

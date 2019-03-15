@@ -1,8 +1,8 @@
 package fr.chaffotm.geobase.web.rest;
 
 import fr.chaffotm.geobase.service.CountryService;
-import fr.chaffotm.geobase.web.domain.Country;
-import fr.chaffotm.geobase.web.domain.Frame;
+import fr.chaffotm.geodata.resource.Country;
+import fr.chaffotm.geobase.web.resource.Frame;
 
 import javax.inject.Inject;
 import javax.validation.Valid;

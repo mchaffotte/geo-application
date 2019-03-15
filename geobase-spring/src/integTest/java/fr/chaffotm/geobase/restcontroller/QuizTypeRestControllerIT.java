@@ -2,9 +2,9 @@ package fr.chaffotm.geobase.restcontroller;
 
 import fr.chaffotm.geobase.interceptor.JsonInterceptor;
 import fr.chaffotm.geobase.interceptor.LoggingInterceptor;
-import fr.chaffotm.geobase.web.domain.QuestionType;
-import fr.chaffotm.geobase.web.domain.QuizType;
-import fr.chaffotm.geobase.web.domain.ResponseType;
+import fr.chaffotm.geoquiz.resource.QuestionType;
+import fr.chaffotm.geoquiz.resource.QuizType;
+import fr.chaffotm.geoquiz.resource.ResponseType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

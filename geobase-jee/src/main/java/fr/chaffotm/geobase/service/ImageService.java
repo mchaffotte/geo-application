@@ -1,8 +1,8 @@
 package fr.chaffotm.geobase.service;
 
-import fr.chaffotm.geobase.domain.ImageEntity;
+import fr.chaffotm.geoquiz.entity.ImageEntity;
 import fr.chaffotm.geobase.repository.QuizRepository;
-import fr.chaffotm.geobase.service.quiz.descriptor.ImageType;
+import fr.chaffotm.geoquiz.service.descriptor.ImageType;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;

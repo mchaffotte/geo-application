@@ -1,6 +1,6 @@
 package fr.chaffotm.geobase.assertion;
 
-import fr.chaffotm.geobase.web.domain.Frame;
+import fr.chaffotm.geobase.web.resource.Frame;
 import fr.chaffotm.geobase.web.exception.BadRequestBody;
 import fr.chaffotm.geobase.web.exception.ErrorBody;
 import org.assertj.core.api.AbstractAssert;

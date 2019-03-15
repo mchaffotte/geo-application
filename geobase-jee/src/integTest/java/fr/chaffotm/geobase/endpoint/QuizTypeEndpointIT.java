@@ -1,8 +1,8 @@
 package fr.chaffotm.geobase.endpoint;
 
-import fr.chaffotm.geobase.web.domain.QuestionType;
-import fr.chaffotm.geobase.web.domain.QuizType;
-import fr.chaffotm.geobase.web.domain.ResponseType;
+import fr.chaffotm.geoquiz.resource.QuestionType;
+import fr.chaffotm.geoquiz.resource.QuizType;
+import fr.chaffotm.geoquiz.resource.ResponseType;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -31,7 +31,7 @@ public class QuizTypeEndpointIT {
     @Deployment(testable = false)
     public static Archive createDeployment() {
         final JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
-        deployment.addPackages(true, "fr.chaffotm.geobase");
+        deployment.addPackages(true, "fr.chaffotm");
         deployment.addAsResource("META-INF/persistence.xml");
         deployment.addAsResource("META-INF/sql/create.sql");
         deployment.addAsResource("META-INF/sql/data.sql");

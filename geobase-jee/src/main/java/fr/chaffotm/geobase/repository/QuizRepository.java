@@ -1,7 +1,7 @@
 package fr.chaffotm.geobase.repository;
 
-import fr.chaffotm.geobase.domain.ImageEntity;
-import fr.chaffotm.geobase.domain.QuizEntity;
+import fr.chaffotm.geoquiz.entity.ImageEntity;
+import fr.chaffotm.geoquiz.entity.QuizEntity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;

@@ -1,10 +1,9 @@
 package fr.chaffotm.geobase.assertion;
 
-import fr.chaffotm.geobase.web.domain.Frame;
+import fr.chaffotm.geobase.web.resource.Frame;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
 
 public class FrameParameterizedType implements ParameterizedType {
 

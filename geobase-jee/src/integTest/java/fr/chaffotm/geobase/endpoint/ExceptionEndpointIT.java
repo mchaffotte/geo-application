@@ -32,7 +32,7 @@ public class ExceptionEndpointIT {
     @Deployment(testable = false)
     public static Archive createDeployment() {
         final JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
-        deployment.addPackages(true, "fr.chaffotm.geobase");
+        deployment.addPackages(true, "fr.chaffotm");
         deployment.addAsResource("META-INF/persistence-test.xml", "META-INF/persistence.xml");
         deployment.addAsResource("META-INF/sql/create.sql");
         deployment.addAsResource("META-INF/sql/drop.sql");
