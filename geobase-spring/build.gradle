@@ -18,10 +18,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 
     integTestImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'junit'
         exclude group: 'org.assertj'
         exclude group: 'org.mockito'
     }
-    integTestImplementation 'com.fasterxml.jackson.core:jackson-databind:2.9.5'
+    integTestImplementation 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
 
 }
