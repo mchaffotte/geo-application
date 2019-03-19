@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        thorntailVersion = '2.3.0.Final'
+        thorntailVersion = '2.4.0.Final'
     }
 
     repositories {
@@ -16,7 +16,7 @@ apply plugin: 'thorntail'
 apply plugin: 'war'
 
 ext {
-    resteasyVersion = '3.6.2.Final'
+    resteasyVersion = '3.6.3.Final'
 }
 
 repositories {
