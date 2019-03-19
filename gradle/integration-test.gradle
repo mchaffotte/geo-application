@@ -13,12 +13,12 @@ configurations {
 }
 
 task integrationTest(type: Test) {
-    description = 'Runs integration tests.'
-    group = 'verification'
+    description = 'Runs the integration tests.'
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
 
     testClassesDirs = sourceSets.integTest.output.classesDirs
     classpath = sourceSets.integTest.runtimeClasspath
-    shouldRunAfter test
+    mustRunAfter test
 }
 
 check.dependsOn integrationTest
