@@ -32,6 +32,7 @@ dependencies {
     implementation 'io.thorntail:jpa'
     implementation 'io.thorntail:microprofile'
     implementation 'org.slf4j:slf4j-simple:1.7.25'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.5'
 
     integTestImplementation ("io.thorntail:gradle-arquillian-adapter:$thorntailVersion") {
         exclude group: 'junit'

@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.wildfly.swarm.jaxrs.JAXRSArchive;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
@@ -108,7 +107,7 @@ public class QuizEndpointIT {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setResponseType(ResponseType.ANSWER);
         configuration.setQuestionType(QuestionType.WATER_AREA);
-        final Client client = ClientBuilder.newClient();
+        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("Quiz supports only multiple choice");
@@ -121,7 +120,7 @@ public class QuizEndpointIT {
     }
 
     private void assertThatQuizIsCreatedAndAnswerWithEmptySolution(final QuizConfiguration configuration) {
-        final Client client = ClientBuilder.newClient();
+        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
 
         Response response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(configuration));
@@ -153,7 +152,7 @@ public class QuizEndpointIT {
 
     @Test
     public void answerQuiz_should_not_recognize_null_body() {
-        final Client client = ClientBuilder.newClient();
+        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("<list element> must not be null");
@@ -167,7 +166,7 @@ public class QuizEndpointIT {
 
     @Test
     public void answerQuiz_should_not_validate_null_body() {
-        final Client client = ClientBuilder.newClient();
+        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("arg1 must not be null");
@@ -181,7 +180,7 @@ public class QuizEndpointIT {
 
     @Test
     public void answerQuiz_should_not_validate_empty_body() {
-        final Client client = ClientBuilder.newClient();
+        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("arg1 must not be null");
@@ -197,7 +196,7 @@ public class QuizEndpointIT {
     public void answerQuiz_should_not_validate_null_list_of_answers() {
         final QuizResponse quizResponse = new QuizResponse();
         quizResponse.setAnswers(null);
-        final Client client = ClientBuilder.newClient();
+        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("answers must not be null");
@@ -213,7 +212,7 @@ public class QuizEndpointIT {
     public void answerQuiz_should_not_validate_null_element_in_list_of_answers() {
         final QuizResponse quizResponse = new QuizResponse();
         quizResponse.setAnswers(Arrays.asList(null, "", null));
-        final Client client = ClientBuilder.newClient();
+        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("<list element> must not be null");

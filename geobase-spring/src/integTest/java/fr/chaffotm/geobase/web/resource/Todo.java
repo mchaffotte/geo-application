@@ -2,6 +2,7 @@ package fr.chaffotm.geobase.web.resource;
 
 import javax.validation.constraints.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @XmlRootElement
@@ -19,6 +20,9 @@ public class Todo {
     @Positive
     @Max(value = 10)
     private int priority;
+
+    @FutureOrPresent
+    private LocalDate startDate;
 
     public String getTitle() {
         return title;
@@ -52,6 +56,14 @@ public class Todo {
         this.priority = priority;
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,12 +72,13 @@ public class Todo {
         return priority == todo.priority &&
                 Objects.equals(title, todo.title) &&
                 Objects.equals(message, todo.message) &&
-                Objects.equals(email, todo.email);
+                Objects.equals(email, todo.email) &&
+                Objects.equals(startDate, todo.startDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, message, email, priority);
+        return Objects.hash(title, message, email, priority, startDate);
     }
 
     @Override
@@ -75,6 +88,7 @@ public class Todo {
                 ", message='" + message + '\'' +
                 ", email='" + email + '\'' +
                 ", priority=" + priority +
+                ", startDate=" + startDate +
                 '}';
     }
 

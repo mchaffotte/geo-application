@@ -1,10 +1,10 @@
 package fr.chaffotm.geobase.endpoint;
 
 import fr.chaffotm.geobase.assertion.ResponseAssert;
+import fr.chaffotm.geobase.web.resource.Frame;
 import fr.chaffotm.geodata.resource.Area;
 import fr.chaffotm.geodata.resource.City;
 import fr.chaffotm.geodata.resource.Country;
-import fr.chaffotm.geobase.web.resource.Frame;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -16,7 +16,6 @@ import org.junit.runner.RunWith;
 import org.wildfly.swarm.jaxrs.JAXRSArchive;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
@@ -47,7 +46,7 @@ public class CountryEndpointIT {
 
     @Test
     public void crud_Country() {
-        final Client client = ClientBuilder.newClient();
+        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/countries");
         Frame<Country> countries = new Frame<>();
 

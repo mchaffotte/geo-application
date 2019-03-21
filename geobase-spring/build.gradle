@@ -21,6 +21,4 @@ dependencies {
         exclude group: 'org.assertj'
         exclude group: 'org.mockito'
     }
-    integTestImplementation 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
-
 }

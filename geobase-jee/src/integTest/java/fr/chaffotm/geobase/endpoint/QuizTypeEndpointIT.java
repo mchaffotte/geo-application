@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.wildfly.swarm.jaxrs.JAXRSArchive;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import java.net.URI;
@@ -52,7 +51,7 @@ public class QuizTypeEndpointIT {
 
     @Test
     public void getQuizTypes_should_return_all_possible_types() {
-        final Client client = ClientBuilder.newClient();
+        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quiz-types");
         Response response = webTarget.request(APPLICATION_JSON_TYPE).get();
 

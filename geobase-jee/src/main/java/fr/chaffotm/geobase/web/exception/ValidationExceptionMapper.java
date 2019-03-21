@@ -17,8 +17,8 @@ public class ValidationExceptionMapper implements ExceptionMapper<ValidationExce
     public Response toResponse(final ValidationException e) {
         LOGGER.warn("ValidationException occurs: ", e);
         final BadRequestBody body = new BadRequestBody();
-       body.addMessage(e.getMessage());
-       return Response.status(Response.Status.BAD_REQUEST).entity(body).build();
-   }
+        body.addMessage(e.getMessage());
+        return Response.status(Response.Status.BAD_REQUEST).entity(body).build();
+    }
 
 }

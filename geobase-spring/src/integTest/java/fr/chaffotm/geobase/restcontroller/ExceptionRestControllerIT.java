@@ -17,6 +17,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -96,11 +97,13 @@ public class ExceptionRestControllerIT {
     public void if_a_constraint_validation_exception_occurs_a_bad_request_is_returned_with_explanation() {
         final Todo todo = new Todo();
         todo.setEmail("todo@");
+        todo.setStartDate(LocalDate.now().minusDays(2));
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("email must be a well-formed email address");
         errorBody.addMessage("Title cannot be null");
         errorBody.addMessage("message must not be blank");
         errorBody.addMessage("priority must be greater than 0");
+        errorBody.addMessage("startDate must be a date in the present or in the future");
 
         final ResponseEntity<BadRequestBody> response = restTemplate.postForEntity("/api/exceptions/todos", todo, BadRequestBody.class);
 

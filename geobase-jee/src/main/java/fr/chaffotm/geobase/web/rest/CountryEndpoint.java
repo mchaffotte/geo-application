@@ -7,6 +7,7 @@ import fr.chaffotm.geobase.web.resource.Frame;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -34,7 +35,7 @@ public class CountryEndpoint implements ResourceEndpoint {
     }
 
     @POST
-    public Response create(@Valid final Country country) {
+    public Response create(@Valid @NotNull final Country country) {
         final long countryId = countryService.create(country);
         return Response.created(UriBuilder.fromResource(CountryEndpoint.class)
                 .path(String.valueOf(countryId)).build())
