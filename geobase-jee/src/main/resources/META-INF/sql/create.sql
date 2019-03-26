@@ -6,13 +6,14 @@ ALTER TABLE country ADD CONSTRAINT uk_country_code UNIQUE(code);
 ALTER TABLE country ADD CONSTRAINT uk_capital_id UNIQUE(capital_id);
 ALTER TABLE country ADD CONSTRAINT fk_country_capital_id FOREIGN KEY(capital_id) REFERENCES city;
 
+CREATE SEQUENCE answer_sequence INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE question_sequence INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE quiz_sequence INCREMENT BY 1 START WITH 1;
-CREATE TABLE image (id BINARY NOT NULL, type VARCHAR(10), country_id BIGINT, PRIMARY KEY(id))
-CREATE TABLE question (id BIGINT NOT NULL, wording VARCHAR(255), answer VARCHAR(50), image_id BINARY, quiz_id BIGINT, PRIMARY KEY(id));
-CREATE TABLE suggestion (question_id BIGINT NOT NULL, suggestion VARCHAR(255));
-CREATE TABLE quiz (id BIGINT NOT NULL, PRIMARY KEY(id));
+CREATE TABLE image (id BINARY NOT NULL, type VARCHAR(10), country_id BIGINT, PRIMARY KEY(id));
+CREATE TABLE answer (id BIGINT NOT NULL, answer VARCHAR(255), correct BOOLEAN NOT NULL, question_id BIGINT, PRIMARY KEY(id));
+CREATE TABLE question (id BIGINT NOT NULL, wording VARCHAR(255), image_id BINARY, quiz_id BIGINT, PRIMARY KEY(id));
+CREATE TABLE quiz (id BIGINT NOT NULL, answer_type VARCHAR(2), PRIMARY KEY(id));
 ALTER TABLE image ADD CONSTRAINT fk_image_country FOREIGN KEY(country_id) REFERENCES country;
+ALTER TABLE answer ADD CONSTRAINT fk_answer_question FOREIGN KEY(question_id) REFERENCES question;
 ALTER TABLE question ADD CONSTRAINT fk_question_image FOREIGN KEY(image_id) REFERENCES image;
 ALTER TABLE question ADD CONSTRAINT fk_question_quiz FOREIGN KEY(quiz_id) REFERENCES quiz;
-ALTER TABLE suggestion ADD CONSTRAINT fk_suggestion_question FOREIGN KEY(question_id) REFERENCES question;

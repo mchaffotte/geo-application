@@ -1,9 +1,7 @@
 package fr.chaffotm.geoquiz.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity(name = "Question")
 @Table(name = "question")
@@ -25,16 +23,12 @@ public class QuestionEntity {
 
     private String wording;
 
-    private String answer;
-
-    @ElementCollection
-    @CollectionTable(
-            name = "suggestion",
-            joinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"),
-            foreignKey = @ForeignKey(name = "fk_suggestion_question")
+    @OneToMany(
+            mappedBy = "question",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    @Column(name = "suggestion")
-    private List<String> suggestions = new ArrayList<>();
+    private Set<AnswerEntity> answers = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -64,25 +58,18 @@ public class QuestionEntity {
         this.wording = wording;
     }
 
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public List<String> getSuggestions() {
-        return suggestions;
+    public Set<AnswerEntity> getAnswers() {
+        return answers;
     }
 
     // Used by JPA
-    protected void setSuggestions(List<String> suggestions) {
-        this.suggestions = suggestions;
+    protected  void setAnswers(Set<AnswerEntity> answers) {
+        this.answers = answers;
     }
 
-    public void addSuggestion(String suggestion) {
-        this.suggestions.add(suggestion);
+    public void addAnswer(final AnswerEntity answer) {
+        answers.add(answer);
+        answer.setQuestion(this);
     }
 
     @Override

@@ -2,13 +2,16 @@ package fr.chaffotm.geobase.endpoint;
 
 import fr.chaffotm.geobase.assertion.ResponseAssert;
 import fr.chaffotm.geobase.web.exception.BadRequestBody;
+import fr.chaffotm.geoquiz.builder.QuizAnswerBuilder;
 import fr.chaffotm.geoquiz.resource.*;
+import org.assertj.core.api.Condition;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.jaxrs.JAXRSArchive;
@@ -18,7 +21,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.util.Arrays;
+import java.util.function.Predicate;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 import static javax.ws.rs.core.Response.Status.*;
@@ -43,69 +46,92 @@ public class QuizEndpointIT {
     @ArquillianResource
     private URI baseURL;
 
+    private Condition<Question> withoutChoices;
+
+    private Condition<Question> fourChoices;
+
+    @Before
+    public void setUp() {
+        withoutChoices = new Condition<>(hasChoices(0), "Empty choices");
+        fourChoices = new Condition<>(hasChoices(4), "4 choices");
+    }
+
+    private Predicate<Question> hasChoices(final int numberOfChoices) {
+        return question -> question.getChoices().size() == numberOfChoices;
+    }
+
     @Test
     public void answerQuiz_should_check_user_answers() {
-        assertThatQuizIsCreatedAndAnswerWithEmptySolution(null);
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(null, fourChoices);
+    }
+
+    @Test
+    public void answerQuiz_should_generate_a_quiz_without_choices() {
+        final QuizConfiguration configuration = new QuizConfiguration();
+        configuration.setAnswerType(AnswerType.ANSWER);
+        configuration.setQuestionType(QuestionType.CAPITAL);
+
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, withoutChoices);
     }
 
     @Test
     public void answerQuiz_should_check_user_answers_using_capitals() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setResponseType(ResponseType.MULTIPLE_CHOICE);
+        configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.CAPITAL);
 
-        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
 
     @Test
     public void answerQuiz_should_check_user_answers_using_flags() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setResponseType(ResponseType.MULTIPLE_CHOICE);
+        configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.FLAG);
 
-        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
 
     @Test
     public void answerQuiz_should_check_user_answers_using_silhouettes() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setResponseType(ResponseType.MULTIPLE_CHOICE);
+        configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.SILHOUETTE);
 
-        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
 
     @Test
     public void answerQuiz_should_check_user_answers_using_land_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setResponseType(ResponseType.MULTIPLE_CHOICE);
+        configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.LAND_AREA);
 
-        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
 
     @Test
     public void answerQuiz_should_check_user_answers_using_water_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setResponseType(ResponseType.MULTIPLE_CHOICE);
+        configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.WATER_AREA);
 
-        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
 
     @Test
     public void answerQuiz_should_check_user_answers_using_total_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setResponseType(ResponseType.MULTIPLE_CHOICE);
+        configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.TOTAL_AREA);
 
-        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration);
+        assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
 
     @Test
     public void answerQuiz_should_not_generate_a_quiz_due_to_a_misconfiguration_with_using_water_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
-        configuration.setResponseType(ResponseType.ANSWER);
+        configuration.setAnswerType(AnswerType.ANSWER);
         configuration.setQuestionType(QuestionType.WATER_AREA);
         final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
@@ -119,7 +145,7 @@ public class QuizEndpointIT {
                 .hasBody(errorBody);
     }
 
-    private void assertThatQuizIsCreatedAndAnswerWithEmptySolution(final QuizConfiguration configuration) {
+    private void assertThatQuizIsCreatedAndAnswerWithEmptySolution(final QuizConfiguration configuration, final Condition<Question> condition) {
         final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
 
@@ -133,16 +159,27 @@ public class QuizEndpointIT {
         final Response response1 = client.target(location).request(APPLICATION_JSON_TYPE).get();
         ResponseAssert.assertThat(response1).hasStatus(OK);
         final Quiz quiz = response1.readEntity(Quiz.class);
-        assertThat(quiz).isNotNull();
-        assertThat(quiz.getQuestions()).hasSize(10);
+        assertThat(quiz.getQuestions())
+                .hasSize(10)
+                .are(condition);
 
-        final QuizResponse quizResponse = new QuizResponse();
-        quizResponse.setAnswers(Arrays.asList("", "", "", "", "", "", "", "", "", ""));
+        final QuizAnswer quizAnswer = new QuizAnswerBuilder()
+                .questionAnswer("")
+                .questionAnswer("")
+                .questionAnswer("")
+                .questionAnswer("")
+                .questionAnswer("")
+                .questionAnswer("")
+                .questionAnswer("")
+                .questionAnswer("")
+                .questionAnswer("")
+                .questionAnswer("")
+                .getQuizAnswer();
         final QuizResult expected = new QuizResult();
         expected.setNbOfCorrectAnswers(0);
         expected.setNbOfQuestions(10);
 
-        final Response response2 = webTarget.path(String.valueOf(quiz.getId())).request(APPLICATION_JSON_TYPE).put(Entity.json(quizResponse));
+        final Response response2 = webTarget.path(String.valueOf(quiz.getId())).request(APPLICATION_JSON_TYPE).put(Entity.json(quizAnswer));
 
         ResponseAssert.assertThat(response2)
                 .hasStatus(OK)
@@ -193,15 +230,34 @@ public class QuizEndpointIT {
     }
 
     @Test
-    public void answerQuiz_should_not_validate_null_list_of_answers() {
-        final QuizResponse quizResponse = new QuizResponse();
-        quizResponse.setAnswers(null);
+    public void answerQuiz_should_not_validate_null_list_of_question_answers() {
+        final QuizAnswer quizAnswer = new QuizAnswer();
+        quizAnswer.setQuestionAnswers(null);
         final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
-        errorBody.addMessage("answers must not be null");
+        errorBody.addMessage("questionAnswers must not be null");
 
-        final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(quizResponse));
+        final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(quizAnswer));
+
+        ResponseAssert.assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasBody(errorBody);
+    }
+
+    @Test
+    public void answerQuiz_should_not_validate_null_element_in_list_of_question_answers() {
+        final QuizAnswer quizAnswer = new QuizAnswerBuilder()
+                .questionAnswer(null)
+                .questionAnswer("")
+                .questionAnswer(null)
+                .getQuizAnswer();
+        final Client client = TestConfiguration.buildClient();
+        WebTarget webTarget = client.target(baseURL).path("api/quizzes");
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("<list element> must not be null");
+
+        final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(quizAnswer));
 
         ResponseAssert.assertThat(response)
                 .hasStatus(BAD_REQUEST)
@@ -210,14 +266,15 @@ public class QuizEndpointIT {
 
     @Test
     public void answerQuiz_should_not_validate_null_element_in_list_of_answers() {
-        final QuizResponse quizResponse = new QuizResponse();
-        quizResponse.setAnswers(Arrays.asList(null, "", null));
+        final QuizAnswer quizAnswer = new QuizAnswerBuilder()
+                .questionAnswer(null, "", null)
+                .getQuizAnswer();
         final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("<list element> must not be null");
 
-        final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(quizResponse));
+        final Response response = webTarget.path("45").request(APPLICATION_JSON_TYPE).put(Entity.json(quizAnswer));
 
         ResponseAssert.assertThat(response)
                 .hasStatus(BAD_REQUEST)

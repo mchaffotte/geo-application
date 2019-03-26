@@ -5,8 +5,8 @@
   <geo-secured-image *ngIf="question.imagePath" [src]="getImageURL(question.imagePath)" class="mx-auto my-2 d-block"></geo-secured-image>
   <div class="card-body">
     <h5 class="card-title">{{ question.wording }}</h5>
-    <button type="button" class="btn btn-lg btn-block btn-outline-primary" *ngFor="let suggestion of question.suggestions" (click)="selectAnswer(suggestion)">{{ suggestion }}</button>
-    <form [formGroup]="quizGameForm" (ngSubmit)="answer()" *ngIf="question.suggestions.length === 0">
+    <button type="button" class="btn btn-lg btn-block btn-outline-primary" *ngFor="let choice of question.choices" (click)="selectAnswer(choice)">{{ choice }}</button>
+    <form [formGroup]="quizGameForm" (ngSubmit)="answer()" *ngIf="question.choices.length === 0">
       <div class="form-group row">
         <input type="text" class="form-control mx-3" id="answer" name="answer" placeholder="{{ 'admin.quizzes.enter-answer' | translate }}"
           formControlName="answer" #question_answer>

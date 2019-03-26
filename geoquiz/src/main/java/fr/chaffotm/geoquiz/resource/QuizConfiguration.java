@@ -9,7 +9,7 @@ public class QuizConfiguration {
     private QuestionType questionType;
 
     @NotNull
-    private ResponseType responseType;
+    private AnswerType answerType;
 
     public QuestionType getQuestionType() {
         return questionType;
@@ -19,12 +19,12 @@ public class QuizConfiguration {
         this.questionType = questionType;
     }
 
-    public ResponseType getResponseType() {
-        return responseType;
+    public AnswerType getAnswerType() {
+        return answerType;
     }
 
-    public void setResponseType(ResponseType responseType) {
-        this.responseType = responseType;
+    public void setAnswerType(AnswerType answerType) {
+        this.answerType = answerType;
     }
 
     @Override
@@ -33,12 +33,12 @@ public class QuizConfiguration {
         if (o == null || getClass() != o.getClass()) return false;
         QuizConfiguration that = (QuizConfiguration) o;
         return questionType == that.questionType &&
-                responseType == that.responseType;
+                answerType == that.answerType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(questionType, responseType);
+        return Objects.hash(questionType, answerType);
     }
 
 }

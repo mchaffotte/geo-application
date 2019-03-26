@@ -1,19 +1,28 @@
 package fr.chaffotm.geoquiz.resource;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
-public class QuizResponse {
+public class QuestionAnswer {
 
     @NotNull
     private List<@NotNull String> answers;
+
+    public QuestionAnswer() {
+        answers = new ArrayList<>();
+    }
 
     public List<String> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<String> answers) {
+    protected void setAnswers(final List<String> answers) {
         this.answers = answers;
+    }
+
+    public void addAnswer(final String answer) {
+        answers.add(answer);
     }
 
 }

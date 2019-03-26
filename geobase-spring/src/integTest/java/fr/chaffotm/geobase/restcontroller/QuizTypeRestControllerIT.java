@@ -2,9 +2,9 @@ package fr.chaffotm.geobase.restcontroller;
 
 import fr.chaffotm.geobase.interceptor.JsonInterceptor;
 import fr.chaffotm.geobase.interceptor.LoggingInterceptor;
+import fr.chaffotm.geoquiz.resource.AnswerType;
 import fr.chaffotm.geoquiz.resource.QuestionType;
 import fr.chaffotm.geoquiz.resource.QuizType;
-import fr.chaffotm.geoquiz.resource.ResponseType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,10 +34,10 @@ public class QuizTypeRestControllerIT {
         restTemplate.getRestTemplate().setInterceptors(Arrays.asList(new LoggingInterceptor(), new JsonInterceptor()));
     }
 
-    private QuizType build(final QuestionType questionType, final ResponseType... responseTypes) {
+    private QuizType build(final QuestionType questionType, final AnswerType... answerTypes) {
         final QuizType type = new QuizType();
         type.setQuestionType(questionType);
-        type.setResponseTypes(Arrays.asList(responseTypes));
+        type.setAnswerTypes(Arrays.asList(answerTypes));
         return type;
     }
 
@@ -51,12 +51,12 @@ public class QuizTypeRestControllerIT {
         final List<QuizType> quizTypes = response.getBody();
         assertThat(quizTypes)
                 .containsExactlyInAnyOrder(
-                        build(QuestionType.CAPITAL, ResponseType.ANSWER, ResponseType.MULTIPLE_CHOICE),
-                        build(QuestionType.TOTAL_AREA, ResponseType.MULTIPLE_CHOICE),
-                        build(QuestionType.LAND_AREA, ResponseType.MULTIPLE_CHOICE),
-                        build(QuestionType.WATER_AREA, ResponseType.MULTIPLE_CHOICE),
-                        build(QuestionType.FLAG, ResponseType.ANSWER, ResponseType.MULTIPLE_CHOICE),
-                        build(QuestionType.SILHOUETTE, ResponseType.ANSWER, ResponseType.MULTIPLE_CHOICE)
+                        build(QuestionType.CAPITAL, AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE),
+                        build(QuestionType.TOTAL_AREA, AnswerType.MULTIPLE_CHOICE),
+                        build(QuestionType.LAND_AREA, AnswerType.MULTIPLE_CHOICE),
+                        build(QuestionType.WATER_AREA, AnswerType.MULTIPLE_CHOICE),
+                        build(QuestionType.FLAG, AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE),
+                        build(QuestionType.SILHOUETTE, AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE)
                 );
     }
 

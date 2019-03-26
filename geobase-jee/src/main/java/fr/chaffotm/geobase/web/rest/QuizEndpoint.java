@@ -3,7 +3,7 @@ package fr.chaffotm.geobase.web.rest;
 import fr.chaffotm.geobase.service.QuizService;
 import fr.chaffotm.geoquiz.resource.Quiz;
 import fr.chaffotm.geoquiz.resource.QuizConfiguration;
-import fr.chaffotm.geoquiz.resource.QuizResponse;
+import fr.chaffotm.geoquiz.resource.QuizAnswer;
 import fr.chaffotm.geoquiz.resource.QuizResult;
 
 import javax.inject.Inject;
@@ -47,8 +47,8 @@ public class QuizEndpoint implements ResourceEndpoint {
 
     @PUT
     @Path("{id}")
-    public QuizResult answer(@PathParam("id") final long id, @Valid @NotNull final QuizResponse response) {
-        return quizService.answer(id, response);
+    public QuizResult answer(@PathParam("id") final long id, @Valid @NotNull final QuizAnswer quizAnswer) {
+        return quizService.answer(id, quizAnswer);
     }
 
 }

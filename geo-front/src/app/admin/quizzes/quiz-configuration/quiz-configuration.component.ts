@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgOption } from '@ng-select/ng-select';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Quiz, QuizConfiguration, ResponseType, QuizType } from '../../../shared/quiz/quiz';
+import { Quiz, QuizConfiguration, AnswerType } from '../../../shared/quiz/quiz';
 import { QuizService } from '../../../shared/quiz/quiz.service';
 import { QuizTypeService } from 'src/app/shared/quiz/quiz-type.service';
 
@@ -26,13 +26,13 @@ export class QuizConfigurationComponent implements OnInit {
 
   configuration: QuizConfiguration;
 
-  ResponseType = ResponseType;
+  AnswerType = AnswerType;
 
   constructor(private quizService: QuizService, private quizTypeService: QuizTypeService, private translate: TranslateService) {
     this.choice = { answer: true, multipleChoice: true};
 
     this.configuration = new QuizConfiguration();
-    this.configuration.responseType = ResponseType.MULTIPLE_CHOICE;
+    this.configuration.answerType = AnswerType.MULTIPLE_CHOICE;
   }
 
   ngOnInit() {
@@ -45,7 +45,7 @@ export class QuizConfigurationComponent implements OnInit {
           index: i,
           label: this.translate.instant('model.question-type.' + type.questionType),
           questionType: type.questionType,
-          responseTypes: type.responseTypes
+          answerTypes: type.answerTypes
         });
         i++;
       });
@@ -57,18 +57,18 @@ export class QuizConfigurationComponent implements OnInit {
     });
   }
 
-  private contains(questionOption: NgOption, responseType: ResponseType): boolean {
-    const response = questionOption.responseTypes.find((type: ResponseType) => type === responseType);
+  private contains(questionOption: NgOption, answerType: AnswerType): boolean {
+    const response = questionOption.answerTypes.find((type: AnswerType) => type === answerType);
     return !!response;
   }
 
   updateQuestion(event: NgOption) {
     const questionOption = this.questionTypes.find(option => option.questionType === event.questionType);
-    this.choice.multipleChoice = this.contains(questionOption, ResponseType.MULTIPLE_CHOICE);
-    this.choice.answer = this.contains(questionOption, ResponseType.ANSWER);
+    this.choice.multipleChoice = this.contains(questionOption, AnswerType.MULTIPLE_CHOICE);
+    this.choice.answer = this.contains(questionOption, AnswerType.ANSWER);
 
-    if (this.configuration.responseType === ResponseType.ANSWER && !this.choice.answer) {
-      this.configuration.responseType = ResponseType.MULTIPLE_CHOICE;
+    if (this.configuration.answerType === AnswerType.ANSWER && !this.choice.answer) {
+      this.configuration.answerType = AnswerType.MULTIPLE_CHOICE;
     }
   }
 

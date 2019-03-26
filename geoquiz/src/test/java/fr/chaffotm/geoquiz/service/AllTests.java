@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         QuestionDescriptorServiceTest.class,
-        QuizResponseCheckerTest.class
+        QuizAnswerCheckerTest.class
 })
 public class AllTests {
 

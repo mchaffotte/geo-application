@@ -1,6 +1,6 @@
 package fr.chaffotm.geoquiz.resource;
 
-public enum ResponseType {
+public enum AnswerType {
 
     ANSWER, MULTIPLE_CHOICE
 

@@ -1,5 +1,7 @@
 package fr.chaffotm.geoquiz.entity;
 
+import fr.chaffotm.geoquiz.resource.AnswerType;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,9 @@ public class QuizEntity {
     )
     private List<QuestionEntity> questions = new ArrayList<>();
 
+    @Column(name = "answer_type", length = 2)
+    private AnswerType answerType;
+
     public Long getId() {
         return id;
     }
@@ -38,6 +43,14 @@ public class QuizEntity {
     public void addQuestion(final QuestionEntity question) {
         this.questions.add(question);
         question.setQuiz(this);
+    }
+
+    public AnswerType getAnswerType() {
+        return answerType;
+    }
+
+    public void setAnswerType(AnswerType answerType) {
+        this.answerType = answerType;
     }
 
     @Override

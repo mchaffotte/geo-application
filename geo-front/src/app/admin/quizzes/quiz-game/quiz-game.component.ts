@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { Question, Quiz, QuizResponse, QuizResult } from '../../../shared/quiz/quiz';
+import { Question, Quiz, QuizAnswer, QuizResult, QuestionAnswer } from '../../../shared/quiz/quiz';
 import { QuizService } from '../../../shared/quiz/quiz.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class QuizGameComponent implements OnInit {
 
   private innerQuiz: Quiz;
 
-  private response: QuizResponse;
+  private quizAnswer: QuizAnswer;
 
   index: number;
 
@@ -38,9 +38,9 @@ export class QuizGameComponent implements OnInit {
       this.innerQuiz = quiz;
       this.index = -1;
       this.changeQuestion();
-      this.response = new QuizResponse();
+      this.quizAnswer = new QuizAnswer();
       this.result = null;
-      if (this.question.suggestions.length === 0) {
+      if (this.question.choices.length === 0) {
         setTimeout(() => this.answerRef.nativeElement.focus(), 5);
       }
     }
@@ -57,11 +57,13 @@ export class QuizGameComponent implements OnInit {
   }
 
   selectAnswer(answer: string) {
-    this.response.answers.push(answer);
+    const questionAnswer = new QuestionAnswer();
+    questionAnswer.answers.push(answer);
+    this.quizAnswer.questionAnswers.push(questionAnswer);
     if (this.index + 1 < this.innerQuiz.questions.length) {
       this.changeQuestion();
     } else {
-      this.quizService.answer(this.innerQuiz.id, this.response).subscribe(res => {
+      this.quizService.answer(this.innerQuiz.id, this.quizAnswer).subscribe(res => {
         this.question = null;
         this.result = res;
       });

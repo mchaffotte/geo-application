@@ -7,7 +7,7 @@ public class QuizType {
 
     private QuestionType questionType;
 
-    private List<ResponseType> responseTypes;
+    private List<AnswerType> answerTypes;
 
     public QuestionType getQuestionType() {
         return questionType;
@@ -17,12 +17,12 @@ public class QuizType {
         this.questionType = questionType;
     }
 
-    public List<ResponseType> getResponseTypes() {
-        return responseTypes;
+    public List<AnswerType> getAnswerTypes() {
+        return answerTypes;
     }
 
-    public void setResponseTypes(List<ResponseType> responseTypes) {
-        this.responseTypes = responseTypes;
+    public void setAnswerTypes(List<AnswerType> answerTypes) {
+        this.answerTypes = answerTypes;
     }
 
     @Override
@@ -31,19 +31,19 @@ public class QuizType {
         if (o == null || getClass() != o.getClass()) return false;
         QuizType quizType = (QuizType) o;
         return questionType == quizType.questionType &&
-                Objects.equals(responseTypes, quizType.responseTypes);
+                Objects.equals(answerTypes, quizType.answerTypes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(questionType, responseTypes);
+        return Objects.hash(questionType, answerTypes);
     }
 
     @Override
     public String toString() {
         return "QuizType{" +
                 "questionType=" + questionType +
-                ", responseTypes=" + responseTypes +
+                ", answerTypes=" + answerTypes +
                 '}';
     }
 

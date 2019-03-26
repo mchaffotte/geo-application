@@ -7,7 +7,7 @@ export const enum QuestionType {
   WATER_AREA = 'WATER_AREA'
 }
 
-export enum ResponseType {
+export enum AnswerType {
   ANSWER = 'ANSWER',
   MULTIPLE_CHOICE = 'MULTIPLE_CHOICE'
 }
@@ -16,7 +16,7 @@ export class QuizType {
 
   questionType: QuestionType;
 
-  responseTypes: ResponseType[];
+  answerTypes: AnswerType[];
 
 }
 
@@ -24,7 +24,7 @@ export class QuizConfiguration {
 
   questionType: QuestionType;
 
-  responseType: ResponseType;
+  answerType: AnswerType;
 
 }
 
@@ -34,7 +34,7 @@ export class Question {
 
   wording: string;
 
-  suggestions: string[];
+  choices: string[];
 
 }
 
@@ -46,9 +46,15 @@ export class Quiz {
 
 }
 
-export class QuizResponse {
+export class QuestionAnswer {
 
   answers: string[] = [];
+
+}
+
+export class QuizAnswer {
+
+  questionAnswers: QuestionAnswer[] = [];
 
 }
 

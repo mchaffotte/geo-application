@@ -11,14 +11,14 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="responseType" class="col-sm-4 col-form-label">{{ 'admin.quizzes.response-type' | translate }}</label>
+        <label for="answerType" class="col-sm-4 col-form-label">{{ 'admin.quizzes.response-type' | translate }}</label>
         <div class="col-sm-8">
-          <div class="btn-group btn-group-toggle" ngbRadioGroup name="responseType" [(ngModel)]="configuration.responseType">
+          <div class="btn-group btn-group-toggle" ngbRadioGroup name="answerType" [(ngModel)]="configuration.answerType">
             <label class="btn-outline-primary" ngbButtonLabel>
-              <input type="radio" name="answer" ngbButton [value]="ResponseType.ANSWER" [disabled]="!choice.answer" > {{ 'admin.quizzes.answer' | translate }}
+              <input type="radio" name="answer" ngbButton [value]="AnswerType.ANSWER" [disabled]="!choice.answer" > {{ 'admin.quizzes.answer' | translate }}
             </label>
             <label class="btn-outline-primary" ngbButtonLabel>
-              <input type="radio" name="multipleChoice" ngbButton [value]="ResponseType.MULTIPLE_CHOICE" [disabled]="!choice.multipleChoice"> {{ 'admin.quizzes.multiple-choice' | translate }}
+              <input type="radio" name="multipleChoice" ngbButton [value]="AnswerType.MULTIPLE_CHOICE" [disabled]="!choice.multipleChoice"> {{ 'admin.quizzes.multiple-choice' | translate }}
             </label>
           </div>
         </div>

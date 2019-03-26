@@ -10,7 +10,7 @@ public class Question {
 
     private String wording;
 
-    private List<String> suggestions = new ArrayList<>();
+    private List<String> choices = new ArrayList<>();
 
     public String getImagePath() {
         return imagePath;
@@ -28,12 +28,12 @@ public class Question {
         this.wording = wording;
     }
 
-    public List<String> getSuggestions() {
-        return suggestions;
+    public List<String> getChoices() {
+        return choices;
     }
 
-    public void setSuggestions(List<String> suggestions) {
-        this.suggestions = suggestions;
+    public void setChoices(List<String> choices) {
+        this.choices = choices;
     }
 
     @Override
@@ -43,12 +43,12 @@ public class Question {
         Question question = (Question) o;
         return Objects.equals(imagePath, question.imagePath) &&
                 Objects.equals(wording, question.wording) &&
-                Objects.equals(suggestions, question.suggestions);
+                Objects.equals(choices, question.choices);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(imagePath, wording, suggestions);
+        return Objects.hash(imagePath, wording, choices);
     }
 
 }

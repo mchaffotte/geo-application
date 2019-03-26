@@ -1,8 +1,8 @@
 package fr.chaffotm.geoquiz.service.generator;
 
 import fr.chaffotm.geodata.entity.CountryEntity;
+import fr.chaffotm.geoquiz.resource.AnswerType;
 import fr.chaffotm.geoquiz.service.MultipleChoice;
-import fr.chaffotm.geoquiz.resource.ResponseType;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class RandomGenerator implements Generator {
 
     @Override
-    public List<MultipleChoice> generate(final List<CountryEntity> countries, final ResponseType responseType) {
+    public List<MultipleChoice> generate(final List<CountryEntity> countries, final AnswerType answerType) {
         final int size = countries.size();
         final Set<Integer> excludeIds = new HashSet<>(exclude(size));
         final List<MultipleChoice> multipleChoices = new ArrayList<>();
@@ -22,7 +22,7 @@ public abstract class RandomGenerator implements Generator {
             excludeIds.add(countryIndex);
             final CountryEntity answer = countries.get(countryIndex);
             final MultipleChoice multipleChoice = new MultipleChoice(answer);
-            if (ResponseType.MULTIPLE_CHOICE.equals(responseType)) {
+            if (AnswerType.MULTIPLE_CHOICE.equals(answerType)) {
                 final List<CountryEntity> distractors = findRandom(countries, countryIndex);
                 for (CountryEntity distractor : distractors) {
                     multipleChoice.addDistractor(distractor);
