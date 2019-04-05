@@ -8,7 +8,7 @@ import fr.chaffotm.query.criteria.QueryCriteria;
 public class WaterAreaQuestionDescriptor extends QueryCriteriaQuestionDescriptor {
 
     @Override
-    public QueryCriteria getQueryCriteria() {
+    public QueryCriteria<CountryEntity> getQueryCriteria() {
         final QueryCriteria<CountryEntity> criteria = new QueryCriteria<>(CountryEntity.class);
         criteria.setJoin("area");
         criteria.addSort("area.water", FieldOrder.DESC);
