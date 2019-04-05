@@ -1,8 +1,9 @@
 package fr.chaffotm.geobase.repository;
 
 import fr.chaffotm.geodata.entity.CountryEntity;
-import fr.chaffotm.query.QueryCriteria;
-import fr.chaffotm.query.Repository;
+import fr.chaffotm.query.criteria.QueryCriteria;
+import fr.chaffotm.query.CriteriaRepository;
+import fr.chaffotm.query.jpa.JPACriteriaRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -20,9 +21,9 @@ public class CountryRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public List<CountryEntity> findAll(final int offset, final Integer limit, final QueryCriteria criteria) {
-        final Repository repository = new Repository(em);
-        return repository.findAll(offset, limit, criteria, CountryEntity.class);
+    public List<CountryEntity> findAll(final int offset, final Integer limit, final QueryCriteria<CountryEntity> criteria) {
+        final CriteriaRepository repository = new JPACriteriaRepository(em);
+        return repository.findAll(offset, limit, criteria);
     }
 
     public long count() {

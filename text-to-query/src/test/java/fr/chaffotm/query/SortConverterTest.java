@@ -1,6 +1,6 @@
 package fr.chaffotm.query;
 
-import fr.chaffotm.query.criteria.Order;
+import fr.chaffotm.query.criteria.FieldOrder;
 import fr.chaffotm.query.criteria.Sort;
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ public class SortConverterTest {
 
         assertThat(sorts)
                 .containsExactly(
-                        new Sort("name", Order.ASC));
+                        new Sort("name", FieldOrder.ASC));
     }
 
     @Test
@@ -30,7 +30,7 @@ public class SortConverterTest {
 
         assertThat(sorts)
                 .containsExactly(
-                        new Sort("1name", Order.ASC));
+                        new Sort("1name", FieldOrder.ASC));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class SortConverterTest {
 
         assertThat(sorts)
                 .containsExactly(
-                        new Sort("NAME", Order.ASC));
+                        new Sort("NAME", FieldOrder.ASC));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class SortConverterTest {
 
         assertThat(sorts)
                 .containsExactly(
-                        new Sort("name", Order.DESC));
+                        new Sort("name", FieldOrder.DESC));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class SortConverterTest {
 
         assertThat(sorts)
                 .containsExactly(
-                        new Sort("name", Order.ASC));
+                        new Sort("name", FieldOrder.ASC));
     }
 
     @Test
@@ -74,9 +74,9 @@ public class SortConverterTest {
 
         assertThat(sorts)
                 .containsExactly(
-                        new Sort("name", Order.ASC),
-                        new Sort("age", Order.DESC),
-                        new Sort("surname", Order.ASC));
+                        new Sort("name", FieldOrder.ASC),
+                        new Sort("age", FieldOrder.DESC),
+                        new Sort("surname", FieldOrder.ASC));
     }
 
     @Test

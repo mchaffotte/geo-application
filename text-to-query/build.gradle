@@ -1,5 +1,6 @@
 dependencies {
     compileOnly 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
 
-    integTestImplementation 'org.hibernate:hibernate-entitymanager:5.2.12.Final'
+    integTestImplementation 'org.hibernate:hibernate-entitymanager:5.3.9.Final'
+    integTestImplementation 'org.slf4j:slf4j-simple:1.7.25'
 }

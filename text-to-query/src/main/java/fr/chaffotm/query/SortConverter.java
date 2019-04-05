@@ -1,6 +1,6 @@
 package fr.chaffotm.query;
 
-import fr.chaffotm.query.criteria.Order;
+import fr.chaffotm.query.criteria.FieldOrder;
 import fr.chaffotm.query.criteria.Sort;
 
 import java.util.ArrayList;
@@ -48,14 +48,14 @@ public class SortConverter {
     }
 
     private Sort build(final String property) {
-        final Order order;
+        final FieldOrder order;
         final String element;
         if (property.startsWith("-")) {
             element = property.substring(1);
-            order = Order.DESC;
+            order = FieldOrder.DESC;
         } else {
             element = property;
-            order = Order.ASC;
+            order = FieldOrder.ASC;
         }
         return new Sort(element, order);
     }

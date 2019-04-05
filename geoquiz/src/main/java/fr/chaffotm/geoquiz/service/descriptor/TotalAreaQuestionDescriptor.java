@@ -1,17 +1,19 @@
 package fr.chaffotm.geoquiz.service.descriptor;
 
 import fr.chaffotm.geodata.entity.CountryEntity;
-import fr.chaffotm.query.FunctionCriteria;
-import fr.chaffotm.query.criteria.Order;
-import fr.chaffotm.query.criteria.SumFunction;
 import fr.chaffotm.geoquiz.service.ColumnType;
+import fr.chaffotm.query.criteria.FieldOrder;
+import fr.chaffotm.query.criteria.Functions;
+import fr.chaffotm.query.criteria.QueryCriteria;
 
-public class TotalAreaQuestionDescriptor extends FunctionCriteriaQuestionDescriptor {
+public class TotalAreaQuestionDescriptor extends QueryCriteriaQuestionDescriptor {
 
-    public FunctionCriteria getFunctionCriteria() {
-        final FunctionCriteria criteria = new FunctionCriteria(new SumFunction("total", "land", "water"));
+    @Override
+    QueryCriteria<CountryEntity> getQueryCriteria() {
+        final QueryCriteria<CountryEntity> criteria = new QueryCriteria<>(CountryEntity.class);
         criteria.setJoin("area");
-        criteria.addSort("total", Order.DESC);
+        criteria.setFunction(Functions.sum("total", "area.land", "area.water"));
+        criteria.addSort("total", FieldOrder.DESC);
         return criteria;
     }
 

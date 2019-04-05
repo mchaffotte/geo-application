@@ -1,16 +1,16 @@
 package fr.chaffotm.geoquiz.service.descriptor;
 
 import fr.chaffotm.geodata.entity.CountryEntity;
-import fr.chaffotm.query.QueryCriteria;
-import fr.chaffotm.query.criteria.Order;
+import fr.chaffotm.query.criteria.FieldOrder;
+import fr.chaffotm.query.criteria.QueryCriteria;
 
 public class CapitalQuestionDescriptor extends QueryCriteriaQuestionDescriptor {
 
     @Override
-    public QueryCriteria getQueryCriteria() {
-        final QueryCriteria criteria = new QueryCriteria();
+    public QueryCriteria<CountryEntity> getQueryCriteria() {
+        final QueryCriteria<CountryEntity> criteria = new QueryCriteria<>(CountryEntity.class);
         criteria.setJoin("capital");
-        criteria.addSort("id", Order.DESC);
+        criteria.addSort("id", FieldOrder.DESC);
         return criteria;
     }
 

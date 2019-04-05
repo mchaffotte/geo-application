@@ -1,5 +1,5 @@
 package fr.chaffotm.query.criteria;
 
-public enum Order {
+public enum FieldOrder {
     ASC, DESC
 }

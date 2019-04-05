@@ -6,7 +6,7 @@ import fr.chaffotm.geoquiz.entity.ImageEntity;
 import fr.chaffotm.geoquiz.entity.QuestionEntity;
 import fr.chaffotm.geoquiz.entity.QuizEntity;
 import fr.chaffotm.geoquiz.resource.AnswerType;
-import fr.chaffotm.query.Repository;
+import fr.chaffotm.query.CriteriaRepository;
 import fr.chaffotm.geoquiz.service.descriptor.ImageType;
 import fr.chaffotm.geoquiz.service.descriptor.QuestionDescriptor;
 import fr.chaffotm.geoquiz.service.descriptor.QuestionDescriptorService;
@@ -21,13 +21,13 @@ import java.util.UUID;
 
 public class QuizMaker {
 
-    private final Repository repository;
+    private final CriteriaRepository repository;
 
     private final QuestionDescriptorService descriptorService;
 
     private final GeneratorFactory generatorFactory;
 
-    public QuizMaker(final Repository repository) {
+    public QuizMaker(final CriteriaRepository repository) {
         this.repository = repository;
         descriptorService = new QuestionDescriptorService();
         generatorFactory = new GeneratorFactory();

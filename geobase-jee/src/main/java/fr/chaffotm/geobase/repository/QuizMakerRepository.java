@@ -1,9 +1,9 @@
 package fr.chaffotm.geobase.repository;
 
 import fr.chaffotm.geoquiz.entity.QuizEntity;
-import fr.chaffotm.geoquiz.service.QuizMaker;
 import fr.chaffotm.geoquiz.resource.QuizConfiguration;
-import fr.chaffotm.query.Repository;
+import fr.chaffotm.geoquiz.service.QuizMaker;
+import fr.chaffotm.query.jpa.JPACriteriaRepository;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -20,7 +20,7 @@ public class QuizMakerRepository {
 
     @PostConstruct
     public void initMaker() {
-        quizMaker = new QuizMaker(new Repository(em));
+        quizMaker = new QuizMaker(new JPACriteriaRepository(em));
     }
 
     public QuizEntity build(QuizConfiguration configuration) {

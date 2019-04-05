@@ -4,20 +4,20 @@ import java.util.Objects;
 
 public class Sort {
 
-    private final String propertyName;
+    private final String fieldName;
 
-    private final Order order;
+    private final FieldOrder order;
 
-    public Sort(final String propertyName, final Order order) {
-        this.propertyName = propertyName;
+    public Sort(final String fieldName, final FieldOrder order) {
+        this.fieldName = fieldName;
         this.order = order;
     }
 
-    public String getPropertyName() {
-        return propertyName;
+    public String getFieldName() {
+        return fieldName;
     }
 
-    public Order getOrder() {
+    public FieldOrder getOrder() {
         return order;
     }
 
@@ -26,13 +26,13 @@ public class Sort {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Sort sort = (Sort) o;
-        return Objects.equals(propertyName, sort.propertyName) &&
+        return Objects.equals(fieldName, sort.fieldName) &&
                 order == sort.order;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(propertyName, order);
+        return Objects.hash(fieldName, order);
     }
 
 }
