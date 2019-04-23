@@ -8,7 +8,7 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.List;
 
 public class JsonInterceptor implements ClientHttpRequestInterceptor {
 
@@ -17,7 +17,7 @@ public class JsonInterceptor implements ClientHttpRequestInterceptor {
                                         final ClientHttpRequestExecution execution) throws IOException {
         final HttpHeaders headers = request.getHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         return execution.execute(request, body);
     }
 

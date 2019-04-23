@@ -22,10 +22,25 @@ public class JPACriteriaRepository implements CriteriaRepository {
     public <T> List<T> findAll(final int offset, final Integer limit, final QueryCriteria<T> criteria) {
         final CriteriaBuilder builder = em.getCriteriaBuilder();
         final Class<T> entityClass = criteria.getEntityClass();
-        final CriteriaQueryBuilder<T> criteriaQueryBuilder = new CriteriaQueryBuilder<>(builder, criteria);
-        final CriteriaQuery<FunctionEntity> query = criteriaQueryBuilder.build();
+        final CriteriaQuery<FunctionEntity> query = buildQuery(builder, criteria);
         final List<FunctionEntity> functionEntities = getResultList(query, offset, limit);
         return functionEntities.stream().map(entity -> entity.getEntity(entityClass)).collect(Collectors.toList());
+    }
+
+    private <T> CriteriaQuery<FunctionEntity> buildQuery(final CriteriaBuilder builder, final QueryCriteria<T> criteria) {
+        final Class<T> entityClass = criteria.getEntityClass();
+        final CriteriaQueryBuilder<T> criteriaQueryBuilder = new CriteriaQueryBuilder<>(builder, entityClass);
+        if (criteria.getFunction() != null) {
+            criteriaQueryBuilder.function(criteria.getFunction());
+        }
+        if (criteria.getJoin() != null) {
+            criteriaQueryBuilder.join(criteria.getJoin());
+        }
+        final List<Sort> sorts = criteria.getSorts();
+        for (Sort sort : sorts) {
+            criteriaQueryBuilder.sort(sort);
+        }
+        return criteriaQueryBuilder.build();
     }
 
     private <T> List<T> getResultList(final CriteriaQuery<T> query, final int offset, final Integer limit) {

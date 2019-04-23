@@ -12,17 +12,21 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class RandomGenerator implements Generator {
 
+    private static final int NUMBER_OF_QUESTIONS = 10;
+
+    private static final int NUMBER_OF_DISTRACTORS = 3;
+
     @Override
     public List<MultipleChoice> generate(final List<CountryEntity> countries, final AnswerType answerType) {
         final int size = countries.size();
         final Set<Integer> excludeIds = new HashSet<>(exclude(size));
         final List<MultipleChoice> multipleChoices = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < NUMBER_OF_QUESTIONS; i++) {
             final int countryIndex = getRandomIndex(size, excludeIds);
             excludeIds.add(countryIndex);
             final CountryEntity answer = countries.get(countryIndex);
             final MultipleChoice multipleChoice = new MultipleChoice(answer);
-            if (AnswerType.MULTIPLE_CHOICE.equals(answerType)) {
+            if (AnswerType.MULTIPLE_CHOICE == answerType) {
                 final List<CountryEntity> distractors = findRandom(countries, countryIndex);
                 for (CountryEntity distractor : distractors) {
                     multipleChoice.addDistractor(distractor);
@@ -50,7 +54,7 @@ public abstract class RandomGenerator implements Generator {
         excludedIndexes.add(excludedIndex);
         final IndexRange range = range(excludedIndex, countries.size());
         final List<CountryEntity> otherCountries = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < NUMBER_OF_DISTRACTORS; i++) {
             final int idx = getRandomIndex(range.getMin(), range.getMax(), excludedIndexes);
             excludedIndexes.add(idx);
             otherCountries.add(countries.get(idx));

@@ -59,12 +59,12 @@ public class JPACriteriaRepositoryIT {
             em.persist(build("Deuterium", "D", 1, 1));
 
             final Map<ElementCategory, List<ElementSymbol>> categories = new HashMap<>();
-            categories.put(build("Alkali metal"), Collections.singletonList(ElementSymbol.LI));
-            categories.put(build("Alkaline earth metal"), Collections.singletonList(ElementSymbol.BE));
-            categories.put(build("Noble gas"), Arrays.asList(ElementSymbol.HE, ElementSymbol.NE));
-            categories.put(build("Metalloid"), Collections.singletonList(ElementSymbol.B));
-            categories.put(build("Reactive nonmetal"), Arrays.asList(ElementSymbol.H, ElementSymbol.C,
-                    ElementSymbol.N, ElementSymbol.O, ElementSymbol.F));
+            categories.put(build("Alkali metal"), List.of(ElementSymbol.LI));
+            categories.put(build("Alkaline earth metal"), List.of(ElementSymbol.BE));
+            categories.put(build("Noble gas"), List.of(ElementSymbol.HE, ElementSymbol.NE));
+            categories.put(build("Metalloid"), List.of(ElementSymbol.B));
+            categories.put(build("Reactive nonmetal"), List.of(ElementSymbol.H, ElementSymbol.C, ElementSymbol.N,
+                    ElementSymbol.O, ElementSymbol.F));
             for (Map.Entry<ElementCategory, List<ElementSymbol>> category : categories.entrySet()) {
                 final ElementCategory elementCategory = category.getKey();
                 for (ElementSymbol symbol : category.getValue()) {

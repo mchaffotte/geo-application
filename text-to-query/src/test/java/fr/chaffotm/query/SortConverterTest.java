@@ -92,7 +92,7 @@ public class SortConverterTest {
     public void getAsList_should_not_validate_the_expression_property_with_a_pipe_but_nothing_after() {
         final SortConverter converter = new SortConverter();
 
-        final Throwable thrown = catchThrowable(() ->  converter.getAsList("name |"));
+        final Throwable thrown = catchThrowable(() -> converter.getAsList("name |"));
 
         assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
     }

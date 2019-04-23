@@ -16,7 +16,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,13 +30,15 @@ public class QuizTypeRestControllerIT {
 
     @Before
     public void setUp() {
-        restTemplate.getRestTemplate().setInterceptors(Arrays.asList(new LoggingInterceptor(), new JsonInterceptor()));
+        restTemplate.getRestTemplate().setInterceptors(
+                List.of(new LoggingInterceptor(), new JsonInterceptor())
+        );
     }
 
     private QuizType build(final QuestionType questionType, final AnswerType... answerTypes) {
         final QuizType type = new QuizType();
         type.setQuestionType(questionType);
-        type.setAnswerTypes(Arrays.asList(answerTypes));
+        type.setAnswerTypes(List.of(answerTypes));
         return type;
     }
 

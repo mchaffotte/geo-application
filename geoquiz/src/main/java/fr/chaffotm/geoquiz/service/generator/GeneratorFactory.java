@@ -6,9 +6,9 @@ public class GeneratorFactory {
 
     public Generator getGenerator(final ColumnType columnType) {
         final Generator generator;
-        if(ColumnType.VARCHAR.equals(columnType)) {
+        if(ColumnType.VARCHAR == columnType) {
             generator = new VarcharRandomGenerator();
-        } else if (ColumnType.NUMERIC.equals(columnType)) {
+        } else if (ColumnType.NUMERIC == columnType) {
             generator = new SuperiorityRandomGenerator();
         } else {
             throw new IllegalArgumentException("Unknown column type:" + columnType);

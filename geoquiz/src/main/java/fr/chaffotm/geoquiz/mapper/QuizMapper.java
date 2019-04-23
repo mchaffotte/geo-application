@@ -35,7 +35,7 @@ public class QuizMapper {
             question.setImagePath(baseURI + "images/" + entity.getImage().getUuid());
         }
         question.setWording(entity.getWording());
-        if (AnswerType.MULTIPLE_CHOICE.equals(answerType)) {
+        if (AnswerType.MULTIPLE_CHOICE == answerType) {
             final List<String> choices = getRandomOrderChoices(entity);
             question.setChoices(choices);
         }

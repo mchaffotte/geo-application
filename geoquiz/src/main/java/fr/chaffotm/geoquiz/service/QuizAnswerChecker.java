@@ -10,9 +10,12 @@ import fr.chaffotm.geoquiz.resource.QuizResult;
 import java.text.Normalizer;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class QuizAnswerChecker {
+
+    private static final Pattern NORMALIZE = Pattern.compile("[\\p{InCombiningDiacriticalMarks}]");
 
     public QuizResult score(final QuizEntity quizEntity, final QuizAnswer quizAnswer) {
         final List<QuestionEntity> questions = quizEntity.getQuestions();
@@ -47,9 +50,11 @@ public class QuizAnswerChecker {
                 .collect(Collectors.toSet());
     }
 
-    private String stripAccents(final String s) {
-        final String a = Normalizer.normalize(s.trim(), Normalizer.Form.NFD);
-        return a.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "").toLowerCase();
+    private String stripAccents(final String text) {
+        final String normalize = Normalizer.normalize(text.trim(), Normalizer.Form.NFD);
+        return NORMALIZE.matcher(normalize)
+                .replaceAll("")
+                .toLowerCase();
     }
 
 }

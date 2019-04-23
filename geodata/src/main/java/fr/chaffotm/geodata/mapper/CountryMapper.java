@@ -29,14 +29,6 @@ public class CountryMapper {
         return country;
     }
 
-    public static List<CountryEntity> unMap(final List<Country> resources) {
-        final List<CountryEntity> countries = new ArrayList<>();
-        for (Country resource : resources) {
-                countries.add(unMap(resource));
-            }
-        return countries;
-    }
-
     public static CountryEntity unMap(final Country resource) {
         final CountryEntity country = new CountryEntity();
         country.setCode(resource.getCode());

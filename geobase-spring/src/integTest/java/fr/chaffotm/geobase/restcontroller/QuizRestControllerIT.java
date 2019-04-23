@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.URI;
-import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,7 +38,9 @@ public class QuizRestControllerIT {
 
     @Before
     public void setUp() {
-        restTemplate.getRestTemplate().setInterceptors(Arrays.asList(new LoggingInterceptor(), new JsonInterceptor()));
+        restTemplate.getRestTemplate().setInterceptors(
+                List.of(new LoggingInterceptor(), new JsonInterceptor())
+        );
         withoutChoices = new Condition<>(hasChoices(0), "Empty choices");
         fourChoices = new Condition<>(hasChoices(4), "4 choices");
     }

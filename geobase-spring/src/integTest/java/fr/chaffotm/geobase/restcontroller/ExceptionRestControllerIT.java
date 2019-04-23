@@ -1,9 +1,9 @@
 package fr.chaffotm.geobase.restcontroller;
 
-import fr.chaffotm.geobase.web.exception.BadRequestBody;
-import fr.chaffotm.geobase.web.exception.ErrorBody;
 import fr.chaffotm.geobase.interceptor.JsonInterceptor;
 import fr.chaffotm.geobase.interceptor.LoggingInterceptor;
+import fr.chaffotm.geobase.web.exception.BadRequestBody;
+import fr.chaffotm.geobase.web.exception.ErrorBody;
 import fr.chaffotm.geobase.web.resource.Todo;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,15 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static fr.chaffotm.geobase.assertion.ResponseEntityAssert.assertThat;
@@ -35,11 +31,12 @@ public class ExceptionRestControllerIT {
 
     @Before
     public void setUp() {
-        restTemplate.getRestTemplate().setInterceptors(Arrays.asList(new LoggingInterceptor(), new JsonInterceptor()));
-        List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-        messageConverters.add(new MappingJackson2HttpMessageConverter());
-        messageConverters.add(new Jaxb2RootElementHttpMessageConverter());
-        restTemplate.getRestTemplate().setMessageConverters(messageConverters);
+        restTemplate.getRestTemplate().setInterceptors(
+                List.of(new LoggingInterceptor(), new JsonInterceptor())
+        );
+        restTemplate.getRestTemplate().setMessageConverters(
+                List.of(new MappingJackson2HttpMessageConverter(), new Jaxb2RootElementHttpMessageConverter())
+        );
     }
 
     @Test
@@ -132,7 +129,7 @@ public class ExceptionRestControllerIT {
     @Test
     public void if_the_accept_header_is_not_supported_by_the_server_the_server_returns_ok_in_a_supported_representation() {
         final HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_PDF));
+        headers.setAccept(List.of(MediaType.APPLICATION_PDF));
         final HttpEntity<Todo> entity = new HttpEntity<>(null, headers);
         final Todo todo = new Todo();
 

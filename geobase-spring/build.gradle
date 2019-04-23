@@ -21,4 +21,6 @@ dependencies {
         exclude group: 'org.assertj'
         exclude group: 'org.mockito'
     }
+    integTestImplementation "com.sun.xml.bind:jaxb-impl:$jaxbImplVersion"
+    integTestImplementation "org.glassfish.jaxb:jaxb-runtime:$jaxbImplVersion"
 }

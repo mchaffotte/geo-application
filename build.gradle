@@ -14,8 +14,8 @@ subprojects {
     apply from: "$rootDir/gradle/integration-test.gradle"
     apply from: "$rootDir/gradle/reporting.gradle"
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 
     compileJava {
         options.encoding = 'UTF-8'
@@ -36,10 +36,21 @@ subprojects {
     repositories {
         mavenLocal()
         jcenter()
+        maven {
+            url 'https://repo.gradle.org/gradle/libs-releases-local/'
+        }
     }
 
     group 'fr.chaffotm.game.geo'
     version '0.1-SNAPSHOT'
+
+    ext {
+        beanValidationVersion = '2.0.1.Final'
+        jaxbApiVersion = '2.3.1'
+        jaxbImplVersion = '2.3.2'
+        hibernateJpaVersion = '1.0.0.Final'
+        hibernateEntityManagerVersion = '5.3.9.Final'
+    }
 
     dependencies {
         implementation 'com.h2database:h2:1.4.199'
@@ -47,7 +58,7 @@ subprojects {
         testImplementation 'junit:junit:4.12'
         testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.3.2'
         testImplementation 'org.assertj:assertj-core:3.12.2'
-        testImplementation 'org.mockito:mockito-core:2.25.1'
+        testImplementation 'org.mockito:mockito-core:2.27.0'
 
         integTestImplementation 'junit:junit:4.12'
         integTestRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.3.2'

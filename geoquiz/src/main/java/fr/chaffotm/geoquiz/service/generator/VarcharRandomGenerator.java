@@ -1,13 +1,12 @@
 package fr.chaffotm.geoquiz.service.generator;
 
-import java.util.Collections;
 import java.util.Set;
 
 public class VarcharRandomGenerator extends RandomGenerator {
 
     @Override
     protected Set<Integer> exclude(int size) {
-        return Collections.emptySet();
+        return Set.of();
     }
 
     @Override

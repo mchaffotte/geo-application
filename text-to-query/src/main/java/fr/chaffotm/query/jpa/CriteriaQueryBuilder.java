@@ -22,20 +22,6 @@ public class CriteriaQueryBuilder<T> {
 
     private List<Order> orders;
 
-    public CriteriaQueryBuilder(final CriteriaBuilder builder, final QueryCriteria<T> criteria) {
-        this(builder, criteria.getEntityClass());
-        if (criteria.getFunction() != null) {
-            function(criteria.getFunction());
-        }
-        if (criteria.getJoin() != null) {
-            join(criteria.getJoin());
-        }
-        final List<Sort> sorts = criteria.getSorts();
-        for (Sort sort : sorts) {
-            sort(sort);
-        }
-    }
-
     public CriteriaQueryBuilder(final CriteriaBuilder builder, final Class<T> queryClass) {
         this.builder = builder;
         query = builder.createQuery(FunctionEntity.class);
@@ -56,7 +42,7 @@ public class CriteriaQueryBuilder<T> {
     }
 
     public CriteriaQueryBuilder<T> function(final Function function) {
-        if (FunctionOperator.SUM.equals(function.getOperator())) {
+        if (FunctionOperator.SUM == function.getOperator()) {
             final Path<Number> path1 = getPath(function.getAttribute1());
             final Path<Number> path2 = getPath(function.getAttribute2());
             functionExpression = builder.sum(path1, path2);
@@ -114,7 +100,7 @@ public class CriteriaQueryBuilder<T> {
 
     private void addSort(final Expression expression, final FieldOrder fieldOrder) {
         final Order order;
-        if (FieldOrder.DESC.equals(fieldOrder)) {
+        if (FieldOrder.DESC == fieldOrder) {
             order = builder.desc(expression);
         } else {
             order = builder.asc(expression);

@@ -2,11 +2,11 @@ dependencies {
     api project(':geodata')
     api project(':text-to-query')
 
-    compileOnly 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
-    compileOnly 'javax.validation:validation-api:2.0.1.Final'
+    compileOnly "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:$hibernateJpaVersion"
+    compileOnly "javax.validation:validation-api:$beanValidationVersion"
 
-    testCompileOnly 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
-    testCompileOnly 'javax.validation:validation-api:2.0.1.Final'
+    testCompileOnly "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:$hibernateJpaVersion"
+    testCompileOnly "javax.validation:validation-api:$beanValidationVersion"
 
-    integTestImplementation 'org.hibernate:hibernate-entitymanager:5.3.9.Final'
+    integTestImplementation "org.hibernate:hibernate-entitymanager:$hibernateEntityManagerVersion"
 }

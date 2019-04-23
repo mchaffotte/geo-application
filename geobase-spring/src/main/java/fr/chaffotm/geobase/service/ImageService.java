@@ -23,9 +23,9 @@ public class ImageService {
         final ImageEntity image = quizRepository.getQuestionImage(imageUuid);
         final String fileName = image.getCountry().getCode().toLowerCase() + ".png";
         final StringBuilder pathBuilder = new StringBuilder();
-        if (ImageType.FLAG.equals(image.getImageType())) {
+        if (ImageType.FLAG == image.getImageType()) {
             pathBuilder.append("flags");
-        } else if (ImageType.SILHOUETTE.equals(image.getImageType())) {
+        } else if (ImageType.SILHOUETTE == image.getImageType()) {
             pathBuilder.append("silhouettes");
         }
         pathBuilder.append("/").append(fileName);

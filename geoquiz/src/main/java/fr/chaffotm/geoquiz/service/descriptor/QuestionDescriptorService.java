@@ -2,8 +2,6 @@ package fr.chaffotm.geoquiz.service.descriptor;
 
 import fr.chaffotm.geoquiz.resource.QuestionType;
 
-import java.util.Collections;
-import java.util.EnumMap;
 import java.util.Map;
 
 public class QuestionDescriptorService {
@@ -11,20 +9,24 @@ public class QuestionDescriptorService {
     private Map<QuestionType, QuestionDescriptor> descriptors;
 
     public QuestionDescriptorService() {
-        descriptors = new EnumMap<>(QuestionType.class);
-        descriptors.put(QuestionType.CAPITAL, new CapitalQuestionDescriptor());
-        descriptors.put(QuestionType.TOTAL_AREA, new TotalAreaQuestionDescriptor());
-        descriptors.put(QuestionType.LAND_AREA, new LandAreaQuestionDescriptor());
-        descriptors.put(QuestionType.WATER_AREA, new WaterAreaQuestionDescriptor());
-        descriptors.put(QuestionType.FLAG, new FlagQuestionDescriptor());
-        descriptors.put(QuestionType.SILHOUETTE, new SilhouetteQuestionDescriptor());
+        descriptors = Map.of(
+                QuestionType.CAPITAL, new CapitalQuestionDescriptor(),
+                QuestionType.TOTAL_AREA, new TotalAreaQuestionDescriptor(),
+                QuestionType.LAND_AREA, new LandAreaQuestionDescriptor(),
+                QuestionType.WATER_AREA, new WaterAreaQuestionDescriptor(),
+                QuestionType.FLAG, new FlagQuestionDescriptor(),
+                QuestionType.SILHOUETTE, new SilhouetteQuestionDescriptor()
+        );
     }
 
     public Map<QuestionType, QuestionDescriptor> getDescriptors() {
-        return Collections.unmodifiableMap(descriptors);
+        return descriptors;
     }
 
     public QuestionDescriptor getDescriptor(final QuestionType questionType) {
+        if (questionType == null) {
+            throw new IllegalArgumentException("Question type is null");
+        }
         final QuestionDescriptor descriptor = descriptors.get(questionType);
         if (descriptor == null) {
             throw new IllegalArgumentException("Unknown question type:" + questionType);

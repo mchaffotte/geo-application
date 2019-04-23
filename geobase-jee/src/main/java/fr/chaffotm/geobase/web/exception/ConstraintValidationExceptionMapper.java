@@ -25,10 +25,7 @@ public class ConstraintValidationExceptionMapper implements ExceptionMapper<Cons
             for (ConstraintViolation<?> constraintViolation : constraintViolations) {
                 StringBuilder builder = new StringBuilder();
                 if (constraintViolation.getMessageTemplate().startsWith("{javax.validation.constraints.")) {
-                    String propertyName = "";
-                    for (Path.Node node : constraintViolation.getPropertyPath()) {
-                        propertyName = node.getName();
-                    }
+                    String propertyName = getPropertyName(constraintViolation);
                     builder.append(propertyName).append(" ");
                 }
                 builder.append(constraintViolation.getMessage());
@@ -36,6 +33,14 @@ public class ConstraintValidationExceptionMapper implements ExceptionMapper<Cons
             }
         }
         return Response.status(Response.Status.BAD_REQUEST).entity(body).build();
+    }
+
+    private String getPropertyName(final ConstraintViolation<?> constraintViolation) {
+        String propertyName = "";
+        for (Path.Node node : constraintViolation.getPropertyPath()) {
+            propertyName = node.getName();
+        }
+        return propertyName;
     }
 
 }

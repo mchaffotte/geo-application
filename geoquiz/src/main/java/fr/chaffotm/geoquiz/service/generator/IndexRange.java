@@ -6,7 +6,7 @@ public class IndexRange {
 
     private int max;
 
-    public IndexRange(int min, int max) {
+    public IndexRange(final int min, final int max) {
         this.min = min;
         this.max = max;
     }

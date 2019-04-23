@@ -20,7 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.URI;
-import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,7 +35,9 @@ public class CountryRestControllerIT {
 
     @Before
     public void setUp() {
-        restTemplate.getRestTemplate().setInterceptors(Arrays.asList(new LoggingInterceptor(), new JsonInterceptor()));
+        restTemplate.getRestTemplate().setInterceptors(
+                List.of(new LoggingInterceptor(), new JsonInterceptor())
+        );
     }
 
     @Test

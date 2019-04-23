@@ -39,7 +39,8 @@ public class QuizMaker {
             quizConfiguration = buildDefaultConfiguration();
         }
         final QuestionDescriptor descriptor = descriptorService.getDescriptor(quizConfiguration.getQuestionType());
-        if (ColumnType.NUMERIC.equals(descriptor.getAttributeColumnType()) && !AnswerType.MULTIPLE_CHOICE.equals(quizConfiguration.getAnswerType())) {
+        if (ColumnType.NUMERIC == descriptor.getAttributeColumnType()
+                && AnswerType.MULTIPLE_CHOICE != quizConfiguration.getAnswerType()) {
             throw new IllegalArgumentException("Quiz supports only multiple choice");
         }
         final Generator generator = generatorFactory.getGenerator(descriptor.getAttributeColumnType());
@@ -66,7 +67,7 @@ public class QuizMaker {
         final QuestionEntity question = new QuestionEntity();
         question.addAnswer(build(descriptor.getAttributeValue(answer), true));
         final ImageType imageType = descriptor.getImageType();
-        if (!ImageType.NONE.equals(imageType)) {
+        if (ImageType.NONE != imageType) {
             final ImageEntity image = new ImageEntity();
             image.setUuid(UUID.randomUUID());
             image.setCountry(answer);

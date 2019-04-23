@@ -64,7 +64,7 @@ public class QuizService {
         final List<QuizType> quizTypes = new ArrayList<>();
         for (Map.Entry<QuestionType, QuestionDescriptor> descriptor : descriptors.entrySet()) {
             final List<AnswerType> answerTypes = new ArrayList<>();
-            if (!ColumnType.NUMERIC.equals(descriptor.getValue().getAttributeColumnType())) {
+            if (ColumnType.NUMERIC != descriptor.getValue().getAttributeColumnType()) {
                 answerTypes.add(AnswerType.ANSWER);
             }
             answerTypes.add(AnswerType.MULTIPLE_CHOICE);
