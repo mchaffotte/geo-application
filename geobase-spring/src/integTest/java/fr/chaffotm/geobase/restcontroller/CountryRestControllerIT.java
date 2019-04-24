@@ -6,9 +6,10 @@ import fr.chaffotm.geobase.web.resource.Frame;
 import fr.chaffotm.geodata.resource.Area;
 import fr.chaffotm.geodata.resource.City;
 import fr.chaffotm.geodata.resource.Country;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -17,14 +18,14 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.net.URI;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CountryRestControllerIT {
 
@@ -33,7 +34,7 @@ public class CountryRestControllerIT {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         restTemplate.getRestTemplate().setInterceptors(
                 List.of(new LoggingInterceptor(), new JsonInterceptor())
@@ -41,7 +42,8 @@ public class CountryRestControllerIT {
     }
 
     @Test
-    public void getCountries_should_return_the_all_list() {
+    @DisplayName("getCountries should return the list of all countries")
+    public void getCountriesShouldReturnTheListOfAllCountries() {
         ResponseEntity<Frame<Country>> response = restTemplate.exchange(API_COUNTRIES, HttpMethod.GET, null, new ParameterizedTypeReference<Frame<Country>>() {});
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -49,7 +51,8 @@ public class CountryRestControllerIT {
     }
 
     @Test
-    public void crud_Country() {
+    @DisplayName("crud the country")
+    public void crudTheCountry() {
         ResponseEntity<Frame<Country>> response = restTemplate.exchange(API_COUNTRIES, HttpMethod.GET, null, new ParameterizedTypeReference<Frame<Country>>() {});
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

@@ -129,7 +129,7 @@ public class QuizEndpointIT {
     }
 
     @Test
-    public void answerQuiz_should_not_generate_a_quiz_due_to_a_misconfiguration_with_using_water_area() {
+    public void answerQuiz_should_not_generate_a_quiz_due_to_a_misconfiguration_using_water_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.ANSWER);
         configuration.setQuestionType(QuestionType.WATER_AREA);

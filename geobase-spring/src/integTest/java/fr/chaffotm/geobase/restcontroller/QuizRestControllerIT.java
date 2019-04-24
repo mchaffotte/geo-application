@@ -7,16 +7,17 @@ import fr.chaffotm.geobase.web.exception.BadRequestBody;
 import fr.chaffotm.geoquiz.builder.QuizAnswerBuilder;
 import fr.chaffotm.geoquiz.resource.*;
 import org.assertj.core.api.Condition;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.net.URI;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.function.Predicate;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class QuizRestControllerIT {
 
@@ -36,7 +37,7 @@ public class QuizRestControllerIT {
 
     private Condition<Question> fourChoices;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         restTemplate.getRestTemplate().setInterceptors(
                 List.of(new LoggingInterceptor(), new JsonInterceptor())
@@ -50,12 +51,14 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_check_user_answers() {
+    @DisplayName("answerQuiz should check user answers")
+    public void answerQuizShouldCheckUserAnswers() {
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(null, fourChoices);
     }
 
     @Test
-    public void answerQuiz_should_generate_a_quiz_without_choices() {
+    @DisplayName("answerQuiz should generate a quiz without choices")
+    public void answerQuizShouldGenerateAQuizWithoutChoices() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.ANSWER);
         configuration.setQuestionType(QuestionType.CAPITAL);
@@ -64,7 +67,8 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_check_user_answers_using_capitals() {
+    @DisplayName("answerQuiz should check user answers using capitals")
+    public void answerQuizShouldCheckUserAnswersUsingCapitals() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.CAPITAL);
@@ -73,7 +77,8 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_check_user_answers_using_flags() {
+    @DisplayName("answerQuiz should check user answers using flags")
+    public void answerQuizShouldCheckUserAnswersUsingFlags() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.FLAG);
@@ -82,7 +87,8 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_check_user_answers_using_silhouettes() {
+    @DisplayName("answerQuiz should check user answers using silhouettes")
+    public void answerQuizShouldCheckUserAnswersUsingSilhouettes() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.SILHOUETTE);
@@ -91,7 +97,8 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_check_user_answers_using_land_area() {
+    @DisplayName("answerQuiz should check user answers using land area")
+    public void answerQuizShouldCheckUserAnswersUsingLandArea() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.LAND_AREA);
@@ -100,7 +107,8 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_check_user_answers_using_water_area() {
+    @DisplayName("answerQuiz should check user answers using water area")
+    public void answerQuizShouldCheckUserAnswersUsingWaterArea() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.WATER_AREA);
@@ -109,7 +117,8 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_check_user_answers_using_total_area() {
+    @DisplayName("answerQuiz should check user answers using total area")
+    public void answerQuizShouldCheckUserAnswersUsingTotalArea() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
         configuration.setQuestionType(QuestionType.TOTAL_AREA);
@@ -118,7 +127,8 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_not_generate_a_quiz_due_to_a_misconfiguration_with_using_water_area() {
+    @DisplayName("answerQuiz should not generate a quiz due to a misconfiguration using water area")
+    public void answerQuizShouldNotGenerateAQuizDueToAMisconfigurationUsingWaterArea() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.ANSWER);
         configuration.setQuestionType(QuestionType.WATER_AREA);
@@ -169,7 +179,8 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_not_recognize_null_body() {
+    @DisplayName("answerQuiz should not recognize null body")
+    public void answerQuizShouldNotRecognizeNullBody() {
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("Required request body is missing");
 
@@ -181,7 +192,8 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_not_validate_null_body() {
+    @DisplayName("answerQuiz should not validate null body")
+    public void answerQuizShouldNotValidateNullBody() {
         final HttpEntity<QuizAnswer> entity = new HttpEntity<>((QuizAnswer) null);
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("Required request body is missing");
@@ -194,7 +206,8 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_not_validate_empty_body() {
+    @DisplayName("answerQuiz should not validate empty body")
+    public void answerQuizShouldNotValidateEmptyBody() {
         final HttpEntity<String> entity = new HttpEntity<>("");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("Required request body is missing");
@@ -207,7 +220,8 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_not_validate_null_list_of_question_answers() {
+    @DisplayName("answerQuiz should not validate null list of question answers")
+    public void answerQuizShouldNotValidateNullListOfQuestionAnswers() {
         final QuizAnswer quizResponse = new QuizAnswer();
         quizResponse.setQuestionAnswers(null);
         final HttpEntity<QuizAnswer> entity = new HttpEntity<>(quizResponse);
@@ -222,7 +236,8 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_not_validate_null_element_in_list_of_question_answers() {
+    @DisplayName("answerQuiz should not validate null element in list of question answers")
+    public void answerQuizShouldNotValidateNullElementInListOfQuestionAnswers() {
         final QuizAnswer quizAnswer = new QuizAnswerBuilder()
                 .questionAnswer(null)
                 .questionAnswer("")
@@ -241,7 +256,8 @@ public class QuizRestControllerIT {
     }
 
     @Test
-    public void answerQuiz_should_not_validate_null_element_in_list_of_answers() {
+    @DisplayName("answerQuiz should not validate null element in list of answers")
+    public void answerQuizShouldNotValidateNullElementInListOfAnswers() {
         final QuizAnswer quizAnswer = new QuizAnswerBuilder()
                 .questionAnswer(null, "", null)
                 .getQuizAnswer();

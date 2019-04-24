@@ -7,10 +7,13 @@ import fr.chaffotm.query.domain.ElementCategory;
 import fr.chaffotm.query.domain.ElementSymbol;
 import fr.chaffotm.query.jpa.JPACriteriaRepository;
 import fr.chaffotm.query.transaction.TransactionManager;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static fr.chaffotm.query.criteria.Functions.sum;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,7 +42,7 @@ public class JPACriteriaRepositoryIT {
         return element;
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         TRANSACTION_MANAGER.execute(em -> {
             final Map<ElementSymbol, Element> elements = new HashMap<>();
@@ -77,7 +80,8 @@ public class JPACriteriaRepositoryIT {
     }
 
     @Test
-    public void criteria_should_sort_the_elements_in_descending_order() {
+    @DisplayName("criteria should sort the elements in descending order")
+    public void criteriaShouldSortTheElementsInDescendingOrder() {
         final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
             final CriteriaRepository repository = new JPACriteriaRepository(em);
             final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
@@ -92,7 +96,8 @@ public class JPACriteriaRepositoryIT {
     }
 
     @Test
-    public void criteria_should_sort_the_elements_in_ascending_order() {
+    @DisplayName("criteria should sort the elements in ascending order")
+    public void criteriaShouldSortTheElementsInAscendingOrder() {
         final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
             final CriteriaRepository repository = new JPACriteriaRepository(em);
             final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
@@ -107,7 +112,8 @@ public class JPACriteriaRepositoryIT {
     }
 
     @Test
-    public void criteria_should_sort_the_elements_in_ascending_order_without_defining_the_order() {
+    @DisplayName("criteria should sort the elements in ascending order without defining the order")
+    public void criteriaShouldSortTheElementsInAscendingOrderWithoutDefiningTheOrder() {
         final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
             final CriteriaRepository repository = new JPACriteriaRepository(em);
             final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
@@ -122,7 +128,8 @@ public class JPACriteriaRepositoryIT {
     }
 
     @Test
-    public void sort_should_sort_the_elements_in_ascending_order_by_default() {
+    @DisplayName("sort should sort the elements in ascending order by default")
+    public void sortShouldSortTheElementsInAscendingOrderByDefault() {
         final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
             final CriteriaRepository repository = new JPACriteriaRepository(em);
             final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
@@ -137,7 +144,8 @@ public class JPACriteriaRepositoryIT {
     }
 
     @Test
-    public void sort_should_not_accept_an_unknown_field() {
+    @DisplayName("sort should not accept an unknown field")
+    public void sortSouldNotAcceptAnUnknownField() {
         final Throwable throwable = catchThrowable(() -> TRANSACTION_MANAGER.execute(em -> {
             final CriteriaRepository repository = new JPACriteriaRepository(em);
             final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
@@ -151,7 +159,8 @@ public class JPACriteriaRepositoryIT {
     }
 
     @Test
-    public void sort_should_not_return_elements_using_a_null_field() {
+    @DisplayName("sort should not return elements using a null field")
+    public void sortShoulNotReturnElementsUsingANullField() {
         final Throwable throwable = catchThrowable(() -> TRANSACTION_MANAGER.execute(em -> {
             final CriteriaRepository repository = new JPACriteriaRepository(em);
             final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
@@ -165,7 +174,8 @@ public class JPACriteriaRepositoryIT {
     }
 
     @Test
-    public void join_and_sort_should_sort_the_elements_in_ascending_order() {
+    @DisplayName("join and sort should sort the elements in ascending order")
+    public void joinAndSortShouldSortTheElementsInAscendingOrder() {
         final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
             final CriteriaRepository repository = new JPACriteriaRepository(em);
             final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
@@ -182,7 +192,8 @@ public class JPACriteriaRepositoryIT {
     }
 
     @Test
-    public void sort_should_join_the_missing_relation() {
+    @DisplayName("sort should join the missing relation")
+    public void sortShouldJoinTheMissingRelation() {
         final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
             final CriteriaRepository repository = new JPACriteriaRepository(em);
             final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
@@ -198,12 +209,13 @@ public class JPACriteriaRepositoryIT {
     }
 
     @Test
-    public void join_and_sort_should_sort_the_elements_in_ascending_order3() {
+    @DisplayName("function and sort should sort the elements in descending order")
+    public void functionAndSortShouldSortTheElementsInDescendingOrder() {
         final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
             final CriteriaRepository repository = new JPACriteriaRepository(em);
             final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
-            criteria.setFunction(sum("mass_number", "atomicNumber", "numberOfNeutrons"));
-            criteria.addSort("mass_number");
+            criteria.setFunction(sum("mass number", "atomicNumber", "numberOfNeutrons"));
+            criteria.addSort("mass number");
             criteria.addSort("name", FieldOrder.DESC);
 
             return repository.findAll(1, null, criteria);

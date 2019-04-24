@@ -1,6 +1,7 @@
 package fr.chaffotm.measurement;
 
-import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import static fr.chaffotm.measurement.AreaUnits.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -8,7 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AreaConverterTest {
 
     @Test
-    public void convertFromSquareMeterToSquareHectometer() {
+    @DisplayName("should convert square meter to square hectometer")
+    public void convertSquareMeterToSquareHectometer() {
         final AreaConverter converter = new AreaConverter();
 
         final double convert = converter.convert(100, SQUARE_METER, SQUARE_HECTOMETER);
@@ -17,7 +19,8 @@ public class AreaConverterTest {
     }
 
     @Test
-    public void convertFromSquareHectometerToSquareMeter() {
+    @DisplayName("should convert square hectometer to square meter")
+    public void convertSquareHectometerToSquareMeter() {
         final AreaConverter converter = new AreaConverter();
 
         final double convert = converter.convert(100, SQUARE_HECTOMETER, SQUARE_METER);
@@ -26,7 +29,8 @@ public class AreaConverterTest {
     }
 
     @Test
-    public void convertFromSquareKilometerToSquareMeter() {
+    @DisplayName("should convert square kilometer to square meter")
+    public void convertSquareKilometerToSquareMeter() {
         final AreaConverter converter = new AreaConverter();
 
         final double convert = converter.convert(1, SQUARE_KILOMETER, SQUARE_METER);
@@ -35,7 +39,8 @@ public class AreaConverterTest {
     }
 
     @Test
-    public void convertFromSquareMeterToSquareCentimeter() {
+    @DisplayName("should convert square meter to square centimeter")
+    public void convertSquareMeterToSquareCentimeter() {
         final AreaConverter converter = new AreaConverter();
 
         final double convert = converter.convert(1, SQUARE_METER, SQUARE_CENTIMETER);
@@ -44,7 +49,8 @@ public class AreaConverterTest {
     }
 
     @Test
-    public void convertFromSquareCentimeterToSquareMillimeter() {
+    @DisplayName("should convert square centimeter to square millimeter")
+    public void convertSquareCentimeterToSquareMillimeter() {
         final AreaConverter converter = new AreaConverter();
 
         final double convert = converter.convert(1, SQUARE_CENTIMETER, SQUARE_MILLIMETER);
@@ -53,7 +59,8 @@ public class AreaConverterTest {
     }
 
     @Test
-    public void convertFromSquareFootToSquareMeter() {
+    @DisplayName("should convert square foot to square meter")
+    public void convertSquareFootToSquareMeter() {
         final AreaConverter converter = new AreaConverter();
 
         final double convert = converter.convert(1, SQUARE_FOOT, SQUARE_METER);
@@ -62,7 +69,8 @@ public class AreaConverterTest {
     }
 
     @Test
-    public void convertFromSquareMeterToSquareFoot() {
+    @DisplayName("should convert square meter to square foot")
+    public void convertSquareMeterToSquareFoot() {
         final AreaConverter converter = new AreaConverter();
 
         final double convert = converter.convert(1, SQUARE_METER, SQUARE_FOOT);
@@ -71,7 +79,8 @@ public class AreaConverterTest {
     }
 
     @Test
-    public void convertFromSquareMeterToCentiare() {
+    @DisplayName("should convert square meter to centiare")
+    public void convertSquareMeterToCentiare() {
         final AreaConverter converter = new AreaConverter();
 
         final double convert = converter.convert(100, SQUARE_METER, CENTIARE);
@@ -80,7 +89,8 @@ public class AreaConverterTest {
     }
 
     @Test
-    public void convertFromSquareMeterToAre() {
+    @DisplayName("should convert square meter to are")
+    public void convertSquareMeterToAre() {
         final AreaConverter converter = new AreaConverter();
 
         final double convert = converter.convert(100, SQUARE_METER, ARE);
@@ -89,7 +99,8 @@ public class AreaConverterTest {
     }
 
     @Test
-    public void convertFromSquareMeterToHectare() {
+    @DisplayName("should convert square meter to hectare")
+    public void convertSquareMeterToHectare() {
         final AreaConverter converter = new AreaConverter();
 
         final double convert = converter.convert(100, SQUARE_METER, HECTARE);
@@ -98,7 +109,8 @@ public class AreaConverterTest {
     }
 
     @Test
-    public void convertFromSquareMeterToSquareDecameter() {
+    @DisplayName("should convert square meter to square decameter")
+    public void convertSquareMeterToSquareDecameter() {
         final AreaConverter converter = new AreaConverter();
 
         final double convert = converter.convert(100, SQUARE_METER, SQUARE_DECAMETER);
@@ -107,7 +119,8 @@ public class AreaConverterTest {
     }
 
     @Test
-    public void convertFromSquareMeterToSquareDecimeter() {
+    @DisplayName("should convert square meter to square decimeter")
+    public void convertSquareMeterToSquareDecimeter() {
         final AreaConverter converter = new AreaConverter();
 
         final double convert = converter.convert(100, SQUARE_METER, SQUARE_DECIMETER);

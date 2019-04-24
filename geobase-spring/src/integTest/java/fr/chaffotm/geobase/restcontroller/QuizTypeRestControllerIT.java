@@ -5,30 +5,31 @@ import fr.chaffotm.geobase.interceptor.LoggingInterceptor;
 import fr.chaffotm.geoquiz.resource.AnswerType;
 import fr.chaffotm.geoquiz.resource.QuestionType;
 import fr.chaffotm.geoquiz.resource.QuizType;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.OK;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class QuizTypeRestControllerIT {
 
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         restTemplate.getRestTemplate().setInterceptors(
                 List.of(new LoggingInterceptor(), new JsonInterceptor())
@@ -43,7 +44,8 @@ public class QuizTypeRestControllerIT {
     }
 
     @Test
-    public void getQuizTypes_should_return_all_possible_types() {
+    @DisplayName("getQuizTypes should return all possible types")
+    public void getQuizTypesShouldReturnAllPossibleTypes() {
         final ResponseEntity<List<QuizType>> response = restTemplate.exchange("/api/quiz-types", HttpMethod.GET,
                 null, new ParameterizedTypeReference<List<QuizType>>() {});
 

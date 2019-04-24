@@ -5,16 +5,17 @@ import fr.chaffotm.geobase.interceptor.LoggingInterceptor;
 import fr.chaffotm.geobase.web.exception.BadRequestBody;
 import fr.chaffotm.geobase.web.exception.ErrorBody;
 import fr.chaffotm.geobase.web.resource.Todo;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,14 +23,14 @@ import java.util.List;
 import static fr.chaffotm.geobase.assertion.ResponseEntityAssert.assertThat;
 import static org.springframework.http.HttpStatus.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ExceptionRestControllerIT {
 
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         restTemplate.getRestTemplate().setInterceptors(
                 List.of(new LoggingInterceptor(), new JsonInterceptor())
@@ -40,7 +41,8 @@ public class ExceptionRestControllerIT {
     }
 
     @Test
-    public void if_an_exception_occurs_an_internal_server_error_is_returned() {
+    @DisplayName("if an exception occurs an internal server error is returned")
+    public void ifAnExceptionOccursAnInternalServerErrorIsReturned() {
         final ResponseEntity<ErrorBody> response = restTemplate.getForEntity("/api/exceptions/exception", ErrorBody.class);
 
         assertThat(response)
@@ -49,7 +51,8 @@ public class ExceptionRestControllerIT {
     }
 
     @Test
-    public void if_a_runtime_exception_occurs_an_internal_server_error_is_returned() {
+    @DisplayName("if a runtime exception occurs an internal server error is returned")
+    public void ifARuntimeExceptionOccursAnInternalServerErrorIsReturned() {
         final ResponseEntity<ErrorBody> response = restTemplate.getForEntity("/api/exceptions/runtime-exception", ErrorBody.class);
 
         assertThat(response)
@@ -58,7 +61,8 @@ public class ExceptionRestControllerIT {
     }
 
     @Test
-    public void if_an_illegal_argument_exception_occurs_a_bad_request_is_returned() {
+    @DisplayName("if an illegal argument exception occurs a bad request is returned")
+    public void ifAnIllegalArgumentExceptionOccursABadRequestIsReturned() {
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("wrong argument");
 
@@ -70,7 +74,8 @@ public class ExceptionRestControllerIT {
     }
 
     @Test
-    public void if_an_entity_exists_exception_occurs_a_conflict_is_returned() {
+    @DisplayName("if an entity exists exception occurs a conflict is returned")
+    public void ifAnEntityExistsExceptionOccursAConflictIsReturned() {
         final ErrorBody errorBody = new ErrorBody();
         errorBody.setMessage("resource with id 5 does not exist");
 
@@ -82,7 +87,8 @@ public class ExceptionRestControllerIT {
     }
 
     @Test
-    public void if_an_entity_not_found_exception_occurs_a_not_found_is_returned() {
+    @DisplayName("if an entity not found exception occurs a not found is returned")
+    public void ifAnEntityNotFoundExceptionOccursANotFoundIsReturned() {
         final ResponseEntity<String> response = restTemplate.getForEntity("/api/exceptions/entity-not-found-exception", String.class);
 
         assertThat(response)
@@ -91,7 +97,8 @@ public class ExceptionRestControllerIT {
     }
 
     @Test
-    public void if_a_constraint_validation_exception_occurs_a_bad_request_is_returned_with_explanation() {
+    @DisplayName("if a constraint validation exception occurs a bad request is returned with explanation")
+    public void ifAConstraintValidationExceptionOccursABadRequestIsReturnedWithExplanation() {
         final Todo todo = new Todo();
         todo.setEmail("todo@");
         todo.setStartDate(LocalDate.now().minusDays(2));
@@ -110,7 +117,8 @@ public class ExceptionRestControllerIT {
     }
 
     @Test
-    public void if_the_payload_does_not_use_a_good_media_type_an_unsupported_media_type_is_returned() {
+    @DisplayName("if the payload use an invalid media type an unsupported media type is returned")
+    public void ifThePayloadUseAnInvalidMediaTypeAnUnsupportedMediaTypeIsReturned() {
         final Todo todo = new Todo();
         todo.setPriority(1);
         todo.setTitle("Important");
@@ -127,7 +135,8 @@ public class ExceptionRestControllerIT {
     }
 
     @Test
-    public void if_the_accept_header_is_not_supported_by_the_server_the_server_returns_ok_in_a_supported_representation() {
+    @DisplayName("if the accept header is not supported by the server the server returns ok in a supported representation")
+    public void ifTheAcceptHeaderIsNotSupportedByTheServerTheServerReturnsOkInASupportedRepresentation() {
         final HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_PDF));
         final HttpEntity<Todo> entity = new HttpEntity<>(null, headers);

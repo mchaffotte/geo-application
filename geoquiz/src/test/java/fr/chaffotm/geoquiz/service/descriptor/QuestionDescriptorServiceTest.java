@@ -1,6 +1,7 @@
 package fr.chaffotm.geoquiz.service.descriptor;
 
-import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -8,7 +9,8 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 public class QuestionDescriptorServiceTest {
 
     @Test
-    public void getDescriptor_should_throw_an_exception_if_question_type_is_null() {
+    @DisplayName("getDescriptor should throw an exception if question type is null")
+    public void getDescriptorShouldThrowAnExceptionIfQuestionTypeIsNull() {
         final QuestionDescriptorService service = new QuestionDescriptorService();
 
         final Throwable thrown = catchThrowable(() -> service.getDescriptor(null));

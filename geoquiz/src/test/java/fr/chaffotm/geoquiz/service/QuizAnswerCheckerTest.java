@@ -6,8 +6,9 @@ import fr.chaffotm.geoquiz.entity.QuizEntity;
 import fr.chaffotm.geoquiz.resource.AnswerType;
 import fr.chaffotm.geoquiz.resource.QuizAnswer;
 import fr.chaffotm.geoquiz.resource.QuizResult;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,13 +16,14 @@ public class QuizAnswerCheckerTest {
 
     private QuizAnswerChecker checker;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         checker = new QuizAnswerChecker();
     }
 
     @Test
-    public void score_should_validate_correct_answer() {
+    @DisplayName("score should validate correct answer")
+    public void scoreShouldValidateCorrectAnswer() {
         final QuizEntity quiz = new QuizEntityBuilder(AnswerType.MULTIPLE_CHOICE)
                 .question("What is the capital of England?", "London")
                 .getQuizEntity();
@@ -36,7 +38,8 @@ public class QuizAnswerCheckerTest {
     }
 
     @Test
-    public void score_should_not_validate_incorrect_answer() {
+    @DisplayName("score should not validate incorrect answer")
+    public void scoreShouldNotValidateIncorrectAnswer() {
         final QuizEntity quiz = new QuizEntityBuilder()
                 .question("What is the capital of England?", "London")
                 .getQuizEntity();
@@ -51,7 +54,8 @@ public class QuizAnswerCheckerTest {
     }
 
     @Test
-    public void score_should_ignore_case() {
+    @DisplayName("score should ignore case")
+    public void scoreShouldIgnoreCase() {
         final QuizEntity quiz = new QuizEntityBuilder()
                 .question("What is the capital of England?", "London")
                 .question("What is the capital of France?", "Paris")
@@ -70,7 +74,8 @@ public class QuizAnswerCheckerTest {
     }
 
     @Test
-    public void score_should_ignore_accent() {
+    @DisplayName("score should ignore accent")
+    public void scoreShouldIgnoreAccent() {
         final QuizEntity quiz = new QuizEntityBuilder()
                 .question("What is the lowest point of Argentina?", "Laguna del Carbón")
                 .question("What is the capital of Moldova?", "Chișinău")
@@ -87,7 +92,8 @@ public class QuizAnswerCheckerTest {
     }
 
     @Test
-    public void score_should_not_validate_with_not_all_correct_answers() {
+    @DisplayName("score should not validate with not all correct answers")
+    public void scoreShouldNotValidateWithNotAllCorrectAnswers() {
         final QuizEntity quiz = new QuizEntityBuilder()
                 .question("Which country has Mount Everest as highest point?", "China", "Nepal")
                 .getQuizEntity();
@@ -101,7 +107,8 @@ public class QuizAnswerCheckerTest {
     }
 
     @Test
-    public void score_should_not_validate_with_more_than_all_correct_answers() {
+    @DisplayName("score should not validate with more than all correct answers")
+    public void scoreShouldNotValidateWithMoreThanAllCorrectAnswers() {
         final QuizEntity quiz = new QuizEntityBuilder()
                 .question("Which country has Mount Everest as highest point?", "China", "Nepal")
                 .getQuizEntity();
