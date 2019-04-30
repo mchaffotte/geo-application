@@ -1,6 +1,6 @@
 dependencies {
     api project(':geodata')
-    api project(':text-to-query')
+    api project(':querify')
 
     compileOnly "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:$hibernateJpaVersion"
     compileOnly "javax.validation:validation-api:$beanValidationVersion"

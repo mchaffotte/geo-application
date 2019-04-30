@@ -1,9 +1,9 @@
 package fr.chaffotm.geoquiz.service.descriptor;
 
 import fr.chaffotm.geodata.entity.CountryEntity;
-import fr.chaffotm.query.criteria.QueryCriteria;
-import fr.chaffotm.query.CriteriaRepository;
 import fr.chaffotm.geoquiz.service.ColumnType;
+import fr.chaffotm.querify.CriteriaRepository;
+import fr.chaffotm.querify.criteria.QueryCriteria;
 
 import java.util.List;
 

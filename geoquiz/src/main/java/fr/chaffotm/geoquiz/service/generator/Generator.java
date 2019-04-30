@@ -1,8 +1,8 @@
 package fr.chaffotm.geoquiz.service.generator;
 
 import fr.chaffotm.geodata.entity.CountryEntity;
-import fr.chaffotm.geoquiz.service.MultipleChoice;
 import fr.chaffotm.geoquiz.resource.AnswerType;
+import fr.chaffotm.geoquiz.service.MultipleChoice;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package fr.chaffotm.geobase.repository;
 import fr.chaffotm.geoquiz.entity.QuizEntity;
 import fr.chaffotm.geoquiz.resource.QuizConfiguration;
 import fr.chaffotm.geoquiz.service.QuizMaker;
-import fr.chaffotm.query.jpa.JPACriteriaRepository;
+import fr.chaffotm.querify.jpa.JPACriteriaRepository;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;

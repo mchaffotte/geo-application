@@ -1,9 +1,9 @@
 package fr.chaffotm.geobase.service;
 
-import fr.chaffotm.geoquiz.entity.QuizEntity;
-import fr.chaffotm.geoquiz.mapper.QuizMapper;
 import fr.chaffotm.geobase.repository.QuizMakerRepository;
 import fr.chaffotm.geobase.repository.QuizRepository;
+import fr.chaffotm.geoquiz.entity.QuizEntity;
+import fr.chaffotm.geoquiz.mapper.QuizMapper;
 import fr.chaffotm.geoquiz.resource.*;
 import fr.chaffotm.geoquiz.service.ColumnType;
 import fr.chaffotm.geoquiz.service.QuizAnswerChecker;

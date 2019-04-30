@@ -2,9 +2,9 @@ package fr.chaffotm.geoquiz.service.descriptor;
 
 import fr.chaffotm.geodata.entity.CountryEntity;
 import fr.chaffotm.geoquiz.service.ColumnType;
-import fr.chaffotm.query.criteria.FieldOrder;
-import fr.chaffotm.query.criteria.Functions;
-import fr.chaffotm.query.criteria.QueryCriteria;
+import fr.chaffotm.querify.criteria.FieldOrder;
+import fr.chaffotm.querify.criteria.Functions;
+import fr.chaffotm.querify.criteria.QueryCriteria;
 
 public class TotalAreaQuestionDescriptor extends QueryCriteriaQuestionDescriptor {
 

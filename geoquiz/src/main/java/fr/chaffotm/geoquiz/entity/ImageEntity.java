@@ -1,7 +1,7 @@
 package fr.chaffotm.geoquiz.entity;
 
-import fr.chaffotm.geoquiz.service.descriptor.ImageType;
 import fr.chaffotm.geodata.entity.CountryEntity;
+import fr.chaffotm.geoquiz.service.descriptor.ImageType;
 
 import javax.persistence.*;
 import java.util.Objects;

@@ -5,9 +5,9 @@ import fr.chaffotm.geobase.web.resource.Frame;
 import fr.chaffotm.geodata.entity.CountryEntity;
 import fr.chaffotm.geodata.mapper.CountryMapper;
 import fr.chaffotm.geodata.resource.Country;
-import fr.chaffotm.query.SortConverter;
-import fr.chaffotm.query.criteria.QueryCriteria;
-import fr.chaffotm.query.criteria.Sort;
+import fr.chaffotm.querify.SortConverter;
+import fr.chaffotm.querify.criteria.QueryCriteria;
+import fr.chaffotm.querify.criteria.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

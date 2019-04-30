@@ -6,14 +6,14 @@ import fr.chaffotm.geoquiz.entity.ImageEntity;
 import fr.chaffotm.geoquiz.entity.QuestionEntity;
 import fr.chaffotm.geoquiz.entity.QuizEntity;
 import fr.chaffotm.geoquiz.resource.AnswerType;
-import fr.chaffotm.query.CriteriaRepository;
+import fr.chaffotm.geoquiz.resource.QuestionType;
+import fr.chaffotm.geoquiz.resource.QuizConfiguration;
 import fr.chaffotm.geoquiz.service.descriptor.ImageType;
 import fr.chaffotm.geoquiz.service.descriptor.QuestionDescriptor;
 import fr.chaffotm.geoquiz.service.descriptor.QuestionDescriptorService;
 import fr.chaffotm.geoquiz.service.generator.Generator;
 import fr.chaffotm.geoquiz.service.generator.GeneratorFactory;
-import fr.chaffotm.geoquiz.resource.QuestionType;
-import fr.chaffotm.geoquiz.resource.QuizConfiguration;
+import fr.chaffotm.querify.CriteriaRepository;
 
 import java.util.List;
 import java.util.Set;

@@ -1,8 +1,0 @@
-dependencies {
-    compileOnly "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:$hibernateJpaVersion"
-
-    integTestImplementation "org.hibernate:hibernate-entitymanager:$hibernateEntityManagerVersion"
-    integTestImplementation 'org.slf4j:slf4j-simple:1.7.25'
-    integTestImplementation "com.sun.xml.bind:jaxb-impl:$jaxbImplVersion"
-    integTestImplementation "org.glassfish.jaxb:jaxb-runtime:$jaxbImplVersion"
-}

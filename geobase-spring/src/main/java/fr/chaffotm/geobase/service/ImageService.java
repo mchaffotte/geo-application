@@ -1,7 +1,7 @@
 package fr.chaffotm.geobase.service;
 
-import fr.chaffotm.geoquiz.entity.ImageEntity;
 import fr.chaffotm.geobase.repository.QuizRepository;
+import fr.chaffotm.geoquiz.entity.ImageEntity;
 import fr.chaffotm.geoquiz.service.descriptor.ImageType;
 import org.springframework.stereotype.Service;
 

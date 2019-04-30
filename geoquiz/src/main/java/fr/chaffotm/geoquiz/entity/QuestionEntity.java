@@ -1,7 +1,9 @@
 package fr.chaffotm.geoquiz.entity;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity(name = "Question")
 @Table(name = "question")
