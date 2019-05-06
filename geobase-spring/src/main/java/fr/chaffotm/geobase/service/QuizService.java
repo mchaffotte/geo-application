@@ -1,14 +1,15 @@
 package fr.chaffotm.geobase.service;
 
-import fr.chaffotm.geobase.repository.QuizMakerRepository;
+import fr.chaffotm.geobase.repository.QueryCriteriaRepository;
 import fr.chaffotm.geobase.repository.QuizRepository;
-import fr.chaffotm.geoquiz.entity.QuizEntity;
-import fr.chaffotm.geoquiz.mapper.QuizMapper;
-import fr.chaffotm.geoquiz.resource.*;
-import fr.chaffotm.geoquiz.service.ColumnType;
-import fr.chaffotm.geoquiz.service.QuizAnswerChecker;
-import fr.chaffotm.geoquiz.service.descriptor.QuestionDescriptor;
-import fr.chaffotm.geoquiz.service.descriptor.QuestionDescriptorService;
+import fr.chaffotm.quizzify.entity.QuizEntity;
+import fr.chaffotm.quizzify.mapper.QuizMapper;
+import fr.chaffotm.quizzify.resource.*;
+import fr.chaffotm.quizzify.service.ColumnType;
+import fr.chaffotm.quizzify.service.QuizAnswerChecker;
+import fr.chaffotm.quizzify.service.QuizMaker;
+import fr.chaffotm.quizzify.service.descriptor.QuestionDescriptor;
+import fr.chaffotm.quizzify.service.descriptor.QuestionDescriptorService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,21 +23,22 @@ public class QuizService {
 
     private final QuizRepository quizRepository;
 
-    private final QuizMakerRepository quizMakerRepository;
+    private final QuizMaker quizMaker;
 
     private final QuizAnswerChecker checker;
 
     private final QuestionDescriptorService questionService;
 
-    public QuizService(final QuizRepository quizRepository, final QuizMakerRepository quizMakerRepository) {
+    public QuizService(final QuizRepository quizRepository, final QuestionDescriptorService questionService,
+                       final QueryCriteriaRepository queryCriteriaRepository) {
         this.quizRepository = quizRepository;
-        this.quizMakerRepository = quizMakerRepository;
+        this.questionService = questionService;
+        quizMaker = new QuizMaker(queryCriteriaRepository, questionService);
         checker = new QuizAnswerChecker();
-        questionService = new QuestionDescriptorService();
     }
 
     public long create(final QuizConfiguration configuration) {
-        final QuizEntity newQuiz = quizMakerRepository.build(configuration);
+        final QuizEntity newQuiz = quizMaker.build(configuration);
         final QuizEntity createdQuiz = quizRepository.create(newQuiz);
         return createdQuiz.getId();
     }
@@ -52,9 +54,9 @@ public class QuizService {
     }
 
     public List<QuizType> getQuizTypes() {
-        final Map<QuestionType, QuestionDescriptor> descriptors = questionService.getDescriptors();
+        final Map<String, QuestionDescriptor> descriptors = questionService.getDescriptors();
         final List<QuizType> quizTypes = new ArrayList<>();
-        for (Map.Entry<QuestionType, QuestionDescriptor> descriptor : descriptors.entrySet()) {
+        for (Map.Entry<String, QuestionDescriptor> descriptor : descriptors.entrySet()) {
             final List<AnswerType> answerTypes = new ArrayList<>();
             if (ColumnType.NUMERIC != descriptor.getValue().getAttributeColumnType()) {
                 answerTypes.add(AnswerType.ANSWER);

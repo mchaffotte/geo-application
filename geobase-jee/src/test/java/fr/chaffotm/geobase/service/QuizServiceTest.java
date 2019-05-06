@@ -1,8 +1,8 @@
 package fr.chaffotm.geobase.service;
 
 import fr.chaffotm.geobase.repository.QuizRepository;
-import fr.chaffotm.geoquiz.builder.QuizAnswerBuilder;
-import fr.chaffotm.geoquiz.resource.QuizAnswer;
+import fr.chaffotm.quizzify.builder.QuizAnswerBuilder;
+import fr.chaffotm.quizzify.resource.QuizAnswer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -4,8 +4,8 @@ import fr.chaffotm.geobase.assertion.ResponseEntityAssert;
 import fr.chaffotm.geobase.interceptor.JsonInterceptor;
 import fr.chaffotm.geobase.interceptor.LoggingInterceptor;
 import fr.chaffotm.geobase.web.exception.BadRequestBody;
-import fr.chaffotm.geoquiz.builder.QuizAnswerBuilder;
-import fr.chaffotm.geoquiz.resource.*;
+import fr.chaffotm.quizzify.builder.QuizAnswerBuilder;
+import fr.chaffotm.quizzify.resource.*;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -61,7 +61,7 @@ public class QuizRestControllerIT {
     public void answerQuizShouldGenerateAQuizWithoutChoices() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.ANSWER);
-        configuration.setQuestionType(QuestionType.CAPITAL);
+        configuration.setQuestionType("CAPITAL");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, withoutChoices);
     }
@@ -71,7 +71,7 @@ public class QuizRestControllerIT {
     public void answerQuizShouldCheckUserAnswersUsingCapitals() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
-        configuration.setQuestionType(QuestionType.CAPITAL);
+        configuration.setQuestionType("CAPITAL");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
@@ -81,7 +81,7 @@ public class QuizRestControllerIT {
     public void answerQuizShouldCheckUserAnswersUsingFlags() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
-        configuration.setQuestionType(QuestionType.FLAG);
+        configuration.setQuestionType("FLAG");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
@@ -91,7 +91,7 @@ public class QuizRestControllerIT {
     public void answerQuizShouldCheckUserAnswersUsingSilhouettes() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
-        configuration.setQuestionType(QuestionType.SILHOUETTE);
+        configuration.setQuestionType("SILHOUETTE");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
@@ -101,7 +101,7 @@ public class QuizRestControllerIT {
     public void answerQuizShouldCheckUserAnswersUsingLandArea() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
-        configuration.setQuestionType(QuestionType.LAND_AREA);
+        configuration.setQuestionType("LAND_AREA");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
@@ -111,7 +111,7 @@ public class QuizRestControllerIT {
     public void answerQuizShouldCheckUserAnswersUsingWaterArea() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
-        configuration.setQuestionType(QuestionType.WATER_AREA);
+        configuration.setQuestionType("WATER_AREA");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
@@ -121,7 +121,7 @@ public class QuizRestControllerIT {
     public void answerQuizShouldCheckUserAnswersUsingTotalArea() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
-        configuration.setQuestionType(QuestionType.TOTAL_AREA);
+        configuration.setQuestionType("TOTAL_AREA");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
@@ -131,7 +131,7 @@ public class QuizRestControllerIT {
     public void answerQuizShouldNotGenerateAQuizDueToAMisconfigurationUsingWaterArea() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.ANSWER);
-        configuration.setQuestionType(QuestionType.WATER_AREA);
+        configuration.setQuestionType("WATER_AREA");
 
         final ResponseEntity<Void> response = restTemplate.postForEntity("/api/quizzes", configuration, Void.class);
 

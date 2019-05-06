@@ -1,7 +1,7 @@
 package fr.chaffotm.geobase.web.rest;
 
 import fr.chaffotm.geobase.service.QuizService;
-import fr.chaffotm.geoquiz.resource.QuizType;
+import fr.chaffotm.quizzify.resource.QuizType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

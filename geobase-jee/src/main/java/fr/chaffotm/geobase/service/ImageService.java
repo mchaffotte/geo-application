@@ -1,8 +1,7 @@
 package fr.chaffotm.geobase.service;
 
 import fr.chaffotm.geobase.repository.QuizRepository;
-import fr.chaffotm.geoquiz.entity.ImageEntity;
-import fr.chaffotm.geoquiz.service.descriptor.ImageType;
+import fr.chaffotm.quizzify.entity.ImageEntity;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -28,16 +27,8 @@ public class ImageService {
 
     public InputStream getImageStream(final UUID imageUuid) {
         final ImageEntity image = quizRepository.getQuestionImage(imageUuid);
-        final String fileName = image.getCountry().getCode().toLowerCase() + ".png";
-        final StringBuilder pathBuilder = new StringBuilder("/");
-        if (ImageType.FLAG == image.getImageType()) {
-            pathBuilder.append("flags");
-        } else if (ImageType.SILHOUETTE == image.getImageType()) {
-            pathBuilder.append("silhouettes");
-        }
-        pathBuilder.append("/").append(fileName);
         final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        return classLoader.getResourceAsStream(pathBuilder.toString());
+        return classLoader.getResourceAsStream("/" + image.getFilename());
     }
 
 }

@@ -5,7 +5,7 @@ import fr.chaffotm.geobase.service.CountryService;
 import fr.chaffotm.geobase.web.exception.ExceptionHandlingController;
 import fr.chaffotm.geobase.web.rest.CountryRestController;
 import fr.chaffotm.geodata.entity.CountryEntity;
-import fr.chaffotm.geoquiz.entity.QuizEntity;
+import fr.chaffotm.quizzify.entity.QuizEntity;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

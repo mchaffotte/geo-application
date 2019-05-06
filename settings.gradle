@@ -1,2 +1,4 @@
 rootProject.name = 'geo-application'
-include 'querify', 'querify-jpa', 'geodata', 'geoquiz', 'geobase-jee', 'geobase-spring'
+include 'querify', 'querify-jpa'
+include 'quizzify', 'geodata', 'quizzify-geo'
+include 'geobase-jee', 'geobase-spring'

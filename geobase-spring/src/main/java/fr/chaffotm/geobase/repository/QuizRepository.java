@@ -1,7 +1,7 @@
 package fr.chaffotm.geobase.repository;
 
-import fr.chaffotm.geoquiz.entity.ImageEntity;
-import fr.chaffotm.geoquiz.entity.QuizEntity;
+import fr.chaffotm.quizzify.entity.ImageEntity;
+import fr.chaffotm.quizzify.entity.QuizEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;

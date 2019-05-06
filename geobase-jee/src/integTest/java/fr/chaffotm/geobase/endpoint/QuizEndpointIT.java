@@ -2,8 +2,8 @@ package fr.chaffotm.geobase.endpoint;
 
 import fr.chaffotm.geobase.assertion.ResponseAssert;
 import fr.chaffotm.geobase.web.exception.BadRequestBody;
-import fr.chaffotm.geoquiz.builder.QuizAnswerBuilder;
-import fr.chaffotm.geoquiz.resource.*;
+import fr.chaffotm.quizzify.builder.QuizAnswerBuilder;
+import fr.chaffotm.quizzify.resource.*;
 import org.assertj.core.api.Condition;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -69,7 +69,7 @@ public class QuizEndpointIT {
     public void answerQuiz_should_generate_a_quiz_without_choices() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.ANSWER);
-        configuration.setQuestionType(QuestionType.CAPITAL);
+        configuration.setQuestionType("CAPITAL");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, withoutChoices);
     }
@@ -78,7 +78,7 @@ public class QuizEndpointIT {
     public void answerQuiz_should_check_user_answers_using_capitals() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
-        configuration.setQuestionType(QuestionType.CAPITAL);
+        configuration.setQuestionType("CAPITAL");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
@@ -87,7 +87,7 @@ public class QuizEndpointIT {
     public void answerQuiz_should_check_user_answers_using_flags() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
-        configuration.setQuestionType(QuestionType.FLAG);
+        configuration.setQuestionType("FLAG");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
@@ -96,7 +96,7 @@ public class QuizEndpointIT {
     public void answerQuiz_should_check_user_answers_using_silhouettes() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
-        configuration.setQuestionType(QuestionType.SILHOUETTE);
+        configuration.setQuestionType("SILHOUETTE");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
@@ -105,7 +105,7 @@ public class QuizEndpointIT {
     public void answerQuiz_should_check_user_answers_using_land_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
-        configuration.setQuestionType(QuestionType.LAND_AREA);
+        configuration.setQuestionType("LAND_AREA");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
@@ -114,7 +114,7 @@ public class QuizEndpointIT {
     public void answerQuiz_should_check_user_answers_using_water_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
-        configuration.setQuestionType(QuestionType.WATER_AREA);
+        configuration.setQuestionType("WATER_AREA");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
@@ -123,7 +123,7 @@ public class QuizEndpointIT {
     public void answerQuiz_should_check_user_answers_using_total_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
-        configuration.setQuestionType(QuestionType.TOTAL_AREA);
+        configuration.setQuestionType("TOTAL_AREA");
 
         assertThatQuizIsCreatedAndAnswerWithEmptySolution(configuration, fourChoices);
     }
@@ -132,7 +132,7 @@ public class QuizEndpointIT {
     public void answerQuiz_should_not_generate_a_quiz_due_to_a_misconfiguration_using_water_area() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.ANSWER);
-        configuration.setQuestionType(QuestionType.WATER_AREA);
+        configuration.setQuestionType("WATER_AREA");
         final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();

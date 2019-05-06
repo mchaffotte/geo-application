@@ -2,8 +2,8 @@ package fr.chaffotm.geobase.repository;
 
 import fr.chaffotm.geodata.entity.CountryEntity;
 import fr.chaffotm.querify.CriteriaRepository;
+import fr.chaffotm.querify.JPACriteriaRepository;
 import fr.chaffotm.querify.criteria.QueryCriteria;
-import fr.chaffotm.querify.jpa.JPACriteriaRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;

@@ -1,0 +1,12 @@
+dependencies {
+    api project(':geodata')
+    api project(':quizzify')
+
+    compileOnly "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:$hibernateJpaVersion"
+    compileOnly "javax.validation:validation-api:$beanValidationVersion"
+
+    testCompileOnly "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:$hibernateJpaVersion"
+    testCompileOnly "javax.validation:validation-api:$beanValidationVersion"
+
+    integTestImplementation "org.hibernate:hibernate-entitymanager:$hibernateEntityManagerVersion"
+}

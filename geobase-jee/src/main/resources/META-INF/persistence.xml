@@ -8,10 +8,10 @@
         <class>fr.chaffotm.geodata.entity.AreaEntity</class>
         <class>fr.chaffotm.geodata.entity.CityEntity</class>
         <class>fr.chaffotm.geodata.entity.CountryEntity</class>
-        <class>fr.chaffotm.geoquiz.entity.ImageEntity</class>
-        <class>fr.chaffotm.geoquiz.entity.AnswerEntity</class>
-        <class>fr.chaffotm.geoquiz.entity.QuestionEntity</class>
-        <class>fr.chaffotm.geoquiz.entity.QuizEntity</class>
+        <class>fr.chaffotm.quizzify.entity.ImageEntity</class>
+        <class>fr.chaffotm.quizzify.entity.AnswerEntity</class>
+        <class>fr.chaffotm.quizzify.entity.QuestionEntity</class>
+        <class>fr.chaffotm.quizzify.entity.QuizEntity</class>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

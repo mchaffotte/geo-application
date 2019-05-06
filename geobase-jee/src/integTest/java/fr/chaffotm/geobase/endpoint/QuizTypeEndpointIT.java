@@ -1,8 +1,7 @@
 package fr.chaffotm.geobase.endpoint;
 
-import fr.chaffotm.geoquiz.resource.AnswerType;
-import fr.chaffotm.geoquiz.resource.QuestionType;
-import fr.chaffotm.geoquiz.resource.QuizType;
+import fr.chaffotm.quizzify.resource.AnswerType;
+import fr.chaffotm.quizzify.resource.QuizType;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -42,7 +41,7 @@ public class QuizTypeEndpointIT {
     @ArquillianResource
     private URI baseURL;
 
-    private QuizType build(final QuestionType questionType, final AnswerType... answerTypes) {
+    private QuizType build(final String questionType, final AnswerType... answerTypes) {
         final QuizType type = new QuizType();
         type.setQuestionType(questionType);
         type.setAnswerTypes(List.of(answerTypes));
@@ -59,12 +58,12 @@ public class QuizTypeEndpointIT {
                 .hasStatus(OK)
                 .withBodyList(QuizType.class)
                 .containsExactlyInAnyOrder(
-                        build(QuestionType.CAPITAL, AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE),
-                        build(QuestionType.TOTAL_AREA, AnswerType.MULTIPLE_CHOICE),
-                        build(QuestionType.LAND_AREA, AnswerType.MULTIPLE_CHOICE),
-                        build(QuestionType.WATER_AREA, AnswerType.MULTIPLE_CHOICE),
-                        build(QuestionType.FLAG, AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE),
-                        build(QuestionType.SILHOUETTE, AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE)
+                        build("CAPITAL", AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE),
+                        build("TOTAL_AREA", AnswerType.MULTIPLE_CHOICE),
+                        build("LAND_AREA", AnswerType.MULTIPLE_CHOICE),
+                        build("WATER_AREA", AnswerType.MULTIPLE_CHOICE),
+                        build("FLAG", AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE),
+                        build("SILHOUETTE", AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE)
                 );
     }
 
