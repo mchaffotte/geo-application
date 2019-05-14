@@ -1,9 +1,6 @@
 package fr.chaffotm.querify.jpa;
 
-import fr.chaffotm.querify.criteria.FieldOrder;
-import fr.chaffotm.querify.criteria.Function;
-import fr.chaffotm.querify.criteria.FunctionOperator;
-import fr.chaffotm.querify.criteria.Sort;
+import fr.chaffotm.querify.criteria.*;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
@@ -56,7 +53,7 @@ public class CriteriaQueryBuilder<T> {
         return this;
     }
 
-    private Path<Number> getPath(final String fieldPath) {
+    private <P> Path<P> getPath(final String fieldPath) {
         final String fieldName;
         final Path<?> selection;
         final FieldAccessor accessor = new FieldAccessor(fieldPath);
@@ -72,6 +69,15 @@ public class CriteriaQueryBuilder<T> {
 
     public CriteriaQueryBuilder<T> join(final String fieldName) {
         addJoin(fieldName);
+        return this;
+    }
+
+    public CriteriaQueryBuilder<T> filter(final FieldFilter filter) {
+        final Path<String> path = getPath(filter.getFieldName());
+        final WhereFieldFilterVisitor visitor = new WhereFieldFilterVisitor(path);
+        filter.accept(visitor);
+        final Predicate predicate = visitor.getPredicate();
+        query.where(predicate);
         return this;
     }
 

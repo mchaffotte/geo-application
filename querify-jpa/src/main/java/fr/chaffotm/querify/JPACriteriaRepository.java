@@ -37,6 +37,9 @@ public class JPACriteriaRepository implements CriteriaRepository {
         if (criteria.getJoin() != null) {
             criteriaQueryBuilder.join(criteria.getJoin());
         }
+        if (criteria.getFilter() != null) {
+            criteriaQueryBuilder.filter(criteria.getFilter());
+        }
         final List<Sort> sorts = criteria.getSorts();
         for (Sort sort : sorts) {
             criteriaQueryBuilder.sort(sort);

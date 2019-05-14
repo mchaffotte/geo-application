@@ -27,6 +27,8 @@ public class Element {
     @JoinColumn
     private ElementCategory category;
 
+    private String phaseAtSTP;
+
     public Long getId() {
         return id;
     }
@@ -69,6 +71,14 @@ public class Element {
 
     public void setCategory(ElementCategory category) {
         this.category = category;
+    }
+
+    public String getPhaseAtSTP() {
+        return phaseAtSTP;
+    }
+
+    public void setPhaseAtSTP(String phaseAtSTP) {
+        this.phaseAtSTP = phaseAtSTP;
     }
 
     @Override

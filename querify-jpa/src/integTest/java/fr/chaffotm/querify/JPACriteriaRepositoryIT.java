@@ -1,6 +1,7 @@
 package fr.chaffotm.querify;
 
 import fr.chaffotm.querify.criteria.FieldOrder;
+import fr.chaffotm.querify.criteria.Filters;
 import fr.chaffotm.querify.criteria.QueryCriteria;
 import fr.chaffotm.querify.domain.Element;
 import fr.chaffotm.querify.domain.ElementCategory;
@@ -29,15 +30,24 @@ public class JPACriteriaRepositoryIT {
     }
 
     private static Element build(final String name, final String symbol, final int atomicNumber) {
-        return build(name, symbol, atomicNumber, 0);
+        return build(name, symbol, atomicNumber, 0, null);
+    }
+
+    private static Element build(final String name, final String symbol, final int atomicNumber, final String phaseAtSTP) {
+        return build(name, symbol, atomicNumber, 0, phaseAtSTP);
     }
 
     private static Element build(final String name, final String symbol, final int atomicNumber, final int numberOfNeutrons) {
+        return build(name, symbol, atomicNumber, numberOfNeutrons, null);
+    }
+
+    private static Element build(final String name, final String symbol, final int atomicNumber, final int numberOfNeutrons, final String phaseAtSTP) {
         final Element element = new Element();
         element.setName(name);
         element.setSymbol(symbol);
         element.setAtomicNumber(atomicNumber);
         element.setNumberOfNeutrons(numberOfNeutrons);
+        element.setPhaseAtSTP(phaseAtSTP);
         return element;
     }
 
@@ -52,7 +62,7 @@ public class JPACriteriaRepositoryIT {
             elements.put(ElementSymbol.B, build("Boron", "B", 5));
             elements.put(ElementSymbol.C, build("Carbon", "C", 6));
             elements.put(ElementSymbol.N, build("Nitrogen", "N", 7));
-            elements.put(ElementSymbol.O, build("Oxygen", "O", 8));
+            elements.put(ElementSymbol.O, build("Oxygen", "O", 8, "gas"));
             elements.put(ElementSymbol.F, build("Fluorine", "F", 9));
             elements.put(ElementSymbol.NE, build("Neon", "Ne", 10));
             for (Element element : elements.values()) {
@@ -107,7 +117,7 @@ public class JPACriteriaRepositoryIT {
 
         assertThat(elements).extracting("name")
                 .containsExactly("Boron", "Beryllium", "Carbon", "Deuterium", "Fluorine", "Hydrogen", "Helium", "Lithium",
-                        "Nitrogen", "Neon","Oxygen");
+                        "Nitrogen", "Neon", "Oxygen");
     }
 
     @Test
@@ -123,7 +133,7 @@ public class JPACriteriaRepositoryIT {
 
         assertThat(elements).extracting("name")
                 .containsExactly("Boron", "Beryllium", "Carbon", "Deuterium", "Fluorine", "Hydrogen", "Helium", "Lithium",
-                        "Nitrogen", "Neon","Oxygen");
+                        "Nitrogen", "Neon", "Oxygen");
     }
 
     @Test
@@ -139,7 +149,7 @@ public class JPACriteriaRepositoryIT {
 
         assertThat(elements).extracting("name")
                 .containsExactly("Boron", "Beryllium", "Carbon", "Deuterium", "Fluorine", "Hydrogen", "Helium", "Lithium",
-                        "Nitrogen", "Neon","Oxygen");
+                        "Nitrogen", "Neon", "Oxygen");
     }
 
     @Test
@@ -187,7 +197,7 @@ public class JPACriteriaRepositoryIT {
 
         assertThat(elements).extracting("name")
                 .containsExactly("Lithium", "Beryllium", "Boron", "Helium", "Neon", "Carbon", "Fluorine", "Hydrogen",
-                        "Nitrogen",  "Oxygen");
+                        "Nitrogen", "Oxygen");
     }
 
     @Test
@@ -204,7 +214,7 @@ public class JPACriteriaRepositoryIT {
 
         assertThat(elements).extracting("name")
                 .containsExactly("Lithium", "Beryllium", "Boron", "Helium", "Neon", "Carbon", "Fluorine", "Hydrogen",
-                        "Nitrogen",  "Oxygen");
+                        "Nitrogen", "Oxygen");
     }
 
     @Test
@@ -223,6 +233,71 @@ public class JPACriteriaRepositoryIT {
         assertThat(elements).extracting("name")
                 .containsExactly("Hydrogen", "Helium", "Deuterium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen",
                         "Oxygen", "Fluorine", "Neon");
+    }
+
+    @Test
+    @DisplayName("criteria should filter the elements with field in list")
+    public void criteriaShouldFilterTheElementsWithFieldInList() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.in("symbol", "N", "O", "C", "H"));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Carbon", "Hydrogen", "Nitrogen", "Oxygen");
+    }
+
+    @Test
+    @DisplayName("criteria should filter the elements with field not in list")
+    public void criteriaShouldFilterTheElementsWithFieldNotInList() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.notIn("symbol", "N", "O", "C", "H"));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Boron", "Beryllium", "Deuterium", "Fluorine", "Helium", "Lithium", "Neon");
+    }
+
+    @Test
+    @DisplayName("criteria should filter the elements with field with null value")
+    public void criteriaShouldFilterTheElementsWithFieldWithNullValue() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.isNull("phaseAtSTP"));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Boron", "Beryllium", "Carbon", "Deuterium", "Fluorine", "Hydrogen", "Helium", "Lithium",
+                        "Nitrogen", "Neon");
+    }
+
+    @Test
+    @DisplayName("criteria should filter the elements with field with not null value")
+    public void criteriaShouldFilterTheElementsWithFieldWithNotNullValue() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.isNotNull("phaseAtSTP"));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Oxygen");
     }
 
 }

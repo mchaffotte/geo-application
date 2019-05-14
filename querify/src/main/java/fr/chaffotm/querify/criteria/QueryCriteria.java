@@ -11,6 +11,8 @@ public class QueryCriteria<T> {
 
     private String join;
 
+    private FieldFilter filter;
+
     private List<Sort> sorts;
 
     public QueryCriteria(final Class<T> entityClass) {
@@ -36,6 +38,14 @@ public class QueryCriteria<T> {
 
     public void setJoin(final String fieldName) {
         this.join = fieldName;
+    }
+
+    public FieldFilter getFilter() {
+        return filter;
+    }
+
+    public void setFilter(final FieldFilter filter) {
+        this.filter = filter;
     }
 
     public List<Sort> getSorts() {
