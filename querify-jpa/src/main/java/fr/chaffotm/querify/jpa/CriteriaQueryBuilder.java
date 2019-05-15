@@ -4,9 +4,7 @@ import fr.chaffotm.querify.criteria.*;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CriteriaQueryBuilder<T> {
 
@@ -18,7 +16,7 @@ public class CriteriaQueryBuilder<T> {
 
     private Expression<?> functionExpression;
 
-    private Map<String, Join<Object, Object>> joinAliases;
+    private JoinBuilder joinBuilder;
 
     private List<Order> orders;
 
@@ -27,7 +25,7 @@ public class CriteriaQueryBuilder<T> {
         query = builder.createQuery(FunctionEntity.class);
         functionExpression = null;
         mainEntity = query.from(queryClass);
-        joinAliases = new HashMap<>();
+        joinBuilder = new JoinBuilder(mainEntity);
         orders = new ArrayList<>();
     }
 
@@ -43,8 +41,8 @@ public class CriteriaQueryBuilder<T> {
 
     public CriteriaQueryBuilder<T> function(final Function function) {
         if (FunctionOperator.SUM == function.getOperator()) {
-            final Path<Number> path1 = getPath(function.getAttribute1());
-            final Path<Number> path2 = getPath(function.getAttribute2());
+            final Path<Number> path1 = joinBuilder.getPath(function.getAttribute1());
+            final Path<Number> path2 = joinBuilder.getPath(function.getAttribute2());
             functionExpression = builder.sum(path1, path2);
             functionExpression.alias(function.getAlias());
         } else {
@@ -53,28 +51,13 @@ public class CriteriaQueryBuilder<T> {
         return this;
     }
 
-    private <P> Path<P> getPath(final String fieldPath) {
-        final String fieldName;
-        final Path<?> selection;
-        final FieldAccessor accessor = new FieldAccessor(fieldPath);
-        if (accessor.hasSubField()) {
-            fieldName = accessor.getSubFieldName();
-            selection = addJoin(accessor.getFieldName());
-        } else {
-            fieldName = accessor.getFieldName();
-            selection = mainEntity;
-        }
-        return selection.get(fieldName);
-    }
-
     public CriteriaQueryBuilder<T> join(final String fieldName) {
-        addJoin(fieldName);
+        joinBuilder.addJoin(fieldName);
         return this;
     }
 
     public CriteriaQueryBuilder<T> filter(final FieldFilter filter) {
-        final Path<String> path = getPath(filter.getFieldName());
-        final WhereFieldFilterVisitor visitor = new WhereFieldFilterVisitor(path);
+        final PredicateFieldFilterVisitor visitor = new PredicateFieldFilterVisitor(builder, joinBuilder);
         filter.accept(visitor);
         final Predicate predicate = visitor.getPredicate();
         query.where(predicate);
@@ -86,7 +69,7 @@ public class CriteriaQueryBuilder<T> {
         final FieldAccessor accessor = new FieldAccessor(sort.getFieldName());
         Expression path = null;
         if (accessor.hasSubField()) {
-            final Join join = addJoin(accessor.getFieldName());
+            final Join join = joinBuilder.addJoin(accessor.getFieldName());
             path = join.get(accessor.getSubFieldName());
         } else if (accessor.hasField()) {
             if (functionExpression == null || !functionExpression.getAlias().equals(accessor.getFieldName())) {
@@ -101,10 +84,6 @@ public class CriteriaQueryBuilder<T> {
             throw new IllegalArgumentException();
         }
         return this;
-    }
-
-    private Join<Object, Object> addJoin(final String fieldName) {
-        return joinAliases.computeIfAbsent(fieldName, join -> mainEntity.join(fieldName));
     }
 
     private void addSort(final Expression expression, final FieldOrder fieldOrder) {

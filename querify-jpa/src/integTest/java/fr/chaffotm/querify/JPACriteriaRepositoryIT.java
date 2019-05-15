@@ -300,4 +300,135 @@ public class JPACriteriaRepositoryIT {
                 .containsExactly("Oxygen");
     }
 
+    @Test
+    @DisplayName("criteria should filter the elements with field equal to the value")
+    public void criteriaShouldSortTheElementsWithFieldEqualToTheValue() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.equal("symbol", "F"));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Fluorine");
+    }
+
+    @Test
+    @DisplayName("criteria should filter the elements with field not equal to the value")
+    public void criteriaShouldSortTheElementsWithFieldNotEqualToTheValue() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.notEqual("atomicNumber", 9));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Boron", "Beryllium", "Carbon", "Deuterium", "Hydrogen", "Helium", "Lithium",
+                        "Nitrogen", "Neon", "Oxygen");
+    }
+
+    @Test
+    @DisplayName("criteria should filter the elements with field greater than the value")
+    public void criteriaShouldSortTheElementsWithFieldGreaterThanTheValue() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.greaterThan("atomicNumber", 8));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Fluorine", "Neon");
+    }
+
+    @Test
+    @DisplayName("criteria should filter the elements with field greater than or equal to the value")
+    public void criteriaShouldSortTheElementsWithFieldGreaterThanOrEqualToTheValue() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.greaterThanOrEqual("atomicNumber", 8));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Fluorine", "Neon", "Oxygen");
+    }
+
+    @Test
+    @DisplayName("criteria should filter the elements with field greater than or equal to the string value")
+    public void criteriaShouldSortTheElementsWithFieldGreaterThanOrEqualToTheStringValue() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.greaterThanOrEqual("name", "Neon"));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Nitrogen", "Neon", "Oxygen");
+    }
+
+    @Test
+    @DisplayName("criteria should filter the elements with number field greater than or equal to the string value")
+    public void criteriaShouldSortTheElementsWithNumberFieldGreaterThanOrEqualToTheStringValue() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.greaterThanOrEqual("atomicNumber", "8"));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Fluorine", "Neon", "Oxygen");
+    }
+
+    @Test
+    @DisplayName("criteria should filter the elements with field less than the value")
+    public void criteriaShouldSortTheElementsWithFieldLessThanTheValue() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.lessThan("atomicNumber", 8));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Boron", "Beryllium", "Carbon", "Deuterium", "Hydrogen", "Helium", "Lithium",
+                        "Nitrogen");
+    }
+
+    @Test
+    @DisplayName("criteria should filter the elements with field less than or equal to the value")
+    public void criteriaShouldSortTheElementsWithFieldLessThanOrEqualToTheValue() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.lessThanOrEqual("atomicNumber", 8));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Boron", "Beryllium", "Carbon", "Deuterium", "Hydrogen", "Helium", "Lithium",
+                        "Nitrogen", "Oxygen");
+    }
+
 }

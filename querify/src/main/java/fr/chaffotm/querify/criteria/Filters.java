@@ -1,9 +1,6 @@
 package fr.chaffotm.querify.criteria;
 
-import fr.chaffotm.querify.criteria.filter.CollectionFieldFilter;
-import fr.chaffotm.querify.criteria.filter.CollectionOperator;
-import fr.chaffotm.querify.criteria.filter.NoValueFieldFilter;
-import fr.chaffotm.querify.criteria.filter.NoValueOperator;
+import fr.chaffotm.querify.criteria.filter.*;
 
 public class Filters {
 
@@ -24,6 +21,30 @@ public class Filters {
 
     public static FieldFilter isNotNull(final String fieldName) {
         return new NoValueFieldFilter(fieldName, NoValueOperator.NOT_NULL);
+    }
+
+    public static FieldFilter equal(final String fieldName, final Object value) {
+        return new ValueFieldFilter(fieldName, ValueOperator.EQUAL, value);
+    }
+
+    public static FieldFilter notEqual(final String fieldName, final Object value) {
+        return new ValueFieldFilter(fieldName, ValueOperator.NOT_EQUAL, value);
+    }
+
+    public static FieldFilter greaterThan(final String fieldName, final Object value) {
+        return new ValueFieldFilter(fieldName, ValueOperator.GREATER_THAN, value);
+    }
+
+    public static FieldFilter greaterThanOrEqual(final String fieldName, final Object value) {
+        return new ValueFieldFilter(fieldName, ValueOperator.GREATER_THAN_OR_EQUAL, value);
+    }
+
+    public static FieldFilter lessThan(final String fieldName, final Object value) {
+        return new ValueFieldFilter(fieldName, ValueOperator.LESS_THAN, value);
+    }
+
+    public static FieldFilter lessThanOrEqual(final String fieldName, final Object value) {
+        return new ValueFieldFilter(fieldName, ValueOperator.LESS_THAN_OR_EQUAL, value);
     }
 
 }
