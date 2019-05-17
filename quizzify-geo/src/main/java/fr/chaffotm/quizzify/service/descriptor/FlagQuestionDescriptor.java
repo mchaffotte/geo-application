@@ -20,7 +20,7 @@ public class FlagQuestionDescriptor extends QueryCriteriaQuestionDescriptor {
 
     @Override
     public String getQuestionImage(final CountryEntity country) {
-        return "flags/" + country.getCode() + ".png";
+        return "flags/" + country.getCode().toLowerCase() + ".png";
     }
 
     @Override

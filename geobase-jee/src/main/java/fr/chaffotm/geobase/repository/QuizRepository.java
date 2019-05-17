@@ -33,7 +33,7 @@ public class QuizRepository {
     }
 
     public ImageEntity getQuestionImage(final UUID imageUuid) {
-        final TypedQuery<ImageEntity> query = em.createQuery("SELECT i FROM Image i JOIN i.country c WHERE i.uuid = :uuid", ImageEntity.class);
+        final TypedQuery<ImageEntity> query = em.createQuery("SELECT i FROM Image i WHERE i.uuid = :uuid", ImageEntity.class);
         query.setParameter("uuid", imageUuid);
         return query.getSingleResult();
     }

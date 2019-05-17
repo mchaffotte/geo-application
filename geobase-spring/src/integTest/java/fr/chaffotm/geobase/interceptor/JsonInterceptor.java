@@ -17,7 +17,7 @@ public class JsonInterceptor implements ClientHttpRequestInterceptor {
                                         final ClientHttpRequestExecution execution) throws IOException {
         final HttpHeaders headers = request.getHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON, MediaType.IMAGE_PNG));
         return execution.execute(request, body);
     }
 

@@ -1,6 +1,7 @@
 package fr.chaffotm.geobase.web.rest;
 
 import fr.chaffotm.geobase.web.resource.Todo;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
@@ -19,7 +20,7 @@ public class ExceptionRestController {
     }
 
     @GetMapping("runtime-exception")
-    public void RuntimeException() {
+    public void getRuntimeException() {
         throw new RuntimeException("It does not work");
     }
 
@@ -36,6 +37,11 @@ public class ExceptionRestController {
     @GetMapping("entity-not-found-exception")
     public void getEntityNotFoundException() {
         throw new EntityNotFoundException();
+    }
+
+    @GetMapping("not-found-exception")
+    public void getResourceNotFoundException() {
+        throw new ResourceNotFoundException();
     }
 
     @PostMapping("todos")

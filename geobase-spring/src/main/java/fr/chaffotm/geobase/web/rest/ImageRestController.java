@@ -2,6 +2,7 @@ package fr.chaffotm.geobase.web.rest;
 
 import fr.chaffotm.geobase.service.ImageService;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.EntityNotFoundException;
 import java.io.InputStream;
 import java.util.UUID;
 
@@ -28,7 +28,7 @@ public class ImageRestController {
     public ResponseEntity<InputStreamResource> get(@PathVariable("imageUuid") final UUID imageUuid) {
         final InputStream stream = imageService.getImageStream(imageUuid);
         if (stream == null) {
-            throw new EntityNotFoundException("The uuid does not refer to any existing image: '" + imageUuid + "'");
+            throw new ResourceNotFoundException("The uuid does not refer to any existing image: '" + imageUuid + "'");
         }
         final HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.IMAGE_PNG_VALUE);

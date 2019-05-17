@@ -5,10 +5,7 @@ import fr.chaffotm.geobase.web.rest.domain.Todo;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
 
 @Path("exceptions")
 public class ExceptionEndpoint implements ResourceEndpoint {
@@ -21,7 +18,7 @@ public class ExceptionEndpoint implements ResourceEndpoint {
 
     @GET
     @Path("runtime-exception")
-    public void RuntimeException() {
+    public void getRuntimeException() {
         throw new RuntimeException("It does not work");
     }
 
@@ -41,6 +38,12 @@ public class ExceptionEndpoint implements ResourceEndpoint {
     @Path("entity-not-found-exception")
     public void getEntityNotFoundException() {
         throw new EntityNotFoundException();
+    }
+
+    @GET
+    @Path("not-found-exception")
+    public void getNotFoundException() {
+        throw new NotFoundException();
     }
 
     @POST

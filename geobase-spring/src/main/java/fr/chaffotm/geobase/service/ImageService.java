@@ -21,7 +21,7 @@ public class ImageService {
     public InputStream getImageStream(final UUID imageUuid) {
         final ImageEntity image = quizRepository.getQuestionImage(imageUuid);
         final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        return classLoader.getResourceAsStream("/" + image.getFilename());
+        return classLoader.getResourceAsStream(image.getFilename());
     }
 
 }

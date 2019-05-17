@@ -20,7 +20,7 @@ public class SilhouetteQuestionDescriptor extends QueryCriteriaQuestionDescripto
 
     @Override
     public String getQuestionImage(final CountryEntity country) {
-        return "silhouettes/" + country.getCode() + ".png";
+        return "silhouettes/" + country.getCode().toLowerCase() + ".png";
     }
 
     @Override

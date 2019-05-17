@@ -97,6 +97,16 @@ public class ExceptionRestControllerIT {
     }
 
     @Test
+    @DisplayName("if a not found exception occurs a not found is returned")
+    public void ifANotFoundExceptionOccursANotFoundIsReturned() {
+        final ResponseEntity<String> response = restTemplate.getForEntity("/api/exceptions/not-found-exception", String.class);
+
+        assertThat(response)
+                .hasStatus(NOT_FOUND)
+                .hasNoBody();
+    }
+
+    @Test
     @DisplayName("if a constraint validation exception occurs a bad request is returned with explanation")
     public void ifAConstraintValidationExceptionOccursABadRequestIsReturnedWithExplanation() {
         final Todo todo = new Todo();

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -55,6 +56,12 @@ public class ExceptionHandlingController {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Void> handleException(final EntityNotFoundException ex) {
+        LOGGER.warn(ex.getMessage(), ex);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Void> handleException(final ResourceNotFoundException ex) {
         LOGGER.warn(ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }

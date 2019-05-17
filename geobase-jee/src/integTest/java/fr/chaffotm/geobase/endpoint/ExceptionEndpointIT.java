@@ -108,6 +108,18 @@ public class ExceptionEndpointIT {
     }
 
     @Test
+    public void if_a_not_found_exception_occurs_a_not_found_is_returned() {
+        final Client client = TestConfiguration.buildClient();
+        final WebTarget webTarget = client.target(baseURL).path("api/exceptions/not-found-exception");
+
+        final Response response = webTarget.request(APPLICATION_JSON_TYPE).get();
+
+        assertThat(response)
+                .hasStatus(NOT_FOUND)
+                .hasNoBody();
+    }
+
+    @Test
     public void if_a_constraint_validation_exception_occurs_a_bad_request_is_returned_with_explanation() {
         final Todo todo = new Todo();
         todo.setEmail("todo@fr.");

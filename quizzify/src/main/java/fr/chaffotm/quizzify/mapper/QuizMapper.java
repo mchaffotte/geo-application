@@ -32,7 +32,12 @@ public class QuizMapper {
     private static Question map(final QuestionEntity entity, final AnswerType answerType, final String baseURI) {
         final Question question = new Question();
         if (entity.getImage() != null) {
-            question.setImagePath(baseURI + "images/" + entity.getImage().getUuid());
+            final StringBuilder uriBuilder = new StringBuilder(baseURI);
+            if (!baseURI.endsWith("/")) {
+                uriBuilder.append('/');
+            }
+            uriBuilder.append("images/").append(entity.getImage().getUuid());
+            question.setImagePath(uriBuilder.toString());
         }
         question.setWording(entity.getWording());
         if (AnswerType.MULTIPLE_CHOICE == answerType) {
