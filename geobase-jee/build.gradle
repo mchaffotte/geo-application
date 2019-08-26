@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        thorntailVersion = '2.4.0.Final'
+        thorntailVersion = '2.5.0.Final'
     }
 
     repositories {
@@ -16,12 +16,12 @@ apply plugin: 'thorntail'
 apply plugin: 'war'
 
 ext {
-    resteasyVersion = '3.6.3.Final'
+    resteasyVersion = '3.8.1.Final'
 }
 
 repositories {
     maven {
-        url 'https://maven.repository.redhat.com/nexus/content/repositories/thirdparty-releases/'
+        url 'https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/'
     }
 }
 
@@ -33,7 +33,7 @@ dependencies {
     implementation 'io.thorntail:jpa'
     implementation 'io.thorntail:microprofile'
     implementation 'org.slf4j:slf4j-simple:1.7.25'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.9'
 
     integTestImplementation 'junit:junit:4.12'
     integTestRuntimeOnly "org.junit.vintage:junit-vintage-engine:$junitVersion"
