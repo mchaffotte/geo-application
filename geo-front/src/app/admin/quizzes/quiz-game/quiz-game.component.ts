@@ -1,16 +1,21 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { Question, Quiz, QuizAnswer, QuizResult, QuestionAnswer } from '../../../shared/quiz/quiz';
+import {
+  Question,
+  Quiz,
+  QuizAnswer,
+  QuizResult,
+  QuestionAnswer,
+} from '../../../shared/quiz/quiz';
 import { QuizService } from '../../../shared/quiz/quiz.service';
 
 @Component({
   selector: 'geo-quiz-game',
   templateUrl: './quiz-game.component.html',
-  styleUrls: ['./quiz-game.component.scss']
+  styleUrls: ['./quiz-game.component.scss'],
 })
 export class QuizGameComponent implements OnInit {
-
   private innerQuiz: Quiz;
 
   private quizAnswer: QuizAnswer;
@@ -22,15 +27,15 @@ export class QuizGameComponent implements OnInit {
   result: QuizResult;
 
   quizGameForm: FormGroup;
-  @ViewChild('question_answer') answerRef: ElementRef;
+  @ViewChild('question_answer', { static: false }) answerRef: ElementRef;
 
   constructor(private fb: FormBuilder, private quizService: QuizService) {
     this.quizGameForm = this.fb.group({
-      answer: ''
+      answer: '',
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   @Input()
   set quiz(quiz: Quiz) {
@@ -63,10 +68,12 @@ export class QuizGameComponent implements OnInit {
     if (this.index + 1 < this.innerQuiz.questions.length) {
       this.changeQuestion();
     } else {
-      this.quizService.answer(this.innerQuiz.id, this.quizAnswer).subscribe(res => {
-        this.question = null;
-        this.result = res;
-      });
+      this.quizService
+        .answer(this.innerQuiz.id, this.quizAnswer)
+        .subscribe(res => {
+          this.question = null;
+          this.result = res;
+        });
     }
   }
 
@@ -80,5 +87,4 @@ export class QuizGameComponent implements OnInit {
     const imageId = imagePath.substring(index + 1);
     return 'api/images/' + imageId;
   }
-
 }

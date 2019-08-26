@@ -9,10 +9,9 @@ describe('SecuredImageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SecuredImageComponent ],
-      imports: [ HttpClientModule ]
-    })
-    .compileComponents();
+      declarations: [SecuredImageComponent],
+      imports: [HttpClientModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

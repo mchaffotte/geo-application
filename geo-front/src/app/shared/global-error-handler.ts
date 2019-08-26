@@ -5,9 +5,7 @@ import { AlertsService } from './alerts/alerts.service';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
-
-  constructor(private injector: Injector, private zone: NgZone) {
-  }
+  constructor(private injector: Injector, private zone: NgZone) {}
 
   private get alertsService(): AlertsService {
     return this.injector.get(AlertsService);
@@ -27,5 +25,4 @@ export class GlobalErrorHandler implements ErrorHandler {
     });
     console.error('Something wrong happens: ', error);
   }
-
 }

@@ -5,24 +5,26 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: '/admin',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'admin',
-    loadChildren: './admin/admin.module#AdminModule'
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
   },
   {
     path: 'sandbox',
-    loadChildren: './sandbox/sandbox.module#SandboxModule'
-  }, {
+    loadChildren: () =>
+      import('./sandbox/sandbox.module').then(m => m.SandboxModule),
+  },
+  {
     path: '**',
     redirectTo: 'sandbox',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
