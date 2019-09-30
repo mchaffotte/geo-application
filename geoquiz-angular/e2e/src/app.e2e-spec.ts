@@ -1,7 +1,7 @@
 import { AppPage } from './app.po';
 import { browser, logging } from 'protractor';
 
-describe('geo-front App', () => {
+describe('geoquiz-angular App', () => {
   let page: AppPage;
 
   beforeEach(() => {
