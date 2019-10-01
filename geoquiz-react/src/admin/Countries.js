@@ -9,6 +9,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useTranslation } from 'react-i18next';
 
 import TablePaginationActions from './TablePaginationActions';
 import getCountries from '../api/countriesApi';
@@ -87,6 +88,7 @@ const Countries = () => {
   }, [order, orderBy, page, rowsPerPage]);
 
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const handleRequestSort = (event, property) => {
     const isDesc = orderBy === property && order === 'desc';
@@ -130,7 +132,7 @@ const Countries = () => {
                   direction={order}
                   onClick={createSortHandler('code')}
                 >
-                  Code
+                  {t('model.country.code')}
                   {orderBy === 'code' ? (
                     <span className={classes.visuallyHidden}>
                       {order === 'desc'
@@ -149,7 +151,7 @@ const Countries = () => {
                   direction={order}
                   onClick={createSortHandler('name')}
                 >
-                  Name
+                  {t('model.country.name')}
                   {orderBy === 'name' ? (
                     <span className={classes.visuallyHidden}>
                       {order === 'desc'
@@ -160,9 +162,11 @@ const Countries = () => {
                 </TableSortLabel>
               </TableCell>
               <TableCell key={'total-area'} align="right">
-                Total area
+                {t('model.country.total-area')}
               </TableCell>
-              <TableCell key={'capital-name'}>Capital name</TableCell>
+              <TableCell key={'capital-name'}>
+                {t('model.country.capital')}
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -184,6 +188,10 @@ const Countries = () => {
           count={total}
           rowsPerPage={rowsPerPage}
           page={page}
+          labelRowsPerPage={t('table.page.rows')}
+          labelDisplayedRows={({ from, to, count }) =>
+            t('table.pagination', { from, to, count })
+          }
           SelectProps={{
             inputProps: { 'aria-label': 'rows per page' },
             native: true,

@@ -19,6 +19,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import PublicIcon from '@material-ui/icons/Public';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import { Link, Route, Redirect } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Dashboard from '../admin/Dashboard';
 import Countries from '../admin/Countries';
@@ -90,6 +91,7 @@ const useStyles = makeStyles(theme => ({
 const Menu = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => setOpen(true);
@@ -151,19 +153,19 @@ const Menu = () => {
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary={t('admin.menu.dashboard')} />
           </ListItem>
           <ListItem button key="countries" component={Link} to="/countries">
             <ListItemIcon>
               <PublicIcon />
             </ListItemIcon>
-            <ListItemText primary="Countries" />
+            <ListItemText primary={t('admin.menu.countries')} />
           </ListItem>
           <ListItem button key="quizzes" component={Link} to="/quizzes">
             <ListItemIcon>
               <LiveHelpIcon />
             </ListItemIcon>
-            <ListItemText primary="Quizzes" />
+            <ListItemText primary={t('admin.menu.quizzes')} />
           </ListItem>
         </List>
       </Drawer>
