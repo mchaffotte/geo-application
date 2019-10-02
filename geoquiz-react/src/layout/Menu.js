@@ -23,7 +23,7 @@ import { useTranslation } from 'react-i18next';
 
 import Dashboard from '../admin/Dashboard';
 import Countries from '../admin/Countries';
-import Quizzes from '../admin/Quizzes';
+import Quizzes from '../admin/quizzes/Quizzes';
 
 const drawerWidth = 240;
 
