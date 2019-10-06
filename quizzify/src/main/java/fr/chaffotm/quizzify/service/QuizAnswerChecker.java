@@ -20,8 +20,9 @@ public class QuizAnswerChecker {
     public QuizResult score(final QuizEntity quizEntity, final QuizAnswer quizAnswer) {
         final List<QuestionEntity> questions = quizEntity.getQuestions();
         final List<QuestionAnswer> answers = quizAnswer.getQuestionAnswers();
+        final int nbOfAnsweredQuestions = Math.min(questions.size(), answers.size());
         int nbOfCorrectAnswers = 0;
-        for (int i = 0; i < questions.size(); i++) {
+        for (int i = 0; i < nbOfAnsweredQuestions; i++) {
             final QuestionEntity question = questions.get(i);
             final QuestionAnswer answer = answers.get(i);
             final Set<String> correctAnswers = getCorrectAnswers(question);
