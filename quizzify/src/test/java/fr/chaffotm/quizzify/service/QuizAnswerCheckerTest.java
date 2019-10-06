@@ -121,4 +121,22 @@ public class QuizAnswerCheckerTest {
         assertThat(result.getNbOfQuestions()).isEqualTo(1);
     }
 
+    @Test
+    @DisplayName("score should ignore missing answers")
+    public void scoreShouldIgnoreMissingAnswers() {
+        final QuizEntity quiz = new QuizEntityBuilder()
+                .question("What is the capital of England?", "London")
+                .question("What is the capital of France?", "Paris")
+                .question("What is the capital of Ireland?", "Dublin")
+                .getQuizEntity();
+        final QuizAnswer quizAnswer = new QuizAnswerBuilder()
+                .questionAnswer("london")
+                .getQuizAnswer();
+
+        final QuizResult result = checker.score(quiz, quizAnswer);
+
+        assertThat(result.getNbOfCorrectAnswers()).isEqualTo(1);
+        assertThat(result.getNbOfQuestions()).isEqualTo(3);
+    }
+
 }
