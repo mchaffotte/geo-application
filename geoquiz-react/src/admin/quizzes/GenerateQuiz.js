@@ -186,7 +186,7 @@ const GenerateQuiz = ({ onCreate }) => {
                     type="submit"
                     disabled={submitting}
                   >
-                    Submit
+                    {t('admin.quizzes.play')}
                   </Button>
                 </Grid>
               </Grid>
