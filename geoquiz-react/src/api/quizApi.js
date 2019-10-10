@@ -4,6 +4,7 @@ const createQuiz = async configuration => {
   return axios.post('api/quizzes', configuration, {
     headers: {
       Accept: 'application/json',
+      'Content-type': 'application/json',
     },
   });
 };
@@ -16,4 +17,13 @@ const getQuiz = async id => {
   });
 };
 
-export { createQuiz, getQuiz };
+const answer = (quizId, quizAnswer) => {
+  return axios.put(`api/quizzes/${quizId}`, quizAnswer, {
+    headers: {
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+    },
+  });
+};
+
+export { createQuiz, getQuiz, answer };
