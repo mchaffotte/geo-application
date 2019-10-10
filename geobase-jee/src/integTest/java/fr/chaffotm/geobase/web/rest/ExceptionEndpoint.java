@@ -43,7 +43,7 @@ public class ExceptionEndpoint implements ResourceEndpoint {
     @GET
     @Path("not-found-exception")
     public void getNotFoundException() {
-        throw new NotFoundException();
+        throw new NotFoundException("resource does not exist");
     }
 
     @POST

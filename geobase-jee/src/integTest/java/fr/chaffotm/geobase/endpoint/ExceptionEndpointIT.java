@@ -168,4 +168,18 @@ public class ExceptionEndpointIT {
                 .hasNoBody();
     }
 
+    @Test
+    public void if_the_payload_does_not_contains_a_json_object_a_bad_request_is_returned() {
+        final Client client = TestConfiguration.buildClient();
+        final WebTarget webTarget = client.target(baseURL).path("api/exceptions/todos");
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("Required request body is missing");
+
+        final Response response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json("test"));
+
+        assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasBody(errorBody);
+    }
+
 }

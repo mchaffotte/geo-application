@@ -160,4 +160,17 @@ public class ExceptionRestControllerIT {
                 .hasBody(todo);
     }
 
+    @Test
+    @DisplayName("if the payload does not contains a json object a bad request is returned")
+    public void if_the_payload_does_not_contains_a_json_object_a_bad_request_is_returned() {
+        final BadRequestBody errorBody = new BadRequestBody();
+        errorBody.addMessage("Required request body is missing");
+
+        final ResponseEntity<BadRequestBody> response = restTemplate.postForEntity("/api/exceptions/todos", "test", BadRequestBody.class);
+
+        assertThat(response)
+                .hasStatus(BAD_REQUEST)
+                .hasBody(errorBody);
+    }
+
 }
