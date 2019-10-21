@@ -1,9 +1,9 @@
 package fr.chaffotm.querify.criteria.filter;
 
-import fr.chaffotm.querify.criteria.FieldFilter;
-import fr.chaffotm.querify.criteria.FieldFilterVisitor;
+import fr.chaffotm.querify.criteria.FieldExpression;
+import fr.chaffotm.querify.criteria.ExpressionVisitor;
 
-public class ValueFieldFilter implements FieldFilter {
+public class ValueFieldExpression implements FieldExpression {
 
     private final String fieldName;
 
@@ -11,7 +11,7 @@ public class ValueFieldFilter implements FieldFilter {
 
     private Object value;
 
-    public ValueFieldFilter(final String fieldName, final ValueOperator operator, final Object value) {
+    public ValueFieldExpression(final String fieldName, final ValueOperator operator, final Object value) {
         this.fieldName = fieldName;
         this.operator = operator;
         this.value = value;
@@ -31,7 +31,7 @@ public class ValueFieldFilter implements FieldFilter {
     }
 
     @Override
-    public void accept(final FieldFilterVisitor visitor) {
+    public void accept(final ExpressionVisitor visitor) {
         visitor.visit(this);
     }
 

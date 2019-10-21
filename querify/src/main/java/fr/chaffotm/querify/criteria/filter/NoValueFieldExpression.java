@@ -1,15 +1,15 @@
 package fr.chaffotm.querify.criteria.filter;
 
-import fr.chaffotm.querify.criteria.FieldFilter;
-import fr.chaffotm.querify.criteria.FieldFilterVisitor;
+import fr.chaffotm.querify.criteria.FieldExpression;
+import fr.chaffotm.querify.criteria.ExpressionVisitor;
 
-public class NoValueFieldFilter implements FieldFilter {
+public class NoValueFieldExpression implements FieldExpression {
 
     private final String fieldName;
 
     private final NoValueOperator operator;
 
-    public NoValueFieldFilter(String fieldName, NoValueOperator operator) {
+    public NoValueFieldExpression(String fieldName, NoValueOperator operator) {
         this.fieldName = fieldName;
         this.operator = operator;
     }
@@ -24,7 +24,7 @@ public class NoValueFieldFilter implements FieldFilter {
     }
 
     @Override
-    public void accept(FieldFilterVisitor visitor) {
+    public void accept(ExpressionVisitor visitor) {
         visitor.visit(this);
     }
 

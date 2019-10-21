@@ -7,44 +7,52 @@ public class Filters {
     private Filters() {
     }
 
-    public static FieldFilter in(final String fieldName, final String... values) {
-        return new CollectionFieldFilter(fieldName, CollectionOperator.IN, values);
+    public static LogicalExpression and(final FieldExpression left, final FieldExpression right) {
+        return new LogicalExpression(left, LogicalOperator.AND, right);
     }
 
-    public static FieldFilter notIn(final String fieldName, final String... values) {
-        return new CollectionFieldFilter(fieldName, CollectionOperator.NOT_IN, values);
+    public static LogicalExpression or(final FieldExpression left, final FieldExpression right) {
+        return new LogicalExpression(left, LogicalOperator.OR, right);
     }
 
-    public static FieldFilter isNull(final String fieldName) {
-        return new NoValueFieldFilter(fieldName, NoValueOperator.NULL);
+    public static FieldExpression in(final String fieldName, final String... values) {
+        return new CollectionFieldExpression(fieldName, CollectionOperator.IN, values);
     }
 
-    public static FieldFilter isNotNull(final String fieldName) {
-        return new NoValueFieldFilter(fieldName, NoValueOperator.NOT_NULL);
+    public static FieldExpression notIn(final String fieldName, final String... values) {
+        return new CollectionFieldExpression(fieldName, CollectionOperator.NOT_IN, values);
     }
 
-    public static FieldFilter equal(final String fieldName, final Object value) {
-        return new ValueFieldFilter(fieldName, ValueOperator.EQUAL, value);
+    public static FieldExpression isNull(final String fieldName) {
+        return new NoValueFieldExpression(fieldName, NoValueOperator.NULL);
     }
 
-    public static FieldFilter notEqual(final String fieldName, final Object value) {
-        return new ValueFieldFilter(fieldName, ValueOperator.NOT_EQUAL, value);
+    public static FieldExpression isNotNull(final String fieldName) {
+        return new NoValueFieldExpression(fieldName, NoValueOperator.NOT_NULL);
     }
 
-    public static FieldFilter greaterThan(final String fieldName, final Object value) {
-        return new ValueFieldFilter(fieldName, ValueOperator.GREATER_THAN, value);
+    public static FieldExpression equal(final String fieldName, final Object value) {
+        return new ValueFieldExpression(fieldName, ValueOperator.EQUAL, value);
     }
 
-    public static FieldFilter greaterThanOrEqual(final String fieldName, final Object value) {
-        return new ValueFieldFilter(fieldName, ValueOperator.GREATER_THAN_OR_EQUAL, value);
+    public static FieldExpression notEqual(final String fieldName, final Object value) {
+        return new ValueFieldExpression(fieldName, ValueOperator.NOT_EQUAL, value);
     }
 
-    public static FieldFilter lessThan(final String fieldName, final Object value) {
-        return new ValueFieldFilter(fieldName, ValueOperator.LESS_THAN, value);
+    public static FieldExpression greaterThan(final String fieldName, final Object value) {
+        return new ValueFieldExpression(fieldName, ValueOperator.GREATER_THAN, value);
     }
 
-    public static FieldFilter lessThanOrEqual(final String fieldName, final Object value) {
-        return new ValueFieldFilter(fieldName, ValueOperator.LESS_THAN_OR_EQUAL, value);
+    public static FieldExpression greaterThanOrEqual(final String fieldName, final Object value) {
+        return new ValueFieldExpression(fieldName, ValueOperator.GREATER_THAN_OR_EQUAL, value);
+    }
+
+    public static FieldExpression lessThan(final String fieldName, final Object value) {
+        return new ValueFieldExpression(fieldName, ValueOperator.LESS_THAN, value);
+    }
+
+    public static FieldExpression lessThanOrEqual(final String fieldName, final Object value) {
+        return new ValueFieldExpression(fieldName, ValueOperator.LESS_THAN_OR_EQUAL, value);
     }
 
 }

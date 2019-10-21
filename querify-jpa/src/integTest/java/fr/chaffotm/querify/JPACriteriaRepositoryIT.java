@@ -431,4 +431,38 @@ public class JPACriteriaRepositoryIT {
                         "Nitrogen", "Oxygen");
     }
 
+
+    @Test
+    @DisplayName("criteria should filter elements with and expression")
+    public void criteriaShouldFilterElementsWithAndExpression() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.and(Filters.greaterThan("atomicNumber", 6), Filters.lessThan("atomicNumber", 8)));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Nitrogen");
+    }
+
+
+    @Test
+    @DisplayName("criteria should filter elements with or expression")
+    public void criteriaShouldFilterElementsWithAOrExpression() {
+        final List<Element> elements = TRANSACTION_MANAGER.execute(em -> {
+            final CriteriaRepository repository = new JPACriteriaRepository(em);
+            final QueryCriteria<Element> criteria = new QueryCriteria<>(Element.class);
+            criteria.setFilter(Filters.or(Filters.lessThan("atomicNumber", 3), Filters.greaterThan("atomicNumber", 8)));
+            criteria.addSort("symbol");
+
+            return repository.findAll(1, null, criteria);
+        });
+
+        assertThat(elements).extracting("name")
+                .containsExactly("Deuterium", "Fluorine", "Hydrogen", "Helium", "Neon");
+    }
+
 }

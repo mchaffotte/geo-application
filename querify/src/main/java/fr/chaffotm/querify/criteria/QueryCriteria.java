@@ -11,7 +11,7 @@ public class QueryCriteria<T> {
 
     private String join;
 
-    private FieldFilter filter;
+    private Expression filter;
 
     private List<Sort> sorts;
 
@@ -40,11 +40,11 @@ public class QueryCriteria<T> {
         this.join = fieldName;
     }
 
-    public FieldFilter getFilter() {
+    public Expression getFilter() {
         return filter;
     }
 
-    public void setFilter(final FieldFilter filter) {
+    public void setFilter(final Expression filter) {
         this.filter = filter;
     }
 

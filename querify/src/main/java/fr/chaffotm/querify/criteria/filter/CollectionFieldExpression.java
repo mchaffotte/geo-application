@@ -1,11 +1,11 @@
 package fr.chaffotm.querify.criteria.filter;
 
-import fr.chaffotm.querify.criteria.FieldFilter;
-import fr.chaffotm.querify.criteria.FieldFilterVisitor;
+import fr.chaffotm.querify.criteria.FieldExpression;
+import fr.chaffotm.querify.criteria.ExpressionVisitor;
 
 import java.util.List;
 
-public class CollectionFieldFilter implements FieldFilter {
+public class CollectionFieldExpression implements FieldExpression {
 
     private final String fieldName;
 
@@ -13,7 +13,7 @@ public class CollectionFieldFilter implements FieldFilter {
 
     private final List<String> elements;
 
-    public CollectionFieldFilter(final String fieldName, final CollectionOperator operator, final String... elements) {
+    public CollectionFieldExpression(final String fieldName, final CollectionOperator operator, final String... elements) {
         this.fieldName = fieldName;
         this.operator = operator;
         this.elements = List.of(elements);
@@ -33,7 +33,7 @@ public class CollectionFieldFilter implements FieldFilter {
     }
 
     @Override
-    public void accept(final FieldFilterVisitor visitor) {
+    public void accept(final ExpressionVisitor visitor) {
         visitor.visit(this);
     }
 

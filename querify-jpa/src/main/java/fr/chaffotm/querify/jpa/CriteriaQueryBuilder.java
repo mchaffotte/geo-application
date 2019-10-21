@@ -3,6 +3,7 @@ package fr.chaffotm.querify.jpa;
 import fr.chaffotm.querify.criteria.*;
 
 import javax.persistence.criteria.*;
+import javax.persistence.criteria.Expression;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,8 +57,8 @@ public class CriteriaQueryBuilder<T> {
         return this;
     }
 
-    public CriteriaQueryBuilder<T> filter(final FieldFilter filter) {
-        final PredicateFieldFilterVisitor visitor = new PredicateFieldFilterVisitor(builder, joinBuilder);
+    public CriteriaQueryBuilder<T> filter(final fr.chaffotm.querify.criteria.Expression filter) {
+        final PredicateExpressionVisitor visitor = new PredicateExpressionVisitor(builder, joinBuilder);
         filter.accept(visitor);
         final Predicate predicate = visitor.getPredicate();
         query.where(predicate);
