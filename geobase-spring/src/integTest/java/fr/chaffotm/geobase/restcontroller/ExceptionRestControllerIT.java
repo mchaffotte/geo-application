@@ -156,13 +156,13 @@ public class ExceptionRestControllerIT {
 
         assertThat(response)
                 .hasStatus(OK)
-                .hasContentType(MediaType.APPLICATION_JSON_UTF8)
+                .hasContentType(MediaType.APPLICATION_JSON)
                 .hasBody(todo);
     }
 
     @Test
     @DisplayName("if the payload does not contains a json object a bad request is returned")
-    public void if_the_payload_does_not_contains_a_json_object_a_bad_request_is_returned() {
+    public void ifThePayloadDoesNotContainsAJsonObjectABadRequestIsReturned() {
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("Required request body is missing");
 
