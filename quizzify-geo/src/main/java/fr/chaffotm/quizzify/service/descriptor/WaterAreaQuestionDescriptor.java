@@ -5,7 +5,7 @@ import fr.chaffotm.querify.criteria.FieldOrder;
 import fr.chaffotm.querify.criteria.QueryCriteria;
 import fr.chaffotm.quizzify.service.ColumnType;
 
-public class WaterAreaQuestionDescriptor extends QueryCriteriaQuestionDescriptor {
+public class WaterAreaQuestionDescriptor implements QuestionDescriptor<CountryEntity> {
 
     @Override
     public QueryCriteria<CountryEntity> getQueryCriteria() {
@@ -26,8 +26,18 @@ public class WaterAreaQuestionDescriptor extends QueryCriteriaQuestionDescriptor
     }
 
     @Override
-    public String getQuestion(final CountryEntity country) {
+    public String getQuestionImage(final CountryEntity entity) {
+        return null;
+    }
+
+    @Override
+    public String getQuestion(final CountryEntity entity) {
         return "Which country has the largest water area?";
+    }
+
+    @Override
+    public String getAttributeValue(final CountryEntity entity) {
+        return entity.getName();
     }
 
 }

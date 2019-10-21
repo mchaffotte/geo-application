@@ -1,23 +1,20 @@
 package fr.chaffotm.quizzify.service.descriptor;
 
-import fr.chaffotm.geodata.entity.CountryEntity;
-import fr.chaffotm.querify.CriteriaRepository;
+import fr.chaffotm.querify.criteria.QueryCriteria;
 import fr.chaffotm.quizzify.service.ColumnType;
 
-import java.util.List;
+public interface QuestionDescriptor<T> {
 
-public interface QuestionDescriptor {
+    QueryCriteria<T> getQueryCriteria();
 
     String getQuestionType();
 
-    List<CountryEntity> getQuizCountries(CriteriaRepository repository);
-
     ColumnType getAttributeColumnType();
 
-    String getQuestionImage(final CountryEntity country);
+    String getQuestionImage(T entity);
 
-    String getQuestion(CountryEntity country);
+    String getQuestion(T entity);
 
-    String getAttributeValue(CountryEntity country);
+    String getAttributeValue(T entity);
 
 }

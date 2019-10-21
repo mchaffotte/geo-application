@@ -1,7 +1,7 @@
 package fr.chaffotm.quizzify.service;
 
-import fr.chaffotm.geodata.entity.CountryEntity;
 import fr.chaffotm.querify.CriteriaRepository;
+import fr.chaffotm.querify.criteria.QueryCriteria;
 import fr.chaffotm.quizzify.entity.AnswerEntity;
 import fr.chaffotm.quizzify.entity.ImageEntity;
 import fr.chaffotm.quizzify.entity.QuestionEntity;
@@ -31,22 +31,23 @@ public class QuizMaker {
         generatorFactory = new GeneratorFactory();
     }
 
-    public QuizEntity build(final QuizConfiguration configuration) {
+    public <T> QuizEntity build(final QuizConfiguration configuration) {
         QuizConfiguration quizConfiguration = configuration;
         if (quizConfiguration == null) {
             quizConfiguration = buildDefaultConfiguration();
         }
-        final QuestionDescriptor descriptor = descriptorService.getDescriptor(quizConfiguration.getQuestionType());
+        final QuestionDescriptor<T> descriptor = descriptorService.getDescriptor(quizConfiguration.getQuestionType());
         if (ColumnType.NUMERIC == descriptor.getAttributeColumnType()
                 && AnswerType.MULTIPLE_CHOICE != quizConfiguration.getAnswerType()) {
             throw new IllegalArgumentException("Quiz supports only multiple choice");
         }
         final Generator generator = generatorFactory.getGenerator(descriptor.getAttributeColumnType());
-        final List<CountryEntity> countries = descriptor.getQuizCountries(repository);
-        final List<MultipleChoice> multipleChoices = generator.generate(countries, quizConfiguration.getAnswerType());
+        final QueryCriteria<T> queryCriteria = descriptor.getQueryCriteria();
+        final List<T> entities = repository.findAll(1, null, queryCriteria);
+        final List<MultipleChoice<T>> multipleChoices = generator.generate(entities, quizConfiguration.getAnswerType());
         final QuizEntity quiz = new QuizEntity();
         quiz.setAnswerType(quizConfiguration.getAnswerType());
-        for (MultipleChoice multipleChoice : multipleChoices) {
+        for (MultipleChoice<T> multipleChoice : multipleChoices) {
             QuestionEntity question = buildQuestion(descriptor, multipleChoice);
             quiz.addQuestion(question);
         }
@@ -60,8 +61,8 @@ public class QuizMaker {
         return configuration;
     }
 
-    private QuestionEntity buildQuestion(final QuestionDescriptor descriptor, final MultipleChoice multipleChoice) {
-        final CountryEntity answer = multipleChoice.getAnswer();
+    private <T> QuestionEntity buildQuestion(final QuestionDescriptor<T> descriptor, final MultipleChoice<T> multipleChoice) {
+        final T answer = multipleChoice.getAnswer();
         final QuestionEntity question = new QuestionEntity();
         question.addAnswer(build(descriptor.getAttributeValue(answer), true));
         final String imageFilename = descriptor.getQuestionImage(answer);
@@ -72,9 +73,9 @@ public class QuizMaker {
             question.setImage(image);
         }
         question.setWording(descriptor.getQuestion(answer));
-        final Set<CountryEntity> distractors = multipleChoice.getDistractors();
-        for (CountryEntity possibleCountry : distractors) {
-            question.addAnswer(build(descriptor.getAttributeValue(possibleCountry), false));
+        final Set<T> distractors = multipleChoice.getDistractors();
+        for (T distractor : distractors) {
+            question.addAnswer(build(descriptor.getAttributeValue(distractor), false));
         }
         return question;
     }

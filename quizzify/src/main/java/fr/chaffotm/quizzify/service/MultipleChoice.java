@@ -1,30 +1,28 @@
 package fr.chaffotm.quizzify.service;
 
-import fr.chaffotm.geodata.entity.CountryEntity;
-
 import java.util.HashSet;
 import java.util.Set;
 
-public class MultipleChoice {
+public class MultipleChoice<T> {
 
-    private CountryEntity answer;
+    private T answer;
 
-    private Set<CountryEntity> distractors;
+    private Set<T> distractors;
 
-    public MultipleChoice(final CountryEntity answer) {
+    public MultipleChoice(final T answer) {
         this.answer = answer;
         this.distractors = new HashSet<>();
     }
 
-    public CountryEntity getAnswer() {
+    public T getAnswer() {
         return answer;
     }
 
-    public Set<CountryEntity> getDistractors() {
+    public Set<T> getDistractors() {
         return distractors;
     }
 
-    public void addDistractor(final CountryEntity distractor) {
+    public void addDistractor(final T distractor) {
         distractors.add(distractor);
     }
 

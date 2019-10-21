@@ -3,8 +3,9 @@ package fr.chaffotm.quizzify.service.descriptor;
 import fr.chaffotm.geodata.entity.CountryEntity;
 import fr.chaffotm.querify.criteria.FieldOrder;
 import fr.chaffotm.querify.criteria.QueryCriteria;
+import fr.chaffotm.quizzify.service.ColumnType;
 
-public class CapitalQuestionDescriptor extends QueryCriteriaQuestionDescriptor {
+public class CapitalQuestionDescriptor implements QuestionDescriptor<CountryEntity> {
 
     @Override
     public QueryCriteria<CountryEntity> getQueryCriteria() {
@@ -20,13 +21,23 @@ public class CapitalQuestionDescriptor extends QueryCriteriaQuestionDescriptor {
     }
 
     @Override
-    public String getQuestion(final CountryEntity country) {
-        return "What is the capital of " + country.getName() + "?";
+    public ColumnType getAttributeColumnType() {
+        return ColumnType.VARCHAR;
     }
 
     @Override
-    public String getAttributeValue(final CountryEntity country) {
-        return country.getCapital().getName();
+    public String getQuestionImage(final CountryEntity entity) {
+        return null;
+    }
+
+    @Override
+    public String getQuestion(final CountryEntity entity) {
+        return "What is the capital of " + entity.getName() + "?";
+    }
+
+    @Override
+    public String getAttributeValue(final CountryEntity entity) {
+        return entity.getCapital().getName();
     }
 
 }

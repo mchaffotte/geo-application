@@ -1,6 +1,5 @@
 package fr.chaffotm.quizzify.service.generator;
 
-import fr.chaffotm.geodata.entity.CountryEntity;
 import fr.chaffotm.quizzify.resource.AnswerType;
 import fr.chaffotm.quizzify.service.MultipleChoice;
 
@@ -17,18 +16,18 @@ public abstract class RandomGenerator implements Generator {
     private static final int NUMBER_OF_DISTRACTORS = 3;
 
     @Override
-    public List<MultipleChoice> generate(final List<CountryEntity> countries, final AnswerType answerType) {
-        final int size = countries.size();
+    public <T> List<MultipleChoice<T>> generate(final List<T> entities, final AnswerType answerType) {
+        final int size = entities.size();
         final Set<Integer> excludeIds = new HashSet<>(exclude(size));
-        final List<MultipleChoice> multipleChoices = new ArrayList<>();
+        final List<MultipleChoice<T>> multipleChoices = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_QUESTIONS; i++) {
-            final int countryIndex = getRandomIndex(size, excludeIds);
-            excludeIds.add(countryIndex);
-            final CountryEntity answer = countries.get(countryIndex);
-            final MultipleChoice multipleChoice = new MultipleChoice(answer);
+            final int entityIndex = getRandomIndex(size, excludeIds);
+            excludeIds.add(entityIndex);
+            final T answer = entities.get(entityIndex);
+            final MultipleChoice<T> multipleChoice = new MultipleChoice<>(answer);
             if (AnswerType.MULTIPLE_CHOICE == answerType) {
-                final List<CountryEntity> distractors = findRandom(countries, countryIndex);
-                for (CountryEntity distractor : distractors) {
+                final List<T> distractors = findRandom(entities, entityIndex);
+                for (T distractor : distractors) {
                     multipleChoice.addDistractor(distractor);
                 }
             }
@@ -49,17 +48,17 @@ public abstract class RandomGenerator implements Generator {
         return index;
     }
 
-    private List<CountryEntity> findRandom(final List<CountryEntity> countries, final int excludedIndex) {
+    private <T> List<T> findRandom(final List<T> entities, final int excludedIndex) {
         final Set<Integer> excludedIndexes = new HashSet<>();
         excludedIndexes.add(excludedIndex);
-        final IndexRange range = range(excludedIndex, countries.size());
-        final List<CountryEntity> otherCountries = new ArrayList<>();
+        final IndexRange range = range(excludedIndex, entities.size());
+        final List<T> otherEntities = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_DISTRACTORS; i++) {
             final int idx = getRandomIndex(range.getMin(), range.getMax(), excludedIndexes);
             excludedIndexes.add(idx);
-            otherCountries.add(countries.get(idx));
+            otherEntities.add(entities.get(idx));
         }
-        return otherCountries;
+        return otherEntities;
     }
 
     protected abstract Set<Integer> exclude(int size);

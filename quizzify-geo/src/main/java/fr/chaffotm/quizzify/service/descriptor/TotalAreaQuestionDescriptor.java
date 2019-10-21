@@ -6,10 +6,10 @@ import fr.chaffotm.querify.criteria.Functions;
 import fr.chaffotm.querify.criteria.QueryCriteria;
 import fr.chaffotm.quizzify.service.ColumnType;
 
-public class TotalAreaQuestionDescriptor extends QueryCriteriaQuestionDescriptor {
+public class TotalAreaQuestionDescriptor implements QuestionDescriptor<CountryEntity> {
 
     @Override
-    QueryCriteria<CountryEntity> getQueryCriteria() {
+    public QueryCriteria<CountryEntity> getQueryCriteria() {
         final QueryCriteria<CountryEntity> criteria = new QueryCriteria<>(CountryEntity.class);
         criteria.setJoin("area");
         criteria.setFunction(Functions.sum("total", "area.land", "area.water"));
@@ -28,8 +28,18 @@ public class TotalAreaQuestionDescriptor extends QueryCriteriaQuestionDescriptor
     }
 
     @Override
-    public String getQuestion(final CountryEntity country) {
+    public String getQuestionImage(final CountryEntity entity) {
+        return null;
+    }
+
+    @Override
+    public String getQuestion(final CountryEntity entity) {
         return "Which country has the largest total area?";
+    }
+
+    @Override
+    public String getAttributeValue(final CountryEntity entity) {
+        return entity.getName();
     }
 
 }

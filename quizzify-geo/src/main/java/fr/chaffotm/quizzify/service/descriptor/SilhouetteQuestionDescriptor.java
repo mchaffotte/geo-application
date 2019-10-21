@@ -3,8 +3,9 @@ package fr.chaffotm.quizzify.service.descriptor;
 import fr.chaffotm.geodata.entity.CountryEntity;
 import fr.chaffotm.querify.criteria.FieldOrder;
 import fr.chaffotm.querify.criteria.QueryCriteria;
+import fr.chaffotm.quizzify.service.ColumnType;
 
-public class SilhouetteQuestionDescriptor extends QueryCriteriaQuestionDescriptor {
+public class SilhouetteQuestionDescriptor implements QuestionDescriptor<CountryEntity> {
 
     @Override
     public QueryCriteria<CountryEntity> getQueryCriteria() {
@@ -19,13 +20,23 @@ public class SilhouetteQuestionDescriptor extends QueryCriteriaQuestionDescripto
     }
 
     @Override
-    public String getQuestionImage(final CountryEntity country) {
-        return "silhouettes/" + country.getCode().toLowerCase() + ".png";
+    public ColumnType getAttributeColumnType() {
+        return ColumnType.VARCHAR;
     }
 
     @Override
-    public String getQuestion(final CountryEntity country) {
+    public String getQuestionImage(final CountryEntity entity) {
+        return "silhouettes/" + entity.getCode().toLowerCase() + ".png";
+    }
+
+    @Override
+    public String getQuestion(final CountryEntity entity) {
         return "What country does this silhouette belong to?";
+    }
+
+    @Override
+    public String getAttributeValue(final CountryEntity entity) {
+        return entity.getName();
     }
 
 }

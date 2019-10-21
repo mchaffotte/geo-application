@@ -6,6 +6,6 @@ public interface QuestionDescriptorService {
 
     Map<String, QuestionDescriptor> getDescriptors();
 
-    QuestionDescriptor getDescriptor(final String questionType);
+    <T> QuestionDescriptor<T> getDescriptor(final String questionType);
 
 }
