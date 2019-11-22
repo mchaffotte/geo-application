@@ -5,11 +5,12 @@ import { CountryService } from '../../shared/country/country.service';
 import { Country } from '../../shared/country/country';
 
 enum Order {
-  ASC, DESC, NONE
+  ASC,
+  DESC,
+  NONE
 }
 
 export class PageInfo {
-
   size: number;
 
   totalElements: number;
@@ -24,11 +25,9 @@ export class PageInfo {
     this.sort = sort;
     this.totalElements = 0;
   }
-
 }
 
 export class Column {
-
   label: string;
 
   prop: string;
@@ -43,7 +42,6 @@ export class Column {
     this.sortable = sortable == null ? false : sortable;
     this.order = order == null ? Order.NONE : order;
   }
-
 }
 
 @Component({
@@ -52,7 +50,6 @@ export class Column {
   styleUrls: ['./countries.component.scss']
 })
 export class CountriesComponent implements OnInit {
-
   Order = Order;
 
   countries: Country[];
@@ -67,7 +64,7 @@ export class CountriesComponent implements OnInit {
   faSortUp = faSortUp;
   faSortDown = faSortDown;
 
-  constructor(private countryService: CountryService) { }
+  constructor(private countryService: CountryService) {}
 
   ngOnInit() {
     this.columns = new Array<Column>();
@@ -75,7 +72,7 @@ export class CountriesComponent implements OnInit {
     columns.push(new Column('Code', 'code', true, Order.ASC));
     columns.push(new Column('Name', 'name', true));
     columns.push(new Column('Total area', 'totalArea'));
-    columns.push(new Column('Capital name', 'totalArea'));
+    columns.push(new Column('Capital name', 'capital.name'));
     this.columns = columns;
     this.currentSortColumn = this.columns[0];
     this.page = new PageInfo(1, 10, this.currentSortColumn.prop);
@@ -116,5 +113,4 @@ export class CountriesComponent implements OnInit {
       this.page.totalElements = pagedData.total;
     });
   }
-
 }
