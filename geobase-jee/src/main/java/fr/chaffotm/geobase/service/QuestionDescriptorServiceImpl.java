@@ -29,7 +29,7 @@ public class QuestionDescriptorServiceImpl implements QuestionDescriptorService 
     }
 
     @Override
-    public QuestionDescriptor getDescriptor(String questionType) {
+    public <T> QuestionDescriptor<T> getDescriptor(final String questionType) {
         if (questionType == null) {
             throw new IllegalArgumentException("Question type is null");
         }
