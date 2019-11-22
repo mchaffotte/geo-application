@@ -8,7 +8,7 @@ describe('geoquiz-angular App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display application title', () => {
     page.navigateTo();
     expect(page.getTitleText()).toEqual('GeoAdmin');
   });
