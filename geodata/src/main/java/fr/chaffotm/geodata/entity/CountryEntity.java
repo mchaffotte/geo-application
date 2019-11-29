@@ -22,7 +22,7 @@ public class CountryEntity {
     @Column(name = "code", nullable = false, length = 6)
     private String code;
 
-    @Column(name = "name", nullable = false, length = 25)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
     @Embedded
@@ -32,7 +32,7 @@ public class CountryEntity {
     })
     private AreaEntity area;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "capital_id", foreignKey = @ForeignKey(name = "fk_country_capital_id"))
     private CityEntity capital;
 

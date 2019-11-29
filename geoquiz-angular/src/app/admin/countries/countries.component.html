@@ -14,7 +14,7 @@
       <td>{{ country.code }}</td>
       <td>{{ country.name }}</td>
       <td>{{ country.area.land + country.area.water }}</td>
-      <td>{{ country.capital.name }}</td>
+      <td>{{ country.capital ? country.capital.name : '' }}</td>
     </tr>
   </tbody>
 </table>

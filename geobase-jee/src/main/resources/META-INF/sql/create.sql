@@ -1,8 +1,7 @@
 CREATE SEQUENCE city_sequence INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE country_sequence INCREMENT BY 1 START WITH 1;
 CREATE TABLE city (id BIGINT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id));
-CREATE TABLE country (id BIGINT NOT NULL, code VARCHAR(6) NOT NULL, name VARCHAR(25) NOT NULL, land_area INTEGER, water_area INTEGER, capital_id BIGINT NOT NULL, PRIMARY KEY(id));
-ALTER TABLE country ADD CONSTRAINT uk_country_code UNIQUE(code);
+CREATE TABLE country (id BIGINT NOT NULL, code VARCHAR(6) NOT NULL, name VARCHAR(50) NOT NULL, land_area INTEGER, water_area INTEGER, capital_id BIGINT, PRIMARY KEY(id));ALTER TABLE country ADD CONSTRAINT uk_country_code UNIQUE(code);
 ALTER TABLE country ADD CONSTRAINT uk_capital_id UNIQUE(capital_id);
 ALTER TABLE country ADD CONSTRAINT fk_country_capital_id FOREIGN KEY(capital_id) REFERENCES city;
 

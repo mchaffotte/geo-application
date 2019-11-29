@@ -177,7 +177,9 @@ const Countries = () => {
                 <TableCell align="right">
                   {country.area.land + country.area.water}
                 </TableCell>
-                <TableCell>{country.capital.name}</TableCell>
+                <TableCell>
+                  {country.capital ? country.capital.name : ''}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
