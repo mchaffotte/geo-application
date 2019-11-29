@@ -27,7 +27,7 @@ public class QuizRepository {
     public QuizEntity get(final long id) {
         final QuizEntity quiz = em.find(QuizEntity.class, id);
         if (quiz == null) {
-            throw new EntityNotFoundException("Quiz not found with id" + id);
+            throw new EntityNotFoundException("Quiz not found with id " + id);
         }
         return quiz;
     }
