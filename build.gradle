@@ -52,16 +52,16 @@ subprojects {
         hibernateEntityManagerVersion = '5.4.6.Final'
 
         junitVersion = '5.5.2'
-        assertjVersion = '3.13.2'
+        assertjVersion = '3.14.0'
     }
 
     dependencies {
-        implementation 'com.h2database:h2:1.4.199'
+        implementation 'com.h2database:h2:1.4.200'
 
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
         testImplementation "org.assertj:assertj-core:$assertjVersion"
-        testImplementation 'org.mockito:mockito-junit-jupiter:3.1.0'
+        testImplementation 'org.mockito:mockito-junit-jupiter:3.2.4'
 
         integTestImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
         integTestRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
