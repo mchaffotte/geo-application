@@ -13,16 +13,18 @@ class FakeLoader implements TranslateLoader {
 }
 
 describe('AlertsService', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [
-      TranslateModule.forRoot({
-        loader: { provide: TranslateLoader, useClass: FakeLoader },
-      })
-    ]
-  }));
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      imports: [
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: FakeLoader }
+        })
+      ]
+    })
+  );
 
   it('should be created', () => {
-    const service: AlertsService = TestBed.get(AlertsService);
+    const service: AlertsService = TestBed.inject(AlertsService);
     expect(service).toBeTruthy();
   });
 });
