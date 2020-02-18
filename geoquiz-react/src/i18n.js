@@ -1,21 +1,20 @@
 import i18n from 'i18next';
-import Backend from 'i18next-xhr-backend';
+import detector from 'i18next-browser-languagedetector';
+import backend from 'i18next-xhr-backend';
 import { initReactI18next } from 'react-i18next';
 
 i18n
-  // load translation using xhr -> see /public/locales
-  // learn more: https://github.com/i18next/i18next-xhr-backend
-  .use(Backend)
-  // pass the i18n instance to react-i18next.
-  .use(initReactI18next)
-  // init i18next
-  // for all options read: https://www.i18next.com/overview/configuration-options
+  .use(detector)
+  .use(backend)
+  .use(initReactI18next) // passes i18n down to react-i18next
   .init({
-    fallbackLng: 'en',
-    debug: true,
+    lng: 'en',
+    fallbackLng: 'en', // use en if detected lng is not available
+
+    saveMissing: true, // send not translated keys to endpoint
 
     interpolation: {
-      escapeValue: false, // not needed for react as it escapes by default
+      escapeValue: false, // react already safes from xss
     },
   });
 
