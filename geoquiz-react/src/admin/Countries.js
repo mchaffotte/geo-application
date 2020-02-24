@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 import TablePaginationActions from './TablePaginationActions';
 import getCountries from '../api/countriesApi';
+import useAlert from '../components/alert/useAlert';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,6 +51,8 @@ const Countries = () => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('code');
 
+  const { error } = useAlert();
+
   useEffect(() => {
     const fetchData = () => {
       let didCancel = false;
@@ -66,15 +69,16 @@ const Countries = () => {
             setStatus('success');
           }
         })
-        .catch(error => {
-          if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
+        .catch(err => {
+          error(`${err}`);
+          if (err.response) {
+            console.log(err.response.data);
+            console.log(err.response.status);
+            console.log(err.response.headers);
+          } else if (err.request) {
+            console.log(err.request);
           } else {
-            console.log('Error', error.message);
+            console.log('Error', err.message);
           }
           if (!didCancel) {
             setStatus('error');
@@ -85,18 +89,18 @@ const Countries = () => {
       };
     };
     fetchData();
-  }, [order, orderBy, page, rowsPerPage]);
+  }, [error, order, orderBy, page, rowsPerPage]);
 
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const handleRequestSort = (event, property) => {
+  const handleRequestSort = (_, property) => {
     const isDesc = orderBy === property && order === 'desc';
     setOrder(isDesc ? 'asc' : 'desc');
     setOrderBy(property);
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (_, newPage) => {
     setPage(newPage);
   };
 

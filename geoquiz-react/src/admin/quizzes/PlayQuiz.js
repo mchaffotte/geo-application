@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 
 import { answer } from '../../api/quizApi';
+import useAlert from '../../components/alert/useAlert';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -38,6 +39,7 @@ const useStyles = makeStyles(theme => ({
 const PlayQuiz = ({ quiz }) => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const { error } = useAlert();
 
   const [index, setIndex] = useState(0);
   const [question, setQuestion] = useState(null);
@@ -69,15 +71,16 @@ const PlayQuiz = ({ quiz }) => {
         .then(response => {
           setResult(response.data);
         })
-        .catch(error => {
-          if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
+        .catch(err => {
+          error(`${err}`);
+          if (err.response) {
+            console.log(err.response.data);
+            console.log(err.response.status);
+            console.log(err.response.headers);
+          } else if (err.request) {
+            console.log(err.request);
           } else {
-            console.log('Error', error.message);
+            console.log('Error', err.message);
           }
         });
     }

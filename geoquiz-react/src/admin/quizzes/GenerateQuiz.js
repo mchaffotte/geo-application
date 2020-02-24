@@ -20,6 +20,7 @@ import {
 
 import getQuizTypes from '../../api/quizTypesApi';
 import { createQuiz } from '../../api/quizApi';
+import useAlert from '../../components/alert/useAlert';
 
 const useStyles = makeStyles({
   card: {
@@ -44,6 +45,8 @@ const GenerateQuiz = ({ onCreate }) => {
   const [status, setStatus] = useState('loading');
   const [choice, setChoice] = useState({ answer: true, multipleChoice: true });
 
+  const { error } = useAlert();
+
   useEffect(() => {
     const fetchData = () => {
       let didCancel = false;
@@ -57,15 +60,16 @@ const GenerateQuiz = ({ onCreate }) => {
             setStatus('success');
           }
         })
-        .catch(error => {
-          if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
+        .catch(err => {
+          error(`${err}`);
+          if (err.response) {
+            console.log(err.response.data);
+            console.log(err.response.status);
+            console.log(err.response.headers);
+          } else if (err.request) {
+            console.log(err.request);
           } else {
-            console.log('Error', error.message);
+            console.log('Error', err.message);
           }
           if (!didCancel) {
             setStatus('error');
@@ -76,7 +80,7 @@ const GenerateQuiz = ({ onCreate }) => {
       };
     };
     fetchData();
-  }, []);
+  }, [error]);
 
   const onSubmit = async ({ questionType, answerType }) => {
     const response = await createQuiz({

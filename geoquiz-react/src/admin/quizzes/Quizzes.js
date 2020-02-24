@@ -10,8 +10,6 @@ const Quizzes = () => {
 
   const handleNewQuiz = async id => {
     const response = await getQuiz(id);
-    console.log('refresh');
-
     setQuiz(response.data);
   };
 
