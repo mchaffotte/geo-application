@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Form, Field } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -15,6 +15,7 @@ import {
 
 import { answer } from '../../api/quizApi';
 import useAlert from '../../components/alert/useAlert';
+import Countdown from '../../components/countdown/Countdown';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -41,31 +42,31 @@ const PlayQuiz = ({ quiz }) => {
   const { t } = useTranslation();
   const { error } = useAlert();
 
-  const [index, setIndex] = useState(0);
+  const index = useRef(1);
   const [question, setQuestion] = useState(null);
-  const [answers, setAnswers] = useState([]);
+  const answers = useRef([]);
 
   const [result, setResult] = useState(null);
 
   useEffect(() => {
     if (quiz) {
-      setAnswers([]);
-      setIndex(0);
+      answers.current = [];
+      index.current = 1;
+      setQuestion(quiz.questions[index.current - 1]);
       setResult(null);
     }
   }, [quiz]);
 
-  useEffect(() => {
-    if (quiz) {
-      setQuestion(quiz.questions[index]);
-    }
-  }, [index, quiz]);
+  const handleTimeOver = () => {
+    handleChoice('');
+  };
 
   const handleChoice = choice => {
-    const questionAnswers = [...answers, { answers: [choice] }];
-    if (index + 1 < quiz.questions.length) {
-      setAnswers(questionAnswers);
-      setIndex(index + 1);
+    const questionAnswers = [...answers.current, { answers: [choice] }];
+    if (index.current < quiz.questions.length) {
+      answers.current = questionAnswers;
+      index.current += 1;
+      setQuestion(quiz.questions[index.current - 1]);
     } else {
       answer(quiz.id, { questionAnswers })
         .then(response => {
@@ -110,7 +111,16 @@ const PlayQuiz = ({ quiz }) => {
 
   return (
     <Card className={classes.card}>
-      <CardHeader title={t('admin.quizzes.question', { number: index + 1 })} />
+      <CardHeader
+        title={t('admin.quizzes.question', { number: index.current })}
+        action={
+          <Countdown
+            key={`${quiz.id}#${index.current}`}
+            seconds={10}
+            onOver={handleTimeOver}
+          />
+        }
+      />
       {question.imagePath && (
         <CardMedia
           className={classes.media}
@@ -118,6 +128,7 @@ const PlayQuiz = ({ quiz }) => {
           component="img"
         />
       )}
+
       <CardContent>
         <Typography variant="body1" color="textSecondary" component="p">
           {question.wording}
