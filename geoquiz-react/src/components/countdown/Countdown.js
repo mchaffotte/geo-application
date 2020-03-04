@@ -42,7 +42,6 @@ const Countdown = ({ seconds, onOver }) => {
       if (distance >= 0) {
         setTimeLeft(distance);
       } else {
-        clearInterval(intervalId);
         onOver();
       }
     }, INTERVAL);
