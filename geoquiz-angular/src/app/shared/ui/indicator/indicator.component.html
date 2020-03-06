@@ -1,0 +1,13 @@
+<div class="card shadow h-100 py-2" [ngStyle]="{'border-left': '0.25rem solid ' + color}">
+  <div class="card-body">
+    <div class="row no-gutters align-items-center">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-uppercase mb-1" [ngStyle]="{'color': color}">{{label}}</div>
+        <div class="h5 mb-0 font-weight-bold text-gray">{{value}}</div>
+      </div>
+      <div class="col-auto">
+        <fa-icon [icon]="icon" size="2x" [styles]="{'color': 'rgb(222, 226, 230)'}"></fa-icon>
+      </div>
+    </div>
+  </div>
+</div>
