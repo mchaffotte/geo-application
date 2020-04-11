@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import TablePaginationActions from './TablePaginationActions';
 import getCountries from '../api/countriesApi';
 import useAlert from '../components/alert/useAlert';
+import log from '../service/logger';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,15 +74,7 @@ const Countries = () => {
         })
         .catch((err) => {
           error(`${err}`);
-          if (err.response) {
-            console.log(err.response.data);
-            console.log(err.response.status);
-            console.log(err.response.headers);
-          } else if (err.request) {
-            console.log(err.request);
-          } else {
-            console.log('Error', err.message);
-          }
+          log(err);
           if (!didCancel) {
             setStatus('error');
           }

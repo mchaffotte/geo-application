@@ -16,6 +16,7 @@ import {
 import { answer } from '../../api/quizApi';
 import useAlert from '../../components/alert/useAlert';
 import Countdown from '../../components/countdown/Countdown';
+import log from '../../service/logger';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -74,15 +75,7 @@ const PlayQuiz = ({ quiz }) => {
         })
         .catch((err) => {
           error(`${err}`);
-          if (err.response) {
-            console.log(err.response.data);
-            console.log(err.response.status);
-            console.log(err.response.headers);
-          } else if (err.request) {
-            console.log(err.request);
-          } else {
-            console.log('Error', err.message);
-          }
+          log(err);
         });
     }
   };

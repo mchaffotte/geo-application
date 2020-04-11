@@ -4,6 +4,7 @@ import Public from '@material-ui/icons/Public';
 import Indicator from './Indicator';
 import useAlert from '../alert/useAlert';
 import getCountries from '../../api/countriesApi';
+import log from '../../service/logger';
 
 const TotalCountries = () => {
   const [total, setTotal] = useState(null);
@@ -22,15 +23,7 @@ const TotalCountries = () => {
         })
         .catch((err) => {
           error(`${err}`);
-          if (err.response) {
-            console.log(err.response.data);
-            console.log(err.response.status);
-            console.log(err.response.headers);
-          } else if (err.request) {
-            console.log(err.request);
-          } else {
-            console.log('Error', err.message);
-          }
+          log(err);
           setTotal('?');
         });
       return () => {
