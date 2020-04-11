@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
+import { IconButton, makeStyles, useTheme } from '@material-ui/core';
+import {
+  FirstPage,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
+  LastPage,
+} from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +44,7 @@ const TablePaginationActions = (props) => {
         disabled={page === 0}
         aria-label="first page"
       >
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+        {theme.direction === 'rtl' ? <LastPage /> : <FirstPage />}
       </IconButton>
       <IconButton
         onClick={handleBackButtonClick}
@@ -72,7 +73,7 @@ const TablePaginationActions = (props) => {
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label="last page"
       >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+        {theme.direction === 'rtl' ? <FirstPage /> : <LastPage />}
       </IconButton>
     </div>
   );

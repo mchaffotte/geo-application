@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import PublicIcon from '@material-ui/icons/Public';
+import Public from '@material-ui/icons/Public';
 
 import Indicator from './Indicator';
-import getCountries from '../../api/countriesApi';
 import useAlert from '../alert/useAlert';
+import getCountries from '../../api/countriesApi';
 
 const TotalCountries = () => {
   const [total, setTotal] = useState(null);
@@ -40,7 +40,7 @@ const TotalCountries = () => {
     fetchData();
   }, [error]);
 
-  return <Indicator label="TOTAL COUNTRIES" value={total} Icon={PublicIcon} />;
+  return <Indicator label="TOTAL COUNTRIES" value={total} Icon={Public} />;
 };
 
 export default TotalCountries;

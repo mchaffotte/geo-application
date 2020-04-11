@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import CloseIcon from '@material-ui/icons/Close';
-import WarningIcon from '@material-ui/icons/Warning';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  IconButton,
+  Snackbar,
+  SnackbarContent,
+  makeStyles,
+} from '@material-ui/core';
 import { amber, green } from '@material-ui/core/colors';
+import { CheckCircle, Close, Error, Info, Warning } from '@material-ui/icons';
 
 const variantIcon = {
-  success: CheckCircleIcon,
-  warning: WarningIcon,
-  error: ErrorIcon,
-  info: InfoIcon,
+  success: CheckCircle,
+  warning: Warning,
+  error: Error,
+  info: Info,
 };
 
 const useStyles1 = makeStyles((theme) => ({
@@ -65,7 +63,7 @@ const AlertContent = ({ className, alert, onClose, ...other }) => {
           color="inherit"
           onClick={onClose}
         >
-          <CloseIcon className={classes.icon} />
+          <Close className={classes.icon} />
         </IconButton>,
       ]}
       {...other}

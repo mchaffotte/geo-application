@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { CircularProgress, makeStyles } from '@material-ui/core';
 
 const INTERVAL = 200;
 const TIMER_SIZE = 46;
