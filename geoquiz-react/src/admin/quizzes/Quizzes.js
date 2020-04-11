@@ -8,7 +8,7 @@ import { getQuiz } from '../../api/quizApi';
 const Quizzes = () => {
   const [quiz, setQuiz] = useState(null);
 
-  const handleNewQuiz = async id => {
+  const handleNewQuiz = async (id) => {
     const response = await getQuiz(id);
     setQuiz(response.data);
   };
