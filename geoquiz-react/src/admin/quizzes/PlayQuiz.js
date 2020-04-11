@@ -17,7 +17,7 @@ import { answer } from '../../api/quizApi';
 import useAlert from '../../components/alert/useAlert';
 import Countdown from '../../components/countdown/Countdown';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     minWidth: 345,
     maxWidth: 500,
@@ -61,7 +61,7 @@ const PlayQuiz = ({ quiz }) => {
     handleChoice('');
   };
 
-  const handleChoice = choice => {
+  const handleChoice = (choice) => {
     const questionAnswers = [...answers.current, { answers: [choice] }];
     if (index.current < quiz.questions.length) {
       answers.current = questionAnswers;
@@ -69,10 +69,10 @@ const PlayQuiz = ({ quiz }) => {
       setQuestion(quiz.questions[index.current - 1]);
     } else {
       answer(quiz.id, { questionAnswers })
-        .then(response => {
+        .then((response) => {
           setResult(response.data);
         })
-        .catch(err => {
+        .catch((err) => {
           error(`${err}`);
           if (err.response) {
             console.log(err.response.data);
@@ -87,7 +87,7 @@ const PlayQuiz = ({ quiz }) => {
     }
   };
 
-  const onSubmit = async values => {
+  const onSubmit = async (values) => {
     const choice = values.answer ? values.answer : '';
     handleChoice(choice);
   };
@@ -133,7 +133,7 @@ const PlayQuiz = ({ quiz }) => {
         <Typography variant="body1" color="textSecondary" component="p">
           {question.wording}
         </Typography>
-        {question.choices.map(choice => (
+        {question.choices.map((choice) => (
           <Button
             key={choice}
             size="large"

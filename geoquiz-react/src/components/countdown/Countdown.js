@@ -5,9 +5,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const INTERVAL = 200;
 const TIMER_SIZE = 46;
 
-const getRemainingSeconds = time => Math.ceil(time / 1000);
+const getRemainingSeconds = (time) => Math.ceil(time / 1000);
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',

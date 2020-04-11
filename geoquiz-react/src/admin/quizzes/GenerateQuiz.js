@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   },
 });
 
-const getChoice = answerTypes => {
+const getChoice = (answerTypes) => {
   const multipleChoice = answerTypes.includes('MULTIPLE_CHOICE');
   const answer = answerTypes.includes('ANSWER');
   return { answer, multipleChoice };
@@ -53,14 +53,14 @@ const GenerateQuiz = ({ onCreate }) => {
       setStatus('loading');
 
       getQuizTypes()
-        .then(response => {
+        .then((response) => {
           if (!didCancel) {
             setQuizTypes(response.data);
             setChoice(getChoice(response.data[0].answerTypes));
             setStatus('success');
           }
         })
-        .catch(err => {
+        .catch((err) => {
           error(`${err}`);
           if (err.response) {
             console.log(err.response.data);
@@ -136,7 +136,7 @@ const GenerateQuiz = ({ onCreate }) => {
                     label="Question type"
                     formControlProps={{ fullWidth: true }}
                   >
-                    {quizTypes.map(type => (
+                    {quizTypes.map((type) => (
                       <MenuItem key={type.questionType} value={type}>
                         {t(`model.question-type.${type.questionType}`)}
                       </MenuItem>

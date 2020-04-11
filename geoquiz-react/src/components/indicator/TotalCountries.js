@@ -15,12 +15,12 @@ const TotalCountries = () => {
       let didCancel = false;
 
       getCountries(1, 1, null)
-        .then(response => {
+        .then((response) => {
           if (!didCancel) {
             setTotal(response.data.total);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           error(`${err}`);
           if (err.response) {
             console.log(err.response.data);

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import TotalCountries from '../components/indicator/TotalCountries';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(4),
   },

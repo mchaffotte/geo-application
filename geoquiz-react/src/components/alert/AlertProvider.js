@@ -22,10 +22,10 @@ const AlertProvider = ({ children }) => {
 
   const contextValue = {
     alert,
-    info: useCallback(message => addAlert('info', message), []),
-    success: useCallback(message => addAlert('success', message), []),
-    warn: useCallback(message => addAlert('warning', message), []),
-    error: useCallback(message => addAlert('error', message), []),
+    info: useCallback((message) => addAlert('info', message), []),
+    success: useCallback((message) => addAlert('success', message), []),
+    warn: useCallback((message) => addAlert('warning', message), []),
+    error: useCallback((message) => addAlert('error', message), []),
     removeAlert,
   };
 

@@ -15,7 +15,7 @@ import TablePaginationActions from './TablePaginationActions';
 import getCountries from '../api/countriesApi';
 import useAlert from '../components/alert/useAlert';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
@@ -62,14 +62,14 @@ const Countries = () => {
       const sort = `${direction}${orderBy}`;
 
       getCountries(offset, rowsPerPage, sort)
-        .then(response => {
+        .then((response) => {
           if (!didCancel) {
             setCountries(response.data.resources);
             setTotal(response.data.total);
             setStatus('success');
           }
         })
-        .catch(err => {
+        .catch((err) => {
           error(`${err}`);
           if (err.response) {
             console.log(err.response.data);
@@ -104,12 +104,12 @@ const Countries = () => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
-  const createSortHandler = property => event => {
+  const createSortHandler = (property) => (event) => {
     handleRequestSort(event, property);
   };
 
@@ -174,7 +174,7 @@ const Countries = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {countries.map(country => (
+            {countries.map((country) => (
               <TableRow key={country.code}>
                 <TableCell>{country.code}</TableCell>
                 <TableCell>{country.name}</TableCell>

@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Loader from '../../layout/Loader';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%',
   },
