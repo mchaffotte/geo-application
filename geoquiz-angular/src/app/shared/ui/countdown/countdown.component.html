@@ -1,0 +1,11 @@
+<ng-container geoCountdown [countdown]="seconds * 1000" [interval]="interval" [actions]="actions"
+  (value)="onProgress($event)">
+  <div class="p-1" class="countdown">
+    <svg viewBox="0 0 100 100" class="countdown-container">
+      <circle cx="50" cy="50" r="46" stroke-width="7" fill-opacity="0" stroke="rgb(238, 238, 238)" />
+      <circle cx="50" cy="50" r="46" stroke-width="7" fill-opacity="0" stroke="rgb(0, 123, 255)"
+        class="countdown-progress" [ngStyle]="{'stroke-dasharray': circumference, 'stroke-dashoffset': progress}" />
+    </svg>
+    <div class="countdown-text">{{ getRemainingSeconds(timeLeft) }}</div>
+  </div>
+</ng-container>

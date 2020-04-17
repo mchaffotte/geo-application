@@ -12,11 +12,20 @@ import { GlobalErrorHandler } from './global-error-handler';
 import { AlertsComponent } from './alerts/alerts.component';
 import { IndicatorComponent } from './ui/indicator/indicator.component';
 import { TotalCountriesComponent } from './ui/total-countries/total-countries.component';
+import { CountdownComponent } from './ui/countdown/countdown.component';
+import { CountdownDirective } from './ui/countdown/countdown.directive';
 
 @NgModule({
   imports: [CommonModule, NgbModule, FontAwesomeModule],
-  exports: [CommonModule, TranslateModule, NgbModule, SecuredImageComponent, AlertsComponent, TotalCountriesComponent],
+  exports: [CommonModule, TranslateModule, NgbModule, SecuredImageComponent, AlertsComponent, TotalCountriesComponent, CountdownComponent],
   providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }, CountryService, QuizService, QuizTypeService],
-  declarations: [SecuredImageComponent, AlertsComponent, IndicatorComponent, TotalCountriesComponent]
+  declarations: [
+    SecuredImageComponent,
+    AlertsComponent,
+    IndicatorComponent,
+    TotalCountriesComponent,
+    CountdownComponent,
+    CountdownDirective
+  ]
 })
 export class SharedModule {}

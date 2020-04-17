@@ -1,0 +1,27 @@
+.countdown {
+  width: 35px;
+  height: 35px;
+  position: relative;
+}
+
+.countdown-container {
+  display: block;
+  width: 100%;
+  transition: stroke-dashoffset 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.countdown-progress {
+  transform-origin: center;
+  transform: rotate(-90deg);
+}
+
+.countdown-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 0px;
+  margin: 0px;
+  transform: translate(-50%, -50%);
+  font-size: 1rem;
+  font-weight: bold;
+}
