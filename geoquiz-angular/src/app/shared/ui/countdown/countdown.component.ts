@@ -6,7 +6,7 @@ import { Action } from './countdown.directive';
 @Component({
   selector: 'geo-countdown',
   templateUrl: './countdown.component.html',
-  styleUrls: ['./countdown.component.scss']
+  styleUrls: ['./countdown.component.scss'],
 })
 export class CountdownComponent implements OnInit {
   interval: number;

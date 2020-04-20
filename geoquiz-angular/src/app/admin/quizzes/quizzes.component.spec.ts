@@ -16,14 +16,13 @@ class FakeLoader implements TranslateLoader {
 
 @Component({
   selector: 'geo-quiz-configuration',
-  template: '<p>Mock Geo Quiz Configuration Component</p>'
+  template: '<p>Mock Geo Quiz Configuration Component</p>',
 })
-class MockQuizConfigurationComponent {
-}
+class MockQuizConfigurationComponent {}
 
 @Component({
   selector: 'geo-quiz-game',
-  template: '<p>Mock Geo Quiz Game Component</p>'
+  template: '<p>Mock Geo Quiz Game Component</p>',
 })
 class MockQuizGameComponent {
   @Input() quiz: Quiz;
@@ -35,16 +34,13 @@ describe('QuizzesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [QuizzesComponent,
-        MockQuizConfigurationComponent,
-        MockQuizGameComponent],
+      declarations: [QuizzesComponent, MockQuizConfigurationComponent, MockQuizGameComponent],
       imports: [
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: FakeLoader },
-        })
-      ]
-    })
-      .compileComponents();
+        }),
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

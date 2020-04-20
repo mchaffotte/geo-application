@@ -19,14 +19,14 @@ describe('AppComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppComponent ],
-      imports: [RouterTestingModule,
+      declarations: [AppComponent],
+      imports: [
+        RouterTestingModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: FakeLoader },
-        })
-      ]
-    })
-    .compileComponents();
+        }),
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

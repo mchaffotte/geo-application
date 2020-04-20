@@ -9,33 +9,41 @@ import { QuizzesComponent } from './quizzes/quizzes.component';
 const routes: Routes = [
   {
     path: '',
-    children: [{
-      path: '',
-      component: AdminComponent,
-      children: [{
-        path: 'dashboard',
-        component: DashboardComponent
-      }, {
-        path: 'countries',
-        component: CountriesComponent
-      }, {
-        path: 'quizzes',
-        component: QuizzesComponent
-      }, {
+    children: [
+      {
         path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full'
-      }, {
-        path: '**',
-        redirectTo: 'dashboard',
-        pathMatch: 'full'
-      }]
-    }]
-  }
+        component: AdminComponent,
+        children: [
+          {
+            path: 'dashboard',
+            component: DashboardComponent,
+          },
+          {
+            path: 'countries',
+            component: CountriesComponent,
+          },
+          {
+            path: 'quizzes',
+            component: QuizzesComponent,
+          },
+          {
+            path: '',
+            redirectTo: 'dashboard',
+            pathMatch: 'full',
+          },
+          {
+            path: '**',
+            redirectTo: 'dashboard',
+            pathMatch: 'full',
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

@@ -6,10 +6,8 @@ import { QuizService } from './quiz.service';
 describe('QuizService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ],
-      providers: [QuizService]
+      imports: [HttpClientTestingModule],
+      providers: [QuizService],
     });
   });
 

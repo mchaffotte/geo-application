@@ -4,7 +4,7 @@ import { faBan } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'geo-indicator',
   templateUrl: './indicator.component.html',
-  styleUrls: ['./indicator.component.scss']
+  styleUrls: ['./indicator.component.scss'],
 })
 export class IndicatorComponent implements OnInit {
   @Input() color: string;

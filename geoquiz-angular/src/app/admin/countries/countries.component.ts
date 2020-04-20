@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  faSort,
-  faSortUp,
-  faSortDown
-} from '@fortawesome/free-solid-svg-icons';
+import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
 
 import { CountryService } from '../../shared/country/country.service';
 import { Country } from '../../shared/country/country';
@@ -11,7 +7,7 @@ import { Country } from '../../shared/country/country';
 enum Order {
   ASC,
   DESC,
-  NONE
+  NONE,
 }
 
 export class PageInfo {
@@ -40,12 +36,7 @@ export class Column {
 
   sortable: boolean;
 
-  public constructor(
-    label: string,
-    prop: string,
-    sortable?: boolean,
-    order?: Order
-  ) {
+  public constructor(label: string, prop: string, sortable?: boolean, order?: Order) {
     this.label = label;
     this.prop = prop;
     this.sortable = sortable == null ? false : sortable;
@@ -56,7 +47,7 @@ export class Column {
 @Component({
   selector: 'geo-countries',
   templateUrl: './countries.component.html',
-  styleUrls: ['./countries.component.scss']
+  styleUrls: ['./countries.component.scss'],
 })
 export class CountriesComponent implements OnInit {
   Order = Order;
@@ -117,11 +108,9 @@ export class CountriesComponent implements OnInit {
 
   private getCountries() {
     const offset = (this.page.pageNumber - 1) * this.page.size + 1;
-    this.countryService
-      .getCountries(offset, this.page.size, this.page.sort)
-      .subscribe(pagedData => {
-        this.countries = pagedData.resources;
-        this.page.totalElements = pagedData.total;
-      });
+    this.countryService.getCountries(offset, this.page.size, this.page.sort).subscribe((pagedData) => {
+      this.countries = pagedData.resources;
+      this.page.totalElements = pagedData.total;
+    });
   }
 }

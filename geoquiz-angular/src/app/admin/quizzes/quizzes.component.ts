@@ -5,18 +5,16 @@ import { Quiz } from '../../shared/quiz/quiz';
 @Component({
   selector: 'geo-quizzes',
   templateUrl: './quizzes.component.html',
-  styleUrls: ['./quizzes.component.scss']
+  styleUrls: ['./quizzes.component.scss'],
 })
 export class QuizzesComponent implements OnInit {
-
   quiz: Quiz;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   startQuiz(quiz: Quiz) {
     this.quiz = quiz;
   }
-
 }

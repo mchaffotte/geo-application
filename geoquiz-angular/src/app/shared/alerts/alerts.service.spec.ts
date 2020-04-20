@@ -17,9 +17,9 @@ describe('AlertsService', () => {
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot({
-          loader: { provide: TranslateLoader, useClass: FakeLoader }
-        })
-      ]
+          loader: { provide: TranslateLoader, useClass: FakeLoader },
+        }),
+      ],
     })
   );
 

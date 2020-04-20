@@ -5,10 +5,7 @@ import { SandboxRoutingModule } from './sandbox-routing.module';
 import { SandboxComponent } from './sandbox.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SandboxRoutingModule
-  ],
-  declarations: [SandboxComponent]
+  imports: [CommonModule, SandboxRoutingModule],
+  declarations: [SandboxComponent],
 })
-export class SandboxModule { }
+export class SandboxModule {}

@@ -28,10 +28,9 @@ describe('AdminComponent', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: FakeLoader },
         }),
-        SharedModule
-      ]
-    })
-    .compileComponents();
+        SharedModule,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

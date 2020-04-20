@@ -5,14 +5,12 @@ import { Observable } from 'rxjs';
 import { QuizType } from './quiz';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class QuizTypeService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getQuizTypes(): Observable<QuizType[]> {
     return this.http.get<QuizType[]>('api/quiz-types');
   }
-
 }

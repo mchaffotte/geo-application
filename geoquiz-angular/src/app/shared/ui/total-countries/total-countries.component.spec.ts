@@ -20,7 +20,7 @@ describe('TotalCountriesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [TotalCountriesComponent],
       imports: [FontAwesomeModule],
-      providers: [{ provide: CountryService, useClass: MockCountryService }]
+      providers: [{ provide: CountryService, useClass: MockCountryService }],
     }).compileComponents();
   }));
 

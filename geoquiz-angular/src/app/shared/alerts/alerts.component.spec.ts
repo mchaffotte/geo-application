@@ -19,15 +19,14 @@ describe('AlertsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AlertsComponent ],
+      declarations: [AlertsComponent],
       imports: [
         NgbModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: FakeLoader },
-        })
-      ]
-    })
-    .compileComponents();
+        }),
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -37,6 +36,6 @@ describe('AlertsComponent', () => {
   });
 
   it('should create', () => {
-     expect(component).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 });

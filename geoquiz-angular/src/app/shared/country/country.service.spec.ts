@@ -6,10 +6,8 @@ import { CountryService } from './country.service';
 describe('CountryService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ],
-      providers: [CountryService]
+      imports: [HttpClientTestingModule],
+      providers: [CountryService],
     });
   });
 

@@ -8,11 +8,9 @@ import { CountryService } from 'src/app/shared/country/country.service';
 import { Page, Country } from 'src/app/shared/country/country';
 
 class MockCountryService {
-
   getCountries(offset: number, limit: number, sort: string): Observable<Page<Country>> {
     return of();
   }
-
 }
 
 describe('CountriesComponent', () => {
@@ -21,16 +19,10 @@ describe('CountriesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CountriesComponent ],
-      imports: [
-        FontAwesomeModule,
-        NgbModule
-      ],
-      providers: [
-        { provide: CountryService, useClass: MockCountryService }
-      ]
-    })
-    .compileComponents();
+      declarations: [CountriesComponent],
+      imports: [FontAwesomeModule, NgbModule],
+      providers: [{ provide: CountryService, useClass: MockCountryService }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

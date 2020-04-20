@@ -6,7 +6,7 @@ import { CountryService } from '../../country/country.service';
 @Component({
   selector: 'geo-total-countries',
   templateUrl: './total-countries.component.html',
-  styleUrls: ['./total-countries.component.scss']
+  styleUrls: ['./total-countries.component.scss'],
 })
 export class TotalCountriesComponent implements OnInit {
   faGlobeEurope = faGlobeEurope;
@@ -17,10 +17,10 @@ export class TotalCountriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.countryService.getCountries(0, 1, null).subscribe(
-      pagedData => {
+      (pagedData) => {
         this.value = pagedData.total;
       },
-      error => {
+      (error) => {
         this.value = '?';
       }
     );

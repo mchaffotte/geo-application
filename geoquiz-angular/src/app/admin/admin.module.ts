@@ -14,22 +14,7 @@ import { QuizConfigurationComponent } from './quizzes/quiz-configuration/quiz-co
 import { QuizGameComponent } from './quizzes/quiz-game/quiz-game.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    SharedModule,
-    NgSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
-    FontAwesomeModule
-  ],
-  declarations: [
-    AdminComponent,
-    CountriesComponent,
-    DashboardComponent,
-    QuizzesComponent,
-    QuizConfigurationComponent,
-    QuizGameComponent
-  ]
+  imports: [CommonModule, AdminRoutingModule, SharedModule, NgSelectModule, FormsModule, ReactiveFormsModule, FontAwesomeModule],
+  declarations: [AdminComponent, CountriesComponent, DashboardComponent, QuizzesComponent, QuizConfigurationComponent, QuizGameComponent],
 })
-export class AdminModule { }
+export class AdminModule {}

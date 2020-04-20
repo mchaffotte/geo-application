@@ -5,8 +5,7 @@ import { Country, Page } from './country';
 
 @Injectable()
 export class CountryService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getCountries(offset: number, limit: number, sort: string): Observable<Page<Country>> {
     let params = new HttpParams();
@@ -21,5 +20,4 @@ export class CountryService {
     }
     return this.http.get<Page<Country>>('api/countries', { params });
   }
-
 }

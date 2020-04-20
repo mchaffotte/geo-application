@@ -3,7 +3,7 @@ import { Subject, Subscription, timer } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 
 export enum Action {
-  START
+  START,
 }
 
 interface CountDown {
@@ -12,7 +12,7 @@ interface CountDown {
 }
 
 @Directive({
-  selector: '[geoCountdown]'
+  selector: '[geoCountdown]',
 })
 export class CountdownDirective implements OnInit, OnDestroy {
   private countdown$ = new Subject<CountDown>();
@@ -45,7 +45,7 @@ export class CountdownDirective implements OnInit, OnDestroy {
       )
       .subscribe();
 
-    this.actionSubscription = this.actions.subscribe(action => {
+    this.actionSubscription = this.actions.subscribe((action) => {
       if (action === Action.START) {
         this.countdown$.next({ count: this.countdown, interval: this.interval });
       }

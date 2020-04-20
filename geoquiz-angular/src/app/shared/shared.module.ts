@@ -25,7 +25,7 @@ import { CountdownDirective } from './ui/countdown/countdown.directive';
     IndicatorComponent,
     TotalCountriesComponent,
     CountdownComponent,
-    CountdownDirective
-  ]
+    CountdownDirective,
+  ],
 })
 export class SharedModule {}

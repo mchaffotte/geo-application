@@ -4,7 +4,7 @@ export enum AlertType {
   WARNING = 'warning',
   DANGER = 'danger',
   PRIMARY = 'primary',
-  SECONDARY = 'secondary'
+  SECONDARY = 'secondary',
 }
 
 export class Alert {

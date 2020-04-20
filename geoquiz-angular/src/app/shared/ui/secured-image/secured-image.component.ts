@@ -20,17 +20,14 @@ export class SecuredImageComponent implements OnChanges {
   // this stream will contain the actual url that our img tag will load
   // everytime the src changes, the previous call would be canceled and the
   // new resource would be loaded
-  dataUrl$ = this.src$.pipe(switchMap(url => this.loadImage(url)));
+  dataUrl$ = this.src$.pipe(switchMap((url) => this.loadImage(url)));
 
   ngOnChanges() {
     this.src$.next(this.src);
   }
 
   // we need HttpClient to load the image and DomSanitizer to trust the url
-  constructor(
-    private httpClient: HttpClient,
-    private domSanitizer: DomSanitizer
-  ) {}
+  constructor(private httpClient: HttpClient, private domSanitizer: DomSanitizer) {}
 
   private loadImage(url: string): Observable<any> {
     if (url == null) {
@@ -38,10 +35,6 @@ export class SecuredImageComponent implements OnChanges {
     }
     return this.httpClient
       .get(url, { responseType: 'blob' })
-      .pipe(
-        map(e =>
-          this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(e))
-        )
-      );
+      .pipe(map((e) => this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(e))));
   }
 }

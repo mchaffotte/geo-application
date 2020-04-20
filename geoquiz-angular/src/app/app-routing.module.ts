@@ -9,12 +9,11 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+    loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
   },
   {
     path: 'sandbox',
-    loadChildren: () =>
-      import('./sandbox/sandbox.module').then(m => m.SandboxModule),
+    loadChildren: () => import('./sandbox/sandbox.module').then((m) => m.SandboxModule),
   },
   {
     path: '**',

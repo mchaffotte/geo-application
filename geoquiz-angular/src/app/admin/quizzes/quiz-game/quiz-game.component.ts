@@ -9,7 +9,7 @@ import { Action } from '../../../shared/ui/countdown/countdown.directive';
 @Component({
   selector: 'geo-quiz-game',
   templateUrl: './quiz-game.component.html',
-  styleUrls: ['./quiz-game.component.scss']
+  styleUrls: ['./quiz-game.component.scss'],
 })
 export class QuizGameComponent implements OnInit {
   private innerQuiz: Quiz;
@@ -31,7 +31,7 @@ export class QuizGameComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private quizService: QuizService) {
     this.quizGameForm = this.fb.group({
-      answer: ''
+      answer: '',
     });
     this.seconds = 10;
   }
@@ -77,7 +77,7 @@ export class QuizGameComponent implements OnInit {
     if (this.index + 1 < this.innerQuiz.questions.length) {
       this.changeQuestion();
     } else {
-      this.quizService.answer(this.innerQuiz.id, this.quizAnswer).subscribe(res => {
+      this.quizService.answer(this.innerQuiz.id, this.quizAnswer).subscribe((res) => {
         this.question = null;
         this.result = res;
       });

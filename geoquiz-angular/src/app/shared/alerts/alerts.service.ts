@@ -5,14 +5,12 @@ import { Observable, Subject } from 'rxjs';
 import { AlertType, Alert } from './alerts.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AlertsService {
-
   private subject = new Subject<Alert>();
 
-  constructor(private translate: TranslateService) {
-  }
+  constructor(private translate: TranslateService) {}
 
   getAlert(): Observable<Alert> {
     return this.subject.asObservable();
@@ -42,5 +40,4 @@ export class AlertsService {
   clear() {
     this.subject.next();
   }
-
 }

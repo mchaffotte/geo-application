@@ -14,10 +14,9 @@ export class ResponseChoice {
 @Component({
   selector: 'geo-quiz-configuration',
   templateUrl: './quiz-configuration.component.html',
-  styleUrls: ['./quiz-configuration.component.scss']
+  styleUrls: ['./quiz-configuration.component.scss'],
 })
 export class QuizConfigurationComponent implements OnInit {
-
   @Output() quizCreated = new EventEmitter<Quiz>();
 
   questionTypes: Array<NgOption>;
@@ -29,7 +28,7 @@ export class QuizConfigurationComponent implements OnInit {
   AnswerType = AnswerType;
 
   constructor(private quizService: QuizService, private quizTypeService: QuizTypeService, private translate: TranslateService) {
-    this.choice = { answer: true, multipleChoice: true};
+    this.choice = { answer: true, multipleChoice: true };
 
     this.configuration = new QuizConfiguration();
     this.configuration.answerType = AnswerType.MULTIPLE_CHOICE;
@@ -37,15 +36,15 @@ export class QuizConfigurationComponent implements OnInit {
 
   ngOnInit() {
     this.questionTypes = [];
-    this.quizTypeService.getQuizTypes().subscribe(types => {
+    this.quizTypeService.getQuizTypes().subscribe((types) => {
       let i = 1;
       const questionTypes = [];
-      types.forEach(type => {
+      types.forEach((type) => {
         questionTypes.push({
           index: i,
           label: this.translate.instant('model.question-type.' + type.questionType),
           questionType: type.questionType,
-          answerTypes: type.answerTypes
+          answerTypes: type.answerTypes,
         });
         i++;
       });
@@ -63,7 +62,7 @@ export class QuizConfigurationComponent implements OnInit {
   }
 
   updateQuestion(event: NgOption) {
-    const questionOption = this.questionTypes.find(option => option.questionType === event.questionType);
+    const questionOption = this.questionTypes.find((option) => option.questionType === event.questionType);
     this.choice.multipleChoice = this.contains(questionOption, AnswerType.MULTIPLE_CHOICE);
     this.choice.answer = this.contains(questionOption, AnswerType.ANSWER);
 
@@ -73,11 +72,10 @@ export class QuizConfigurationComponent implements OnInit {
   }
 
   createQuiz() {
-    this.quizService.createQuiz(this.configuration).subscribe(quizId => {
-      this.quizService.getQuiz(quizId).subscribe(quiz => {
+    this.quizService.createQuiz(this.configuration).subscribe((quizId) => {
+      this.quizService.getQuiz(quizId).subscribe((quiz) => {
         this.quizCreated.emit(quiz);
       });
     });
   }
-
 }

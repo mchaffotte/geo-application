@@ -18,15 +18,12 @@ class FakeLoader implements TranslateLoader {
   }
 }
 
-class MockQuizService {
-}
+class MockQuizService {}
 
 class MockQuizTestService {
-
   getQuizTypes(): Observable<QuizType[]> {
     return of([]);
   }
-
 }
 
 describe('QuizConfigurationComponent', () => {
@@ -42,14 +39,13 @@ describe('QuizConfigurationComponent', () => {
         NgbModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: FakeLoader },
-        })
+        }),
       ],
       providers: [
         { provide: QuizService, useClass: MockQuizService },
-        { provide: QuizTypeService, useClass: MockQuizTestService }
-      ]
-    })
-    .compileComponents();
+        { provide: QuizTypeService, useClass: MockQuizTestService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
