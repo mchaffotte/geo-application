@@ -27,8 +27,11 @@ repositories {
 
 dependencies {
     implementation platform("io.thorntail:bom-all:$thorntailVersion")
+    implementation project(':querify')
     implementation project(':querify-jpa')
+    implementation project(':quizzify')
     implementation project(':quizzify-geo')
+    implementation project(':geodata')
 
     implementation 'io.thorntail:jpa'
     implementation 'io.thorntail:microprofile'

@@ -1,0 +1,36 @@
+plugins {
+    id 'io.quarkus' version "${quarkusPluginVersion}"
+}
+
+ext {
+    resteasyVersion = '4.5.3.Final'
+}
+
+dependencies {
+    implementation project(':querify')
+    implementation project(':querify-jpa')
+    implementation project(':quizzify')
+    implementation project(':quizzify-geo')
+    implementation project(':geodata')
+
+    implementation enforcedPlatform("io.quarkus:quarkus-universe-bom:${quarkusPlatformVersion}")
+    implementation 'io.quarkus:quarkus-resteasy-jackson'
+    implementation 'io.quarkus:quarkus-hibernate-validator'
+    implementation 'io.quarkus:quarkus-hibernate-orm'
+    implementation 'io.quarkus:quarkus-jdbc-h2'
+
+    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.rest-assured:rest-assured'
+
+    testImplementation "org.jboss.resteasy:resteasy-client:$resteasyVersion"
+    testImplementation "org.jboss.resteasy:resteasy-jackson2-provider:$resteasyVersion"
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}

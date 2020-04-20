@@ -1,6 +1,7 @@
 dependencies {
-    api project(':geodata')
-    api project(':quizzify')
+    implementation project(':geodata')
+    implementation project(':querify')
+    implementation project(':quizzify')
 
     compileOnly "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:$hibernateJpaVersion"
     compileOnly "javax.validation:validation-api:$beanValidationVersion"

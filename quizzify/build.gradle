@@ -1,5 +1,5 @@
 dependencies {
-    api project(':querify')
+    implementation project(':querify')
 
     compileOnly "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:$hibernateJpaVersion"
     compileOnly "javax.validation:validation-api:$beanValidationVersion"

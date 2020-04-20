@@ -10,7 +10,6 @@ buildscript {
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'java-library'
     apply from: "$rootDir/gradle/integration-test.gradle"
     apply from: "$rootDir/gradle/reporting.gradle"
 
