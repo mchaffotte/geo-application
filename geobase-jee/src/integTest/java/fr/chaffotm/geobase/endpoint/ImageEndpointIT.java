@@ -18,7 +18,6 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
-import java.io.File;
 import java.net.URI;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
@@ -39,7 +38,7 @@ public class ImageEndpointIT {
         deployment.addAsResource("META-INF/sql/data.sql");
         deployment.addAsResource("META-INF/sql/drop.sql");
         deployment.addAsResource("project-defaults-test.yml", "project-defaults.yml");
-        deployment.addAsResource(new File("../geodata/src/main/resources/silhouettes"));
+        deployment.addAsResource("silhouettes");
         return deployment;
     }
 

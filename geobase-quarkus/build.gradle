@@ -1,6 +1,10 @@
+import fr.chaffotm.data.io.ImportDataPlugin
+
 plugins {
     id 'io.quarkus' version "${quarkusPluginVersion}"
 }
+
+apply plugin: ImportDataPlugin
 
 ext {
     resteasyVersion = '4.5.3.Final'
@@ -34,3 +38,9 @@ compileJava {
 compileTestJava {
     options.encoding = 'UTF-8'
 }
+
+importSQL {
+    fileName = "import"
+}
+quarkusDev.dependsOn importSQL
+quarkusBuild.dependsOn importSQL

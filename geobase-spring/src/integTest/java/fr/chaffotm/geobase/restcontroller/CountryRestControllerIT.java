@@ -47,7 +47,7 @@ public class CountryRestControllerIT {
         ResponseEntity<Frame<Country>> response = restTemplate.exchange(API_COUNTRIES, HttpMethod.GET, null, new ParameterizedTypeReference<Frame<Country>>() {});
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody().getResources()).hasSize(45);
+        assertThat(response.getBody().getResources()).hasSize(14);
     }
 
     @Test
@@ -56,35 +56,35 @@ public class CountryRestControllerIT {
         ResponseEntity<Frame<Country>> response = restTemplate.exchange(API_COUNTRIES, HttpMethod.GET, null, new ParameterizedTypeReference<Frame<Country>>() {});
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody().getResources()).hasSize(45);
+        assertThat(response.getBody().getResources()).hasSize(14);
 
         final Area area = new Area();
-        area.setLand(45.0);
-        area.setWater(20.1);
-        final Country france = new Country();
-        france.setName("France");
-        france.setCode("FR1");
-        france.setArea(area);
+        area.setLand(303815);
+        area.setWater(3433);
+        final Country finland = new Country();
+        finland.setName("Finland");
+        finland.setCode("FI");
+        finland.setArea(area);
         City city = new City();
-        city.setName("Paris");
-        france.setCapital(city);
-        final ResponseEntity<Void> response1 = restTemplate.postForEntity(API_COUNTRIES, france, Void.class);
+        city.setName("Helsinki");
+        finland.setCapital(city);
+        final ResponseEntity<Void> response1 = restTemplate.postForEntity(API_COUNTRIES, finland, Void.class);
         assertThat(response1.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         final URI location = response1.getHeaders().getLocation();
 
         String id = location.getPath().substring(location.getPath().lastIndexOf('/') + 1);
-        france.setId(Long.valueOf(id));
+        finland.setId(Long.valueOf(id));
 
         final ResponseEntity<Country> responseEntity = restTemplate.getForEntity(location, Country.class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         final Country fr = responseEntity.getBody();
-        assertThat(fr).isEqualTo(france);
+        assertThat(fr).isEqualTo(finland);
 
-        fr.getArea().setWater(15);
+        fr.getArea().setWater(34330);
         final ResponseEntity<Country> exchange = restTemplate.exchange(location, HttpMethod.PUT, new HttpEntity<>(fr), Country.class);
         assertThat(exchange.getStatusCode()).isEqualTo(HttpStatus.OK);
-        final Country fre = exchange.getBody();
-        assertThat(fre.getArea().getTotal()).isEqualTo(60);
+        final Country fi = exchange.getBody();
+        assertThat(fi.getArea().getTotal()).isEqualTo(338145);
 
         ResponseEntity<Void> delete = restTemplate.exchange(location, HttpMethod.DELETE, null, Void.class);
         assertThat(delete.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);

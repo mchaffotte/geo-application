@@ -57,16 +57,16 @@ public class CountryEndpointIT {
                 .isEqualTo(countries);
 
         final Area area = new Area();
-        area.setLand(45.0);
-        area.setWater(20.1);
-        final Country france = new Country();
-        france.setName("France");
-        france.setCode("FR");
-        france.setArea(area);
+        area.setLand(303815);
+        area.setWater(3433);
+        final Country finland = new Country();
+        finland.setName("Finland");
+        finland.setCode("FI");
+        finland.setArea(area);
         City city = new City();
-        city.setName("Paris");
-        france.setCapital(city);
-        response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(france));
+        city.setName("Helsinki");
+        finland.setCapital(city);
+        response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(finland));
         ResponseAssert.assertThat(response)
                 .hasStatus(CREATED)
                 .hasNoBody();
@@ -74,18 +74,18 @@ public class CountryEndpointIT {
         final String location = response.getHeaderString("Location");
         assertThat(location).startsWith(baseURL + "api/countries/");
         String id = location.substring(location.lastIndexOf('/') + 1);
-        france.setId(Long.valueOf(id));
+        finland.setId(Long.valueOf(id));
 
         response = webTarget.path(id).request(APPLICATION_JSON_TYPE).get();
         assertThat(response.getStatusInfo()).isEqualTo(OK);
-        final Country fr = response.readEntity(Country.class);
-        assertThat(fr).isEqualTo(france);
+        final Country suomi = response.readEntity(Country.class);
+        assertThat(suomi).isEqualTo(finland);
 
-        fr.getArea().setWater(15);
-        response = webTarget.path(id).request(APPLICATION_JSON_TYPE).put(Entity.json(fr));
+        suomi.getArea().setWater(34330);
+        response = webTarget.path(id).request(APPLICATION_JSON_TYPE).put(Entity.json(suomi));
         assertThat(response.getStatusInfo()).isEqualTo(OK);
-        final Country fre = response.readEntity(Country.class);
-        assertThat(fre.getArea().getTotal()).isEqualTo(60);
+        final Country fi = response.readEntity(Country.class);
+        assertThat(fi.getArea().getTotal()).isEqualTo(338145);
 
         response = webTarget.path(id).request(APPLICATION_JSON_TYPE).delete();
         ResponseAssert.assertThat(response)

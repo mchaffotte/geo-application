@@ -1,0 +1,42 @@
+package fr.chaffotm.data.io;
+
+import fr.chaffotm.data.io.geo.WorldGenerator;
+import org.gradle.api.DefaultTask;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.OutputFile;
+import org.gradle.api.tasks.TaskAction;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class ImportSQLTask extends DefaultTask {
+
+    String fileName;
+
+    @Input
+    public String getFileName() {
+        return fileName;
+    }
+
+    @OutputFile
+    public File getSQLFile() {
+        final File buildDir = getProject().getBuildDir();
+        return new File(String.format("%s/resources/main", buildDir), fileName + ".sql");
+    }
+
+    @TaskAction
+    void run() throws IOException {
+        final WorldGenerator generator = new WorldGenerator(getLogger());
+        writeFile(getSQLFile(), generator.toSQL());
+    }
+
+    private void writeFile(final File destination, final String content) throws IOException {
+        try (final FileWriter writer = new FileWriter(destination);
+             final BufferedWriter output = new BufferedWriter(writer)) {
+            output.write(content);
+        }
+    }
+
+}

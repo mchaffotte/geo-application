@@ -1,3 +1,5 @@
+import fr.chaffotm.data.io.ImportDataPlugin
+
 buildscript {
     repositories {
         mavenCentral()
@@ -11,6 +13,7 @@ buildscript {
 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: ImportDataPlugin
 
 dependencies {
     implementation project(':querify')
@@ -32,3 +35,9 @@ dependencies {
     integTestImplementation "com.sun.xml.bind:jaxb-impl:$jaxbImplVersion"
     integTestImplementation "org.glassfish.jaxb:jaxb-runtime:$jaxbImplVersion"
 }
+
+importSQL {
+    fileName = "data"
+}
+bootRun.dependsOn importSQL
+build.dependsOn importSQL

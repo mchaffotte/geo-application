@@ -1,3 +1,5 @@
+import fr.chaffotm.data.io.ImportDataPlugin
+
 buildscript {
     ext {
         thorntailVersion = '2.5.0.Final'
@@ -14,6 +16,7 @@ buildscript {
 
 apply plugin: 'thorntail'
 apply plugin: 'war'
+apply plugin: ImportDataPlugin
 
 ext {
     resteasyVersion = '3.8.1.Final'
@@ -47,3 +50,8 @@ dependencies {
     integTestImplementation "org.jboss.resteasy:resteasy-client:$resteasyVersion"
     integTestImplementation "org.jboss.resteasy:resteasy-jackson-provider:$resteasyVersion"
 }
+
+importSQL {
+    fileName = "import"
+}
+build.dependsOn importSQL
