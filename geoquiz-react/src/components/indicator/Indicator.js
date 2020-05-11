@@ -49,7 +49,9 @@ const Indicator = ({ label, value, Icon, className }) => {
             >
               {label}
             </Typography>
-            <Typography variant="h3">{!value ? <Loader /> : value}</Typography>
+            <Typography variant="h3">
+              {value == null ? <Loader /> : value}
+            </Typography>
           </Grid>
           <Grid item>
             <Avatar
