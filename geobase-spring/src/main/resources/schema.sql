@@ -1,9 +1,13 @@
 CREATE SEQUENCE city_sequence INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE country_sequence INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE region_sequence INCREMENT BY 1 START WITH 1;
 CREATE TABLE city (id BIGINT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id));
-CREATE TABLE country (id BIGINT NOT NULL, code VARCHAR(6) NOT NULL, name VARCHAR(50) NOT NULL, land_area INTEGER, water_area INTEGER, capital_id BIGINT, PRIMARY KEY(id));ALTER TABLE country ADD CONSTRAINT uk_country_code UNIQUE(code);
+CREATE TABLE country (id BIGINT NOT NULL, code VARCHAR(6) NOT NULL, name VARCHAR(50) NOT NULL, land_area INTEGER, water_area INTEGER, capital_id BIGINT, region_id BIGINT, PRIMARY KEY(id));
+CREATE TABLE region (id BIGINT NOT NULL, numeric_code INTEGER NOT NULL, name VARCHAR(50) NOT NULL, parent_id BIGINT, PRIMARY KEY(id));
+ALTER TABLE country ADD CONSTRAINT uk_country_code UNIQUE(code);
 ALTER TABLE country ADD CONSTRAINT uk_capital_id UNIQUE(capital_id);
 ALTER TABLE country ADD CONSTRAINT fk_country_capital_id FOREIGN KEY(capital_id) REFERENCES city;
+ALTER TABLE country ADD CONSTRAINT fk_country_region_id FOREIGN KEY(region_id) REFERENCES region;
 
 CREATE SEQUENCE answer_sequence INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE question_sequence INCREMENT BY 1 START WITH 1;

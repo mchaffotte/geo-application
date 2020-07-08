@@ -28,4 +28,9 @@ public class QueryCriteriaRepository implements CriteriaRepository {
         return queryCriteriaRepository.findAll(offset, limit, criteria);
     }
 
+    @Override
+    public <T> List<T> findAll(final String query, final Class<T> resultClass) {
+        return queryCriteriaRepository.findAll(query, resultClass);
+    }
+
 }

@@ -42,7 +42,7 @@ public class QuizMaker {
             throw new IllegalArgumentException("Quiz supports only multiple choice");
         }
         final Generator generator = generatorFactory.getGenerator(descriptor.getAttributeColumnType());
-        final QueryCriteria<T> queryCriteria = descriptor.getQueryCriteria();
+        final QueryCriteria<T> queryCriteria = descriptor.getQueryCriteria(quizConfiguration.getFilter());
         final List<T> entities = repository.findAll(1, null, queryCriteria);
         final List<MultipleChoice<T>> multipleChoices = generator.generate(entities, quizConfiguration.getAnswerType());
         final QuizEntity quiz = new QuizEntity();

@@ -50,7 +50,7 @@ subprojects {
         hibernateEntityManagerVersion = '5.4.6.Final'
 
         junitVersion = '5.5.2'
-        assertjVersion = '3.14.0'
+        assertjVersion = '3.16.1'
     }
 
     dependencies {

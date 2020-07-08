@@ -9,6 +9,8 @@ public class QuizType {
 
     private List<AnswerType> answerTypes;
 
+    private FilterType filter;
+
     public String getQuestionType() {
         return questionType;
     }
@@ -25,25 +27,35 @@ public class QuizType {
         this.answerTypes = answerTypes;
     }
 
+    public FilterType getFilter() {
+        return filter;
+    }
+
+    public void setFilter(FilterType filter) {
+        this.filter = filter;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         QuizType quizType = (QuizType) o;
         return Objects.equals(questionType, quizType.questionType) &&
-                Objects.equals(answerTypes, quizType.answerTypes);
+                Objects.equals(answerTypes, quizType.answerTypes) &&
+                Objects.equals(filter, quizType.filter);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(questionType, answerTypes);
+        return Objects.hash(questionType, answerTypes, filter);
     }
 
     @Override
     public String toString() {
         return "QuizType{" +
-                "questionType=" + questionType +
+                "questionType='" + questionType + '\'' +
                 ", answerTypes=" + answerTypes +
+                ", filter=" + filter +
                 '}';
     }
 

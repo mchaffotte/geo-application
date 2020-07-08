@@ -101,7 +101,36 @@ public class WorldGenerator {
         }
     }
 
+    private int getIndex(final List<Region> regions, int numericCode) {
+        int index = 1;
+        for (Region region : regions) {
+            if (region.getNumericCode() == numericCode) {
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
+
     private String toSQL(final World world) {
+        final List<Region> regions = world.getRegions();
+        final StringBuilder regionBuilder = new StringBuilder();
+        int regionIndex = 1;
+        for (Region region : regions) {
+            regionBuilder.append("INSERT INTO region (id, numeric_code, name, parent_id) VALUES (");
+            regionBuilder.append(regionIndex).append(", ");
+            regionBuilder.append(region.getNumericCode()).append(", '");
+            regionBuilder.append(region.getName()).append("', ");
+            if (region.getParents().isEmpty()) {
+                regionBuilder.append("null");
+            } else {
+                final Integer firstRegion = region.getParents().get(0);
+                regionBuilder.append(getIndex(regions, firstRegion));
+            }
+            regionBuilder.append(");\n");
+            regionIndex++;
+        }
+
         final List<Country> countries = world.getCountries();
         countries.sort(Comparator.comparing(Country::getAlpha3Code));
 
@@ -113,12 +142,13 @@ public class WorldGenerator {
             final Area area = country.getArea();
             final double landArea = area.getLand() * 100;
             final double waterArea = area.getWater() * 100;
-            countryBuilder.append("INSERT INTO country (id, code, name, land_area, water_area, capital_id) VALUES (")
+            countryBuilder.append("INSERT INTO country (id, code, name, land_area, water_area, region_id, capital_id) VALUES (")
                     .append(countryIndex).append(", '")
                     .append(country.getAlpha2Code()).append("', '")
                     .append(country.getName().replaceAll("'", "''")).append("', ")
                     .append(landArea).append(", ")
-                    .append(waterArea).append(", ");
+                    .append(waterArea).append(", ")
+                    .append(getIndex(regions, country.getRegion())).append(", ");
             final String capital = country.getCapital();
             if (capital == null || capital.isBlank()) {
                 countryBuilder.append("null);\n");
@@ -129,7 +159,8 @@ public class WorldGenerator {
             }
             countryIndex++;
         }
-        return cityBuilder.toString() + "\n" + countryBuilder.toString() + "\n" +
+        return regionBuilder.toString() + "\n" + cityBuilder.toString() + "\n" + countryBuilder.toString() + "\n" +
+                "ALTER SEQUENCE region_sequence RESTART WITH " + regionIndex + ";\n" +
                 "ALTER SEQUENCE city_sequence RESTART WITH " + cityIndex + ";\n" +
                 "ALTER SEQUENCE country_sequence RESTART WITH " + countryIndex + ";\n";
     }

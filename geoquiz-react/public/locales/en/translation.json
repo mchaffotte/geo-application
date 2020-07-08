@@ -1,44 +1,43 @@
 {
-    "admin": {
-      "menu": {
-        "dashboard": "Dashboard",
-        "countries": "Countries",
-        "quizzes": "Quizzes"
-      },
-      "quizzes": {
-        "play": "Play",
-        "question": "Question {{number}}",
-        "result": "Result",
-        "configuration": "Configuration",
-        "question-type": "Question type",
-        "response-type": "Response type",
-        "answer": "Answer",
-        "multiple-choice": "Multiple choice",
-        "enter-answer": "Enter your answer",
-        "next": "Next"
-      }
+  "admin": {
+    "menu": {
+      "dashboard": "Dashboard",
+      "countries": "Countries",
+      "quizzes": "Quizzes"
     },
-    "table": {
-      "pagination": "{{from}}-{{to}} of {{count}}",
-      "page": {
-        "rows": "rows per page"
-      }
+    "quizzes": {
+      "play": "Play",
+      "question": "Question {{number}}",
+      "result": "Result",
+      "configuration": "Configuration",
+      "question-type": "Question type",
+      "answer-type": "Answer type",
+      "answer": "Answer",
+      "multiple-choice": "Multiple choice",
+      "enter-answer": "Enter your answer",
+      "next": "Next"
+    }
+  },
+  "table": {
+    "pagination": "{{from}}-{{to}} of {{count}}",
+    "page": {
+      "rows": "rows per page"
+    }
+  },
+  "model": {
+    "country": {
+      "code": "Code",
+      "name": "Name",
+      "total-area": "Total area",
+      "capital": "Capital"
     },
-    "model": {
-      "country": {
-        "code": "Code",
-        "name": "Name",
-        "total-area": "Total area",
-        "capital": "Capital"
-      },
-      "question-type": {
-        "CAPITAL": "Capital",
-        "TOTAL_AREA": "Total area",
-        "FLAG": "Flag",
-        "SILHOUETTE": "Silhouette",
-        "LAND_AREA": "Land area",
-        "WATER_AREA": "Water area"
-      }
+    "question-type": {
+      "CAPITAL": "Capital",
+      "TOTAL_AREA": "Total area",
+      "FLAG": "Flag",
+      "SILHOUETTE": "Silhouette",
+      "LAND_AREA": "Land area",
+      "WATER_AREA": "Water area"
     }
   }
-  
+}

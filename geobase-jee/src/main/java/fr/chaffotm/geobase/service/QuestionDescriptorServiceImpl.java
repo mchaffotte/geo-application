@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class QuestionDescriptorServiceImpl implements QuestionDescriptorService {
 
-    private Map<String, QuestionDescriptor> descriptors;
+    private final Map<String, QuestionDescriptor<?>> descriptors;
 
     public QuestionDescriptorServiceImpl() {
         descriptors = List.of(new CapitalQuestionDescriptor(),
@@ -24,7 +24,7 @@ public class QuestionDescriptorServiceImpl implements QuestionDescriptorService 
     }
 
     @Override
-    public Map<String, QuestionDescriptor> getDescriptors() {
+    public Map<String, QuestionDescriptor<?>> getDescriptors() {
         return descriptors;
     }
 

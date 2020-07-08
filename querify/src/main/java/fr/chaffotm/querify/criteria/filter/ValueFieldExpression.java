@@ -9,7 +9,7 @@ public class ValueFieldExpression implements FieldExpression {
 
     private final ValueOperator operator;
 
-    private Object value;
+    private final Object value;
 
     public ValueFieldExpression(final String fieldName, final ValueOperator operator, final Object value) {
         this.fieldName = fieldName;

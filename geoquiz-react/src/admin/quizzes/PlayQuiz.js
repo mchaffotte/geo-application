@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Form, Field } from 'react-final-form';
+import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
@@ -38,6 +38,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const useFocus = () => {
+  const inputRef = useRef(null);
+
+  const setFocus = () => inputRef.current && inputRef.current.focus();
+
+  return [inputRef, setFocus];
+};
+
 const PlayQuiz = ({ quiz }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -48,6 +56,8 @@ const PlayQuiz = ({ quiz }) => {
   const answers = useRef([]);
 
   const [result, setResult] = useState(null);
+
+  const [inputRef, setInputFocus] = useFocus();
 
   useEffect(() => {
     if (quiz) {
@@ -80,8 +90,8 @@ const PlayQuiz = ({ quiz }) => {
     }
   };
 
-  const onSubmit = async (values) => {
-    const choice = values.answer ? values.answer : '';
+  const handleResult = async ({ answer }) => {
+    const choice = answer ? answer : '';
     handleChoice(choice);
   };
 
@@ -141,29 +151,57 @@ const PlayQuiz = ({ quiz }) => {
           </Button>
         ))}
         {question.choices.length === 0 && (
-          <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit }) => (
+          <Formik
+            initialValues={{
+              answer: '',
+            }}
+            onSubmit={(values, { setSubmitting, resetForm }) => {
+              handleResult(values).then(() => {
+                resetForm({ answer: '' });
+                setSubmitting(false);
+                setInputFocus();
+              });
+            }}
+          >
+            {({
+              values,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              errors,
+              touched,
+              isSubmitting,
+            }) => (
               <form onSubmit={handleSubmit} noValidate>
                 <Grid container alignItems="flex-start" spacing={2}>
                   <Grid item xs={12}>
-                    <Field
-                      fullWidth
-                      name="answer"
-                      component={TextField}
-                      type="text"
+                    <TextField
                       label={t('admin.quizzes.enter-answer')}
+                      name="answer"
+                      value={values.answer}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.email && touched.email}
+                      helperText={errors.email && touched.email && errors.email}
+                      fullWidth
+                      autoFocus
+                      inputRef={inputRef}
                     />
                   </Grid>
                   <Grid item className={classes.actions}>
-                    <Button variant="contained" color="primary" type="submit">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
                       {t('admin.quizzes.next')}
                     </Button>
                   </Grid>
                 </Grid>
               </form>
             )}
-          />
+          </Formik>
         )}
       </CardContent>
     </Card>

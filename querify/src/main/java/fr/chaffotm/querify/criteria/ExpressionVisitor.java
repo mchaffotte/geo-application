@@ -1,13 +1,12 @@
 package fr.chaffotm.querify.criteria;
 
-import fr.chaffotm.querify.criteria.filter.CollectionFieldExpression;
-import fr.chaffotm.querify.criteria.filter.LogicalExpression;
-import fr.chaffotm.querify.criteria.filter.NoValueFieldExpression;
-import fr.chaffotm.querify.criteria.filter.ValueFieldExpression;
+import fr.chaffotm.querify.criteria.filter.*;
 
 public interface ExpressionVisitor {
 
-    void visit(CollectionFieldExpression expression);
+    void visit(ValueSetFieldExpression expression);
+
+    void visit(AliasSetFieldExpression expression);
 
     void visit(NoValueFieldExpression expression);
 

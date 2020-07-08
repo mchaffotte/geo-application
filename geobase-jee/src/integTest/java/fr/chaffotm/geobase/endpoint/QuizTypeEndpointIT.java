@@ -1,6 +1,7 @@
 package fr.chaffotm.geobase.endpoint;
 
 import fr.chaffotm.quizzify.resource.AnswerType;
+import fr.chaffotm.quizzify.resource.FilterType;
 import fr.chaffotm.quizzify.resource.QuizType;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -41,15 +42,20 @@ public class QuizTypeEndpointIT {
     @ArquillianResource
     private URI baseURL;
 
-    private QuizType build(final String questionType, final AnswerType... answerTypes) {
+    private QuizType build(final String questionType, final FilterType filter, final AnswerType... answerTypes) {
         final QuizType type = new QuizType();
         type.setQuestionType(questionType);
         type.setAnswerTypes(List.of(answerTypes));
+        type.setFilter(filter);
         return type;
     }
 
     @Test
     public void getQuizTypes_should_return_all_possible_types() {
+        final FilterType filter = new FilterType();
+        filter.setLabel("Region");
+        filter.setName("region.id");
+        filter.setValues(List.of());
         final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quiz-types");
         Response response = webTarget.request(APPLICATION_JSON_TYPE).get();
@@ -58,12 +64,12 @@ public class QuizTypeEndpointIT {
                 .hasStatus(OK)
                 .withBodyList(QuizType.class)
                 .containsExactlyInAnyOrder(
-                        build("CAPITAL", AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE),
-                        build("TOTAL_AREA", AnswerType.MULTIPLE_CHOICE),
-                        build("LAND_AREA", AnswerType.MULTIPLE_CHOICE),
-                        build("WATER_AREA", AnswerType.MULTIPLE_CHOICE),
-                        build("FLAG", AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE),
-                        build("SILHOUETTE", AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE)
+                        build("CAPITAL", filter, AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE),
+                        build("TOTAL_AREA", filter, AnswerType.MULTIPLE_CHOICE),
+                        build("LAND_AREA", filter, AnswerType.MULTIPLE_CHOICE),
+                        build("WATER_AREA", filter, AnswerType.MULTIPLE_CHOICE),
+                        build("FLAG", filter, AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE),
+                        build("SILHOUETTE", filter, AnswerType.ANSWER, AnswerType.MULTIPLE_CHOICE)
                 );
     }
 

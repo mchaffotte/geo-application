@@ -39,8 +39,5 @@ compileTestJava {
     options.encoding = 'UTF-8'
 }
 
-importSQL {
-    fileName = "import"
-}
 quarkusDev.dependsOn importSQL
 quarkusBuild.dependsOn importSQL

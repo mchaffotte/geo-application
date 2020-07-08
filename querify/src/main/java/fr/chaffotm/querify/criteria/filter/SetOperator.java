@@ -1,6 +1,6 @@
 package fr.chaffotm.querify.criteria.filter;
 
-public enum CollectionOperator {
+public enum SetOperator {
 
     IN, NOT_IN
 

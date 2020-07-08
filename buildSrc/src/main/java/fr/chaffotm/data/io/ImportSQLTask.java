@@ -2,9 +2,7 @@ package fr.chaffotm.data.io;
 
 import fr.chaffotm.data.io.geo.WorldGenerator;
 import org.gradle.api.DefaultTask;
-import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.OutputFile;
-import org.gradle.api.tasks.TaskAction;
+import org.gradle.api.tasks.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,17 +11,20 @@ import java.io.IOException;
 
 public class ImportSQLTask extends DefaultTask {
 
-    String fileName;
+    @InputDirectory
+    @Optional
+    public
+    String outputDir = "";
 
     @Input
-    public String getFileName() {
-        return fileName;
-    }
+    @Optional
+    public
+    String fileName = "import";
 
     @OutputFile
     public File getSQLFile() {
         final File buildDir = getProject().getBuildDir();
-        return new File(String.format("%s/resources/main", buildDir), fileName + ".sql");
+        return new File(String.format("%s/resources/main/"+ outputDir, buildDir), fileName + ".sql");
     }
 
     @TaskAction

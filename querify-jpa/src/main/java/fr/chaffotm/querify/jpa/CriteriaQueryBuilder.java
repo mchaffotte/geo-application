@@ -17,17 +17,20 @@ public class CriteriaQueryBuilder<T> {
 
     private Expression<?> functionExpression;
 
-    private JoinBuilder joinBuilder;
+    private final JoinBuilder joinBuilder;
 
-    private List<Order> orders;
+    private final List<Order> orders;
 
-    public CriteriaQueryBuilder(final CriteriaBuilder builder, final Class<T> queryClass) {
+    private final QueryExecutor executor;
+
+    public CriteriaQueryBuilder(final CriteriaBuilder builder, final QueryExecutor executor, final Class<T> queryClass) {
         this.builder = builder;
         query = builder.createQuery(FunctionEntity.class);
         functionExpression = null;
         mainEntity = query.from(queryClass);
         joinBuilder = new JoinBuilder(mainEntity);
         orders = new ArrayList<>();
+        this.executor = executor;
     }
 
     public CriteriaQuery<FunctionEntity> build() {
@@ -58,7 +61,7 @@ public class CriteriaQueryBuilder<T> {
     }
 
     public CriteriaQueryBuilder<T> filter(final fr.chaffotm.querify.criteria.Expression filter) {
-        final PredicateExpressionVisitor visitor = new PredicateExpressionVisitor(builder, joinBuilder);
+        final PredicateExpressionVisitor visitor = new PredicateExpressionVisitor(builder, joinBuilder, executor);
         filter.accept(visitor);
         final Predicate predicate = visitor.getPredicate();
         query.where(predicate);

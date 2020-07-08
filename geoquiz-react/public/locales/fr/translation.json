@@ -1,44 +1,43 @@
 {
-    "admin": {
-      "menu": {
-        "dashboard": "Tableau de bord",
-        "countries": "Pays",
-        "quizzes": "Quiz"
-      },
-      "quizzes": {
-        "play": "Jouer",
-        "question": "Question {{number}}",
-        "result": "Résultat",
-        "configuration": "Configuration",
-        "question-type": "Type de question",
-        "response-type": "Type de réponse",
-        "answer": "Réponse",
-        "multiple-choice": "QCM",
-        "enter-answer": "Entrer votre réponse",
-        "next": "Suivant"
-      }
+  "admin": {
+    "menu": {
+      "dashboard": "Tableau de bord",
+      "countries": "Pays",
+      "quizzes": "Quiz"
     },
-    "table": {
-      "pagination": "{{from}}-{{to}} sur {{count}}",
-      "page": {
-        "rows": "lignes par page"
-      }
+    "quizzes": {
+      "play": "Jouer",
+      "question": "Question {{number}}",
+      "result": "Résultat",
+      "configuration": "Configuration",
+      "question-type": "Type de question",
+      "answer-type": "Type de réponse",
+      "answer": "Réponse",
+      "multiple-choice": "QCM",
+      "enter-answer": "Entrer votre réponse",
+      "next": "Suivant"
+    }
+  },
+  "table": {
+    "pagination": "{{from}}-{{to}} sur {{count}}",
+    "page": {
+      "rows": "lignes par page"
+    }
+  },
+  "model": {
+    "country": {
+      "code": "Code",
+      "name": "Nom",
+      "total-area": "Superficie totale",
+      "capital": "Capitale"
     },
-    "model": {
-      "country": {
-        "code": "Code",
-        "name": "Nom",
-        "total-area": "Superficie totale",
-        "capital": "Capitale"
-      },
-      "question-type": {
-        "CAPITAL": "Capitale",
-        "TOTAL_AREA": "Superficie totale",
-        "FLAG": "Drapeau",
-        "SILHOUETTE": "Silhouette",
-        "LAND_AREA": "Superficie des terres",
-        "WATER_AREA": "Superficie des eaux"
-      }
+    "question-type": {
+      "CAPITAL": "Capitale",
+      "TOTAL_AREA": "Superficie totale",
+      "FLAG": "Drapeau",
+      "SILHOUETTE": "Silhouette",
+      "LAND_AREA": "Superficie des terres",
+      "WATER_AREA": "Superficie des eaux"
     }
   }
-  
+}

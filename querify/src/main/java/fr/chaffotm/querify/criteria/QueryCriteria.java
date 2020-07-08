@@ -13,7 +13,7 @@ public class QueryCriteria<T> {
 
     private Expression filter;
 
-    private List<Sort> sorts;
+    private final List<Sort> sorts;
 
     public QueryCriteria(final Class<T> entityClass) {
         this.entityClass = entityClass;

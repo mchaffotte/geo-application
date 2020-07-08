@@ -30,12 +30,15 @@ public class QuizService {
 
     private final QuestionDescriptorService questionService;
 
+    private final QueryCriteriaRepository queryCriteriaRepository;
+
     public QuizService(final QuizRepository quizRepository, final QuestionDescriptorService questionService,
                        final QueryCriteriaRepository queryCriteriaRepository) {
         this.quizRepository = quizRepository;
         this.questionService = questionService;
         quizMaker = new QuizMaker(queryCriteriaRepository, questionService);
         checker = new QuizAnswerChecker();
+        this.queryCriteriaRepository= queryCriteriaRepository;
     }
 
     public long create(final QuizConfiguration configuration) {
@@ -55,9 +58,9 @@ public class QuizService {
     }
 
     public List<QuizType> getQuizTypes() {
-        final Map<String, QuestionDescriptor> descriptors = questionService.getDescriptors();
+        final Map<String, QuestionDescriptor<?>> descriptors = questionService.getDescriptors();
         final List<QuizType> quizTypes = new ArrayList<>();
-        for (Map.Entry<String, QuestionDescriptor> descriptor : descriptors.entrySet()) {
+        for (Map.Entry<String, QuestionDescriptor<?>> descriptor : descriptors.entrySet()) {
             final List<AnswerType> answerTypes = new ArrayList<>();
             if (ColumnType.NUMERIC != descriptor.getValue().getAttributeColumnType()) {
                 answerTypes.add(AnswerType.ANSWER);
@@ -66,6 +69,8 @@ public class QuizService {
             final QuizType quizType = new QuizType();
             quizType.setQuestionType(descriptor.getKey());
             quizType.setAnswerTypes(answerTypes);
+            final FilterType filterType = descriptor.getValue().getFilterType(queryCriteriaRepository);
+            quizType.setFilter(filterType);
             quizTypes.add(quizType);
         }
         return quizTypes;

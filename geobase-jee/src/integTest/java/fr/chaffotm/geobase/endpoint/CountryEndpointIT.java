@@ -33,7 +33,7 @@ public class CountryEndpointIT {
     public static Archive createDeployment() {
         final JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
         deployment.addPackages(true, "fr.chaffotm");
-        deployment.addAsResource("META-INF/persistence-test.xml", "META-INF/persistence.xml");
+        deployment.addAsResource("META-INF/persistence.xml");
         deployment.addAsResource("META-INF/sql/create.sql");
         deployment.addAsResource("META-INF/sql/data.sql");
         deployment.addAsResource("META-INF/sql/drop.sql");
@@ -48,13 +48,12 @@ public class CountryEndpointIT {
     public void crud_Country() {
         final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/countries");
-        Frame<Country> countries = new Frame<>();
 
         Response response = webTarget.request(APPLICATION_JSON_TYPE).get();
         ResponseAssert.assertThat(response)
                 .hasStatus(OK)
                 .withBodyFrame(Country.class)
-                .isEqualTo(countries);
+                .extracting("total").isEqualTo(14L);
 
         final Area area = new Area();
         area.setLand(303815);

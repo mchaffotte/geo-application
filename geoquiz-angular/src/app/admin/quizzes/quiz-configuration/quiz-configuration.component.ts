@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgOption } from '@ng-select/ng-select';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Quiz, QuizConfiguration, AnswerType } from '../../../shared/quiz/quiz';
+import { Quiz, QuizConfiguration, AnswerType, FilterType } from '../../../shared/quiz/quiz';
 import { QuizService } from '../../../shared/quiz/quiz.service';
 import { QuizTypeService } from 'src/app/shared/quiz/quiz-type.service';
 
@@ -23,6 +23,10 @@ export class QuizConfigurationComponent implements OnInit {
 
   choice: ResponseChoice;
 
+  filter: FilterType;
+
+  filterValues: Array<NgOption>;
+
   configuration: QuizConfiguration;
 
   AnswerType = AnswerType;
@@ -36,6 +40,8 @@ export class QuizConfigurationComponent implements OnInit {
 
   ngOnInit() {
     this.questionTypes = [];
+    this.filterValues = [];
+    this.filter = { label: '', name: '', values: [] };
     this.quizTypeService.getQuizTypes().subscribe((types) => {
       let i = 1;
       const questionTypes = [];
@@ -53,6 +59,18 @@ export class QuizConfigurationComponent implements OnInit {
         this.configuration.questionType = this.questionTypes[0].questionType;
         this.updateQuestion(questionTypes[0]);
       }
+      let j = 1;
+      this.filter = types[0].filter;
+      const filterValues = [];
+      this.filter.values.forEach((possibility) => {
+        filterValues.push({
+          index: j,
+          label: possibility.label,
+          filter: { name: this.filter.name, value: possibility.value },
+        });
+        j++;
+      });
+      this.filterValues = filterValues;
     });
   }
 

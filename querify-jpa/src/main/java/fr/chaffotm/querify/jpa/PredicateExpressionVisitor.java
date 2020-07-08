@@ -6,6 +6,7 @@ import fr.chaffotm.querify.criteria.filter.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
+import java.util.List;
 import java.util.Stack;
 
 public class PredicateExpressionVisitor implements ExpressionVisitor {
@@ -14,23 +15,36 @@ public class PredicateExpressionVisitor implements ExpressionVisitor {
 
     private final JoinBuilder joinBuilder;
 
-    private Stack<Predicate> predicates;
+    private final Stack<Predicate> predicates;
 
-    public PredicateExpressionVisitor(final CriteriaBuilder builder, final JoinBuilder joinBuilder) {
+    private final QueryExecutor executor;
+
+    public PredicateExpressionVisitor(final CriteriaBuilder builder, final JoinBuilder joinBuilder, final QueryExecutor executor) {
         this.builder = builder;
         this.joinBuilder = joinBuilder;
+        this.executor = executor;
         this.predicates = new Stack<>();
     }
 
     @Override
-    public void visit(final CollectionFieldExpression expression) {
+    public void visit(final AliasSetFieldExpression expression) {
+        final List<?> elements = executor.execute(expression.getAlias(), expression.getParameters());
+        visit(expression, elements);
+    }
+
+    @Override
+    public void visit(final ValueSetFieldExpression expression) {
+        visit(expression, expression.getElements());
+    }
+
+    private void visit(final SetFieldExpression expression, final List<?> elements) {
         final Path<String> path = joinBuilder.getPath(expression.getFieldName());
         switch (expression.getOperator()) {
             case NOT_IN:
-                predicates.add(builder.not(path.in(expression.getElements())));
+                predicates.add(builder.not(path.in(elements)));
                 break;
             case IN:
-                predicates.add(path.in(expression.getElements()));
+                predicates.add(path.in(elements));
                 break;
             default:
                 predicates.add(null);
@@ -91,7 +105,6 @@ public class PredicateExpressionVisitor implements ExpressionVisitor {
             logical = builder.or(predicates.pop(), predicates.pop());
         } else {
             logical = builder.and(predicates.pop(), predicates.pop());
-
         }
         predicates.add(logical);
     }

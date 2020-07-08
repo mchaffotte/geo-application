@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Service
 public class QuestionDescriptorServiceImpl implements QuestionDescriptorService {
 
-    private Map<String, QuestionDescriptor> descriptors;
+    private Map<String, QuestionDescriptor<?>> descriptors;
 
     public QuestionDescriptorServiceImpl() {
         descriptors = List.of(new CapitalQuestionDescriptor(),
@@ -24,12 +24,12 @@ public class QuestionDescriptorServiceImpl implements QuestionDescriptorService 
     }
 
     @Override
-    public Map<String, QuestionDescriptor> getDescriptors() {
+    public Map<String, QuestionDescriptor<?>> getDescriptors() {
         return descriptors;
     }
 
     @Override
-    public QuestionDescriptor getDescriptor(String questionType) {
+    public <T> QuestionDescriptor<T> getDescriptor(String questionType) {
         if (questionType == null) {
             throw new IllegalArgumentException("Question type is null");
         }

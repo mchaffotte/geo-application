@@ -52,6 +52,7 @@ dependencies {
 }
 
 importSQL {
-    fileName = "import"
+    fileName = "data"
+    outputDir = "META-INF/sql"
 }
-build.dependsOn importSQL
+war.dependsOn importSQL

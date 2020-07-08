@@ -8,153 +8,153 @@
     {
       "numericCode": 2,
       "name": "Africa",
-      "parent": [1]
+      "parents": [1]
     },
     {
       "numericCode": 15,
       "name": "Northern Africa",
-      "parent": [2]
+      "parents": [2]
     },
     {
       "numericCode": 202,
       "name": "Sub-Saharan Africa",
-      "parent": [2]
+      "parents": [2]
     },
     {
       "numericCode": 14,
       "name": "Eastern Africa",
-      "parent": [202]
+      "parents": [202]
     },
     {
       "numericCode": 17,
       "name": "Middle Africa",
-      "parent": [202]
+      "parents": [202]
     },
     {
       "numericCode": 18,
       "name": "Southern Africa",
-      "parent": [202]
+      "parents": [202]
     },
     {
       "numericCode": 11,
       "name": "Western Africa",
-      "parent": [202]
+      "parents": [202]
     },
     {
       "numericCode": 19,
       "name": "Americas",
-      "parent": [1]
-    },
-    {
-      "numericCode": 419,
-      "name": "Latin America and the Caribbean",
-      "parent": [19]
-    },
-    {
-      "numericCode": 29,
-      "name": "Caribbean",
-      "parent": [3, 419]
-    },
-    {
-      "numericCode": 13,
-      "name": "Central America",
-      "parent": [3, 419]
-    },
-    {
-      "numericCode": 5,
-      "name": "South America",
-      "parent": [419]
+      "parents": [1]
     },
     {
       "numericCode": 3,
       "name": "North America",
-      "parent": [19]
+      "parents": [19]
+    },
+    {
+      "numericCode": 419,
+      "name": "Latin America and the Caribbean",
+      "parents": [19]
+    },
+    {
+      "numericCode": 29,
+      "name": "Caribbean",
+      "parents": [3, 419]
+    },
+    {
+      "numericCode": 13,
+      "name": "Central America",
+      "parents": [3, 419]
+    },
+    {
+      "numericCode": 5,
+      "name": "South America",
+      "parents": [419]
     },
     {
       "numericCode": 21,
       "name": "Northern America",
-      "parent": [3, 19]
+      "parents": [3, 19]
     },
     {
       "numericCode": 142,
       "name": "Asia",
-      "parent": [1]
+      "parents": [1]
     },
     {
       "numericCode": 143,
       "name": "Central Asia",
-      "parent": [142]
+      "parents": [142]
     },
     {
       "numericCode": 30,
       "name": "Eastern Asia",
-      "parent": [142]
+      "parents": [142]
     },
     {
       "numericCode": 35,
       "name": "South-eastern Asia",
-      "parent": [142]
+      "parents": [142]
     },
     {
       "numericCode": 34,
       "name": "Southern Asia",
-      "parent": [142]
+      "parents": [142]
     },
     {
       "numericCode": 145,
       "name": "Western Asia",
-      "parent": [142]
+      "parents": [142]
     },
     {
       "numericCode": 150,
       "name": "Europe",
-      "parent": [1]
+      "parents": [1]
     },
     {
       "numericCode": 151,
       "name": "Eastern Europe",
       "note": "includes North Asia",
-      "parent": [1]
+      "parents": [150]
     },
     {
       "numericCode": 154,
       "name": "Northern Europe",
-      "parent": [150]
+      "parents": [150]
     },
     {
       "numericCode": 39,
       "name": "Southern Europe",
-      "parent": [150]
+      "parents": [150]
     },
     {
       "numericCode": 155,
       "name": "Western Europe",
-      "parent": [150]
+      "parents": [150]
     },
     {
       "numericCode": 9,
       "name": "Oceania",
-      "parent": [1]
+      "parents": [1]
     },
     {
       "numericCode": 53,
       "name": "Australia and New Zealand",
-      "parent": [9]
+      "parents": [9]
     },
     {
       "numericCode": 54,
       "name": "Melanesia",
-      "parent": [9]
+      "parents": [9]
     },
     {
       "numericCode": 57,
       "name": "Micronesia",
-      "parent": [9]
+      "parents": [9]
     },
     {
       "numericCode": 61,
       "name": "Polynesia",
-      "parent": [9]
+      "parents": [9]
     }
   ],
   "countries": [
@@ -4666,8 +4666,7 @@
       "alpha3Code": "LAO",
       "numericCode": 418,
       "capital": "Vientiane",
-      "region": "Asia",
-      "subregion": 35,
+      "region": 35,
       "latlng": [18, 105],
       "area": {
         "land": 230800,

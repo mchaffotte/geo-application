@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface CriteriaRepository {
 
-    <T> List<T> findAll(final int offset, final Integer limit, final QueryCriteria<T> criteria);
+    <T> List<T> findAll(int offset, Integer limit, QueryCriteria<T> criteria);
+
+    <T> List<T> findAll(String query, Class<T> resultClass);
 
 }

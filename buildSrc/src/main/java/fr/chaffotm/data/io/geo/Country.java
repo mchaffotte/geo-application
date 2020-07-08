@@ -25,6 +25,8 @@ public class Country {
 
     private List<Border> borders;
 
+    private int region;
+
     public String getName() {
         return name;
     }
@@ -79,6 +81,14 @@ public class Country {
 
     public void setBorders(List<Border> borders) {
         this.borders = borders;
+    }
+
+    public int getRegion() {
+        return region;
+    }
+
+    public void setRegion(int region) {
+        this.region = region;
     }
 
 }

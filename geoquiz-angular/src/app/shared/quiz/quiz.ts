@@ -12,16 +12,36 @@ export enum AnswerType {
   MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
 }
 
+export class FilterType {
+  label: string;
+  name: string;
+  values: Array<Possibility>;
+}
+
+export class Possibility {
+  label: string;
+  value: number | string;
+}
+
+export class Filter {
+  name: string;
+  value: number | string;
+}
+
 export class QuizType {
   questionType: QuestionType;
 
   answerTypes: AnswerType[];
+
+  filter: FilterType;
 }
 
 export class QuizConfiguration {
   questionType: QuestionType;
 
   answerType: AnswerType;
+
+  filter: Filter;
 }
 
 export class Question {

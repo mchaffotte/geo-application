@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class JoinBuilder {
 
-    private Map<String, Join<Object, Object>> joinAliases;
+    private final Map<String, Join<Object, Object>> joinAliases;
 
     private final Root<?> mainEntity;
 

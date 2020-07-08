@@ -44,7 +44,8 @@ public class CountryRestControllerIT {
     @Test
     @DisplayName("getCountries should return the list of all countries")
     public void getCountriesShouldReturnTheListOfAllCountries() {
-        ResponseEntity<Frame<Country>> response = restTemplate.exchange(API_COUNTRIES, HttpMethod.GET, null, new ParameterizedTypeReference<Frame<Country>>() {});
+        ResponseEntity<Frame<Country>> response = restTemplate.exchange(API_COUNTRIES, HttpMethod.GET, null, new ParameterizedTypeReference<>() {
+        });
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody().getResources()).hasSize(14);
@@ -53,11 +54,6 @@ public class CountryRestControllerIT {
     @Test
     @DisplayName("crud the country")
     public void crudTheCountry() {
-        ResponseEntity<Frame<Country>> response = restTemplate.exchange(API_COUNTRIES, HttpMethod.GET, null, new ParameterizedTypeReference<Frame<Country>>() {});
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody().getResources()).hasSize(14);
-
         final Area area = new Area();
         area.setLand(303815);
         area.setWater(3433);

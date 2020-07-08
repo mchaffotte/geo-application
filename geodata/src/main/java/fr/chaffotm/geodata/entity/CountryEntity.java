@@ -36,6 +36,10 @@ public class CountryEntity {
     @JoinColumn(name = "capital_id", foreignKey = @ForeignKey(name = "fk_country_capital_id"))
     private CityEntity capital;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id", foreignKey = @ForeignKey(name = "fk_country_region_id"))
+    private RegionEntity region;
+
     public Long getId() {
         return id;
     }
@@ -72,17 +76,25 @@ public class CountryEntity {
         this.capital = capital;
     }
 
+    public RegionEntity getRegion() {
+        return region;
+    }
+
+    public void setRegion(RegionEntity region) {
+        this.region = region;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CountryEntity)) return false;
         CountryEntity that = (CountryEntity) o;
-        return Objects.equals(getId(), that.getId());
+        return Objects.equals(getCode(), that.getCode());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getCode());
     }
 
 }

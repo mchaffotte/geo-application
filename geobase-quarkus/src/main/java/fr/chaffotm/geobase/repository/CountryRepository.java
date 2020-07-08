@@ -54,7 +54,7 @@ public class CountryRepository {
 
     public CountryEntity update(final long id, final CountryEntity country) {
         if (country.getId() != null && country.getId() != id) {
-                throw new IllegalArgumentException("ids are not the same");
+            throw new IllegalArgumentException("ids are not the same");
         }
         final CountryEntity countryToUpdate = get(id);
         countryToUpdate.setName(country.getName());

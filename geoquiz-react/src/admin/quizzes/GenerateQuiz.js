@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Radio, Select } from 'final-form-material-ui';
-import { Form, Field } from 'react-final-form';
-import { OnChange } from 'react-final-form-listeners';
 import { useTranslation } from 'react-i18next';
+import { Formik, Field } from 'formik';
 import {
   Button,
   Card,
@@ -15,6 +13,9 @@ import {
   Grid,
   MenuItem,
   RadioGroup,
+  Select,
+  Radio,
+  InputLabel,
   makeStyles,
 } from '@material-ui/core';
 
@@ -29,6 +30,9 @@ const useStyles = makeStyles({
   },
   actions: {
     marginTop: 10,
+  },
+  empty: {
+    height: 36,
   },
 });
 
@@ -75,10 +79,11 @@ const GenerateQuiz = ({ onCreate }) => {
     fetchData();
   }, [error]);
 
-  const onSubmit = async ({ questionType, answerType }) => {
+  const handleQuizCreation = async ({ questionType, answerType, filter }) => {
     const response = await createQuiz({
       questionType: questionType.questionType,
-      answerType: answerType,
+      answerType,
+      filter: filter ? { name: questionType.filter.name, value: filter } : null,
     });
 
     const location = response.headers['location'];
@@ -100,88 +105,114 @@ const GenerateQuiz = ({ onCreate }) => {
     <Card className={classes.card}>
       <CardHeader title="Configuration" />
       <CardContent>
-        <Form
-          onSubmit={onSubmit}
+        <Formik
           initialValues={{
             questionType: quizTypes[0],
             answerType: 'MULTIPLE_CHOICE',
+            filter: '',
           }}
-          mutators={{
-            setDefaultAnswerType: (args, state, utils) => {
-              utils.changeValue(state, 'answerType', () => 'MULTIPLE_CHOICE');
-            },
+          onSubmit={(values, { setSubmitting }) => {
+            handleQuizCreation(values).then(() => setSubmitting(false));
           }}
-          render={({
-            handleSubmit,
-            submitting,
-            values,
-            form: {
-              mutators: { setDefaultAnswerType },
-            },
-          }) => (
-            <form onSubmit={handleSubmit} noValidate>
+        >
+          {({ values, handleChange, handleSubmit, isSubmitting }) => (
+            <form onSubmit={handleSubmit}>
               <Grid container alignItems="flex-start" spacing={2}>
                 <Grid item xs={12}>
-                  <Field
-                    fullWidth
-                    name="questionType"
-                    component={Select}
-                    label="Question type"
-                    formControlProps={{ fullWidth: true }}
-                  >
-                    {quizTypes.map((type) => (
-                      <MenuItem key={type.questionType} value={type}>
-                        {t(`model.question-type.${type.questionType}`)}
-                      </MenuItem>
-                    ))}
+                  <Field name="questionType">
+                    {({ field }) => (
+                      <FormControl fullWidth>
+                        <InputLabel htmlFor="question-type-select">
+                          {t('admin.quizzes.question-type')}
+                        </InputLabel>
+                        <Select
+                          id="question-type-select"
+                          {...field}
+                          onChange={(e) => {
+                            const newChoice = getChoice(
+                              e.target.value.answerTypes
+                            );
+                            setChoice(newChoice);
+                            if (
+                              values.answerType === 'ANSWER' &&
+                              !newChoice.answer
+                            ) {
+                              values.answerType = 'MULTIPLE_CHOICE';
+                            }
+                            handleChange(e);
+                          }}
+                        >
+                          {quizTypes.map((type) => (
+                            <MenuItem key={type.questionType} value={type}>
+                              {t(`model.question-type.${type.questionType}`)}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    )}
                   </Field>
-                  <OnChange name="questionType">
-                    {(value, previous) => {
-                      const newChoice = getChoice(value.answerTypes);
-                      setChoice(newChoice);
-                      if (values.answerType === 'ANSWER' && !newChoice.answer) {
-                        setDefaultAnswerType();
-                      }
-                    }}
-                  </OnChange>
                 </Grid>
                 <Grid item xs={12}>
-                  <FormControl component="fieldset">
-                    <FormLabel component="legend">Answer type</FormLabel>
-                    <RadioGroup row>
-                      <FormControlLabel
-                        label={t('admin.quizzes.answer')}
-                        control={
-                          <Field
-                            name="answerType"
-                            component={Radio}
-                            type="radio"
+                  <Field name="answerType">
+                    {({ field }) => (
+                      <FormControl fullWidth>
+                        <FormLabel htmlFor="anwser-type-select">
+                          {t('admin.quizzes.answer-type')}
+                        </FormLabel>
+                        <RadioGroup
+                          row
+                          {...field}
+                          name="answerType"
+                          id="anwser-type-select"
+                        >
+                          <FormControlLabel
+                            label={t('admin.quizzes.answer')}
                             value="ANSWER"
                             disabled={!choice.answer}
+                            control={<Radio />}
                           />
-                        }
-                      />
-                      <FormControlLabel
-                        label={t('admin.quizzes.multiple-choice')}
-                        control={
-                          <Field
-                            name="answerType"
-                            component={Radio}
-                            type="radio"
+                          <FormControlLabel
+                            label={t('admin.quizzes.multiple-choice')}
                             value="MULTIPLE_CHOICE"
                             disabled={!choice.multipleChoice}
+                            control={<Radio />}
                           />
-                        }
-                      />
-                    </RadioGroup>
-                  </FormControl>
+                        </RadioGroup>
+                      </FormControl>
+                    )}
+                  </Field>
+                </Grid>
+                <Grid item xs={12}>
+                  <Field name="filter">
+                    {({ field }) => (
+                      <FormControl fullWidth>
+                        <InputLabel htmlFor="filter-select">
+                          {quizTypes[0].filter.label}
+                        </InputLabel>
+                        <Select id="filter-select" {...field}>
+                          <MenuItem
+                            value=""
+                            className={classes.empty}
+                          ></MenuItem>
+                          {quizTypes[0].filter.values.map((possibility) => (
+                            <MenuItem
+                              key={possibility.label}
+                              value={possibility.value}
+                            >
+                              {possibility.label}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    )}
+                  </Field>
                 </Grid>
                 <Grid item className={classes.actions}>
                   <Button
                     variant="contained"
                     color="primary"
                     type="submit"
-                    disabled={submitting}
+                    disabled={isSubmitting}
                   >
                     {t('admin.quizzes.play')}
                   </Button>
@@ -189,7 +220,7 @@ const GenerateQuiz = ({ onCreate }) => {
               </Grid>
             </form>
           )}
-        />
+        </Formik>
       </CardContent>
     </Card>
   );

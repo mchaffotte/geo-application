@@ -5,11 +5,12 @@ import fr.chaffotm.querify.criteria.ExpressionVisitor;
 import fr.chaffotm.querify.criteria.FieldExpression;
 
 public class LogicalExpression implements Expression {
-    private FieldExpression left;
 
-    private LogicalOperator operator;
+    private final FieldExpression left;
 
-    private FieldExpression right;
+    private final LogicalOperator operator;
+
+    private final FieldExpression right;
 
     public LogicalExpression(final FieldExpression left, final LogicalOperator operator, final FieldExpression right) {
         this.left = left;

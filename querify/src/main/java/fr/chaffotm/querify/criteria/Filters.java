@@ -16,11 +16,15 @@ public class Filters {
     }
 
     public static FieldExpression in(final String fieldName, final String... values) {
-        return new CollectionFieldExpression(fieldName, CollectionOperator.IN, values);
+        return new ValueSetFieldExpression(fieldName, SetOperator.IN, values);
     }
 
     public static FieldExpression notIn(final String fieldName, final String... values) {
-        return new CollectionFieldExpression(fieldName, CollectionOperator.NOT_IN, values);
+        return new ValueSetFieldExpression(fieldName, SetOperator.NOT_IN, values);
+    }
+
+    public static FieldExpression in(final String fieldName, final String alias, final Object... parameters) {
+        return new AliasSetFieldExpression(fieldName, SetOperator.IN, alias, parameters);
     }
 
     public static FieldExpression isNull(final String fieldName) {

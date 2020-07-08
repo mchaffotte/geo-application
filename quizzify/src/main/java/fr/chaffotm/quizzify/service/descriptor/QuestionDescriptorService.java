@@ -4,8 +4,8 @@ import java.util.Map;
 
 public interface QuestionDescriptorService {
 
-    Map<String, QuestionDescriptor> getDescriptors();
+    Map<String, QuestionDescriptor<?>> getDescriptors();
 
-    <T> QuestionDescriptor<T> getDescriptor(final String questionType);
+    <T> QuestionDescriptor<T> getDescriptor(String questionType);
 
 }
