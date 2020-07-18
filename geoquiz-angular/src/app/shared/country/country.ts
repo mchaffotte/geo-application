@@ -1,20 +1,20 @@
-export class Page<T> {
+export interface Page<T> {
   resources: T[];
 
   total: number;
 }
 
-export class Area {
+export interface Area {
   land: number;
 
   water: number;
 }
 
-export class City {
+export interface City {
   name: string;
 }
 
-export class Country {
+export interface Country {
   id: number;
 
   code: string;

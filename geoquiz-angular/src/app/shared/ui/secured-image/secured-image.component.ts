@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'geo-secured-image',
@@ -22,14 +22,15 @@ export class SecuredImageComponent implements OnChanges {
   // new resource would be loaded
   dataUrl$ = this.src$.pipe(switchMap((url) => this.loadImage(url)));
 
-  ngOnChanges() {
+  constructor(private httpClient: HttpClient, private domSanitizer: DomSanitizer) {
+    this.src = '';
+  }
+
+  ngOnChanges(): void {
     this.src$.next(this.src);
   }
 
-  // we need HttpClient to load the image and DomSanitizer to trust the url
-  constructor(private httpClient: HttpClient, private domSanitizer: DomSanitizer) {}
-
-  private loadImage(url: string): Observable<any> {
+  private loadImage(url: string): Observable<SafeUrl> {
     if (url == null) {
       return of();
     }

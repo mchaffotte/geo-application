@@ -10,10 +10,10 @@ import { QuizService } from '../../../shared/quiz/quiz.service';
 import { QuizTypeService } from '../../../shared/quiz/quiz-type.service';
 import { QuizType } from 'src/app/shared/quiz/quiz';
 
-const translations: any = { 'admin.menu.dashboard': 'Dashboard' };
+const translations: object = { 'admin.menu.dashboard': 'Dashboard' };
 
 class FakeLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<any> {
+  getTranslation(lang: string): Observable<object> {
     return of(translations);
   }
 }

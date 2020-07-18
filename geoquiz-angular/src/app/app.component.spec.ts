@@ -5,10 +5,10 @@ import { Observable, of } from 'rxjs';
 
 import { AppComponent } from './app.component';
 
-const translations: any = { 'admin.menu.dashboard': 'Dashboard' };
+const translations: object = { 'admin.menu.dashboard': 'Dashboard' };
 
 class FakeLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<any> {
+  getTranslation(lang: string): Observable<object> {
     return of(translations);
   }
 }

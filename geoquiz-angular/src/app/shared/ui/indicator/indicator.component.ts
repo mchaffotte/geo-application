@@ -1,28 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { faBan } from '@fortawesome/free-solid-svg-icons';
+import { Component, Input } from '@angular/core';
+import { faBan, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'geo-indicator',
   templateUrl: './indicator.component.html',
   styleUrls: ['./indicator.component.scss'],
 })
-export class IndicatorComponent implements OnInit {
+export class IndicatorComponent {
   @Input() color: string;
 
-  @Input() icon: any;
+  @Input() icon: IconDefinition;
 
   @Input() label: string;
 
-  @Input() value: string;
+  @Input() value: string | number;
 
-  constructor() {}
-
-  ngOnInit(): void {
-    if (!this.color) {
-      this.color = 'rgb(0, 123, 255)';
-    }
-    if (!this.icon) {
-      this.icon = faBan;
-    }
+  constructor() {
+    this.color = 'rgb(0, 123, 255)';
+    this.icon = faBan;
+    this.label = '';
+    this.value = '';
   }
 }

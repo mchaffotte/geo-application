@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 
 // AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http);
 }
 

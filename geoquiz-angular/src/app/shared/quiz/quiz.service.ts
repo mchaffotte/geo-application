@@ -13,6 +13,9 @@ export class QuizService {
     return this.http.post('api/quizzes', configuration, { observe: 'response' }).pipe(
       map((res) => {
         const location = res.headers.get('Location');
+        if (!location) {
+          throw new Error('Cannot locate quiz');
+        }
         const index = location.lastIndexOf('/');
         return Number(location.substring(index + 1));
       })

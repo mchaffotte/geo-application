@@ -9,11 +9,13 @@ import { delay } from 'rxjs/operators';
   styleUrls: ['./alerts.component.scss'],
 })
 export class AlertsComponent implements OnInit {
-  alert: Alert;
+  alert: Alert | null;
 
-  constructor(private alertService: AlertsService) {}
+  constructor(private alertService: AlertsService) {
+    this.alert = null;
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.alertService.getAlert().subscribe((alert) => {
       this.alert = alert;
     });
@@ -28,7 +30,7 @@ export class AlertsComponent implements OnInit {
       });
   }
 
-  close() {
+  close(): void {
     this.alertService.clear();
   }
 }

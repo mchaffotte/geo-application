@@ -64,11 +64,9 @@ export class CountriesComponent implements OnInit {
   faSortUp = faSortUp;
   faSortDown = faSortDown;
 
-  constructor(private countryService: CountryService) {}
-
-  ngOnInit() {
-    this.columns = new Array<Column>();
-    const columns = new Array<Column>();
+  constructor(private countryService: CountryService) {
+    this.countries = [];
+    const columns = [];
     columns.push(new Column('Code', 'code', true, Order.ASC));
     columns.push(new Column('Name', 'name', true));
     columns.push(new Column('Total area', 'totalArea'));
@@ -76,15 +74,17 @@ export class CountriesComponent implements OnInit {
     this.columns = columns;
     this.currentSortColumn = this.columns[0];
     this.page = new PageInfo(1, 10, this.currentSortColumn.prop);
+  }
 
+  ngOnInit(): void {
     this.getCountries();
   }
 
-  changePage() {
+  changePage(): void {
     this.getCountries();
   }
 
-  sortPage(column: Column) {
+  sortPage(column: Column): void {
     if (column.sortable) {
       if (column.order === Order.ASC) {
         column.order = Order.DESC;
@@ -106,7 +106,7 @@ export class CountriesComponent implements OnInit {
     }
   }
 
-  private getCountries() {
+  private getCountries(): void {
     const offset = (this.page.pageNumber - 1) * this.page.size + 1;
     this.countryService.getCountries(offset, this.page.size, this.page.sort).subscribe((pagedData) => {
       this.countries = pagedData.resources;

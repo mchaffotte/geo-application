@@ -13,10 +13,12 @@ export class TotalCountriesComponent implements OnInit {
 
   value: number | string;
 
-  constructor(private countryService: CountryService) {}
+  constructor(private countryService: CountryService) {
+    this.value = '';
+  }
 
   ngOnInit(): void {
-    this.countryService.getCountries(0, 1, null).subscribe(
+    this.countryService.getCountries(0, 1).subscribe(
       (pagedData) => {
         this.value = pagedData.total;
       },

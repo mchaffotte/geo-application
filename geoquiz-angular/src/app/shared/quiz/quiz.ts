@@ -12,23 +12,23 @@ export enum AnswerType {
   MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
 }
 
-export class FilterType {
+export interface FilterType {
   label: string;
   name: string;
   values: Array<Possibility>;
 }
 
-export class Possibility {
+export interface Possibility {
   label: string;
   value: number | string;
 }
 
-export class Filter {
+export interface Filter {
   name: string;
   value: number | string;
 }
 
-export class QuizType {
+export interface QuizType {
   questionType: QuestionType;
 
   answerTypes: AnswerType[];
@@ -36,23 +36,23 @@ export class QuizType {
   filter: FilterType;
 }
 
-export class QuizConfiguration {
+export interface QuizConfiguration {
   questionType: QuestionType;
 
   answerType: AnswerType;
 
-  filter: Filter;
+  filter?: Filter;
 }
 
-export class Question {
-  imagePath: string;
+export interface Question {
+  imagePath?: string;
 
   wording: string;
 
   choices: string[];
 }
 
-export class Quiz {
+export interface Quiz {
   id: number;
 
   questions: Question[];
@@ -66,7 +66,7 @@ export class QuizAnswer {
   questionAnswers: QuestionAnswer[] = [];
 }
 
-export class QuizResult {
+export interface QuizResult {
   nbOfCorrectAnswers: number;
 
   nbOfQuestions: number;

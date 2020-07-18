@@ -6,10 +6,10 @@ import { Observable, of } from 'rxjs';
 import { QuizzesComponent } from './quizzes.component';
 import { Quiz } from '../../shared/quiz/quiz';
 
-const translations: any = { 'admin.menu.dashboard': 'Dashboard' };
+const translations: object = { 'admin.menu.dashboard': 'Dashboard' };
 
 class FakeLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<any> {
+  getTranslation(lang: string): Observable<object> {
     return of(translations);
   }
 }
@@ -25,7 +25,7 @@ class MockQuizConfigurationComponent {}
   template: '<p>Mock Geo Quiz Game Component</p>',
 })
 class MockQuizGameComponent {
-  @Input() quiz: Quiz;
+  @Input() quiz: Quiz | null = null;
 }
 
 describe('QuizzesComponent', () => {

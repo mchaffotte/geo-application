@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { Action } from './countdown.directive';
@@ -8,7 +8,7 @@ import { Action } from './countdown.directive';
   templateUrl: './countdown.component.html',
   styleUrls: ['./countdown.component.scss'],
 })
-export class CountdownComponent implements OnInit {
+export class CountdownComponent {
   interval: number;
   timeLeft: number;
 
@@ -19,10 +19,12 @@ export class CountdownComponent implements OnInit {
   @Input() actions: Subject<Action>;
   @Output() over = new EventEmitter<number>();
 
-  ngOnInit(): void {
+  constructor() {
     this.progress = 0;
     this.interval = 200;
+    this.seconds = 10;
     this.timeLeft = this.seconds * 1000;
+    this.actions = new Subject<Action>();
   }
 
   onProgress(timeLeft: number): void {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
@@ -11,21 +11,21 @@ import { Action } from '../../../shared/ui/countdown/countdown.directive';
   templateUrl: './quiz-game.component.html',
   styleUrls: ['./quiz-game.component.scss'],
 })
-export class QuizGameComponent implements OnInit {
+export class QuizGameComponent {
   private innerQuiz: Quiz;
 
   private quizAnswer: QuizAnswer;
 
   index: number;
 
-  question: Question;
+  question: Question | null;
 
-  result: QuizResult;
+  result: QuizResult | null;
 
   quizGameForm: FormGroup;
   @ViewChild('question_answer', { static: false }) answerRef: ElementRef;
 
-  actionsSubject = new BehaviorSubject<Action>(null);
+  actionsSubject = new BehaviorSubject<Action>(Action.STOP);
 
   seconds: number;
 
@@ -34,26 +34,30 @@ export class QuizGameComponent implements OnInit {
       answer: '',
     });
     this.seconds = 10;
+    this.result = null;
+    this.index = -1;
+    this.question = null;
+    this.quizAnswer = new QuizAnswer();
+    this.innerQuiz = { id: -1, questions: [] };
+    this.answerRef = new ElementRef('');
   }
-
-  ngOnInit() {}
 
   @Input()
   set quiz(quiz: Quiz) {
-    if (quiz) {
+    if (quiz && quiz.id > 0) {
       this.innerQuiz = quiz;
       this.index = -1;
       this.changeQuestion();
       this.quizAnswer = new QuizAnswer();
       this.result = null;
-      if (this.question.choices.length === 0) {
+      if (this.question?.choices.length === 0) {
         setTimeout(() => this.answerRef.nativeElement.focus(), 5);
       }
     }
   }
 
   nextQuestion(): void {
-    if (this.question.choices.length === 0) {
+    if (this.question?.choices.length === 0) {
       this.answer();
     } else {
       this.selectAnswer('');
@@ -61,7 +65,7 @@ export class QuizGameComponent implements OnInit {
   }
 
   answer(): void {
-    let value = this.quizGameForm.get('answer').value;
+    let value = this.quizGameForm.get('answer')?.value;
     if (value == null) {
       value = '';
     }

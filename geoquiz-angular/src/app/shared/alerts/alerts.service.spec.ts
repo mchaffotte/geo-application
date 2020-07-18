@@ -4,10 +4,10 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { AlertsService } from '../alerts/alerts.service';
 import { Observable, of } from 'rxjs';
 
-const translations: any = { 'admin.menu.dashboard': 'Dashboard' };
+const translations: object = { 'admin.menu.dashboard': 'Dashboard' };
 
 class FakeLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<any> {
+  getTranslation(lang: string): Observable<object> {
     return of(translations);
   }
 }

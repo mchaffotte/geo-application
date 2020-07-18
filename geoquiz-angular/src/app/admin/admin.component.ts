@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'geo-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent {
   isNavbarCollapsed: boolean;
 
-  ngOnInit() {
+  constructor() {
     this.isNavbarCollapsed = true;
   }
 
-  collapseNavbar() {
+  collapseNavbar(): void {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
 }

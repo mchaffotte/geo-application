@@ -1,18 +1,30 @@
 <div class="card my-3" *ngIf="question">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h4 class="my-0 font-weight-normal">{{ 'admin.quizzes.question' | translate:{number: index + 1} }}</h4>
+    <h4 class="my-0 font-weight-normal">{{ 'admin.quizzes.question' | translate: { number: index + 1 } }}</h4>
     <geo-countdown [seconds]="seconds" [actions]="actionsSubject" (over)="nextQuestion()"></geo-countdown>
   </div>
-  <geo-secured-image *ngIf="question.imagePath" [src]="getImageURL(question.imagePath)" class="mx-auto my-2 d-block">
-  </geo-secured-image>
+  <geo-secured-image *ngIf="question.imagePath" [src]="getImageURL(question.imagePath)" class="mx-auto my-2 d-block"> </geo-secured-image>
   <div class="card-body">
     <h5 class="card-title">{{ question.wording }}</h5>
-    <button type="button" class="btn btn-lg btn-block btn-outline-primary" *ngFor="let choice of question.choices"
-      (click)="selectAnswer(choice)">{{ choice }}</button>
+    <button
+      type="button"
+      class="btn btn-lg btn-block btn-outline-primary"
+      *ngFor="let choice of question.choices"
+      (click)="selectAnswer(choice)"
+    >
+      {{ choice }}
+    </button>
     <form [formGroup]="quizGameForm" (ngSubmit)="answer()" *ngIf="question.choices.length === 0">
       <div class="form-group row">
-        <input type="text" class="form-control mx-3" id="answer" name="answer"
-          placeholder="{{ 'admin.quizzes.enter-answer' | translate }}" formControlName="answer" #question_answer>
+        <input
+          type="text"
+          class="form-control mx-3"
+          id="answer"
+          name="answer"
+          placeholder="{{ 'admin.quizzes.enter-answer' | translate }}"
+          formControlName="answer"
+          #question_answer
+        />
       </div>
       <div class="form-group row">
         <div class="col">

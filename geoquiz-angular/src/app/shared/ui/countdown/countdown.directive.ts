@@ -4,6 +4,7 @@ import { switchMap, take, tap } from 'rxjs/operators';
 
 export enum Action {
   START,
+  STOP,
 }
 
 interface CountDown {
@@ -28,9 +29,12 @@ export class CountdownDirective implements OnInit, OnDestroy {
     this.countdown$ = new Subject<CountDown>();
     this.subscription = Subscription.EMPTY;
     this.actionSubscription = Subscription.EMPTY;
+    this.countdown = 10 * 1000;
+    this.interval = 5;
+    this.actions = new Subject<Action>();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.subscription = this.countdown$
       .pipe(
         switchMap(({ count, interval }) =>
@@ -52,7 +56,7 @@ export class CountdownDirective implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.actionSubscription.unsubscribe();
   }

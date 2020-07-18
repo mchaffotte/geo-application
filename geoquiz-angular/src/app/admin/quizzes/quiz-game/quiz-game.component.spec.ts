@@ -7,10 +7,10 @@ import { Observable, of } from 'rxjs';
 import { QuizGameComponent } from './quiz-game.component';
 import { QuizService } from '../../../shared/quiz/quiz.service';
 
-const translations: any = { 'admin.menu.dashboard': 'Dashboard' };
+const translations: object = { 'admin.menu.dashboard': 'Dashboard' };
 
 class FakeLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<any> {
+  getTranslation(lang: string): Observable<object> {
     return of(translations);
   }
 }
@@ -20,7 +20,7 @@ class FakeLoader implements TranslateLoader {
   template: '<p>Mock Secured Image Component</p>',
 })
 class MockSecuredImageComponent {
-  @Input() src: string;
+  @Input() src = '';
 }
 
 class MockQuizService {}

@@ -7,7 +7,7 @@ import { Country, Page } from './country';
 export class CountryService {
   constructor(private http: HttpClient) {}
 
-  getCountries(offset: number, limit: number, sort: string): Observable<Page<Country>> {
+  getCountries(offset?: number, limit?: number, sort?: string): Observable<Page<Country>> {
     let params = new HttpParams();
     if (offset) {
       params = params.append('offset', offset.toString());

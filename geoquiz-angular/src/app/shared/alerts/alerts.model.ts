@@ -7,7 +7,7 @@ export enum AlertType {
   SECONDARY = 'secondary',
 }
 
-export class Alert {
+export interface Alert {
   type: AlertType;
   message: string;
 }

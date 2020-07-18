@@ -16,28 +16,28 @@ export class AlertsService {
     return this.subject.asObservable();
   }
 
-  success(translationKey: string, values?: object) {
+  success(translationKey: string, values?: object): void {
     this.alert(AlertType.SUCCESS, translationKey, values);
   }
 
-  warn(translationKey: string, values?: object) {
+  warn(translationKey: string, values?: object): void {
     this.alert(AlertType.WARNING, translationKey, values);
   }
 
-  error(translationKey: string, values?: object) {
+  error(translationKey: string, values?: object): void {
     this.alert(AlertType.DANGER, translationKey, values);
   }
 
-  info(translationKey: string, values?: object) {
+  info(translationKey: string, values?: object): void {
     this.alert(AlertType.INFO, translationKey, values);
   }
 
-  private alert(type: string, translationKey: string, values?: object) {
+  private alert(type: string, translationKey: string, values?: object): void {
     const message = this.translate.instant(translationKey, values);
     this.subject.next({ type, message } as Alert);
   }
 
-  clear() {
+  clear(): void {
     this.subject.next();
   }
 }

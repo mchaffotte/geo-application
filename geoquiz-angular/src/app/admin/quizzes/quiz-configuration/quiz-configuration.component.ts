@@ -2,11 +2,11 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgOption } from '@ng-select/ng-select';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Quiz, QuizConfiguration, AnswerType, FilterType } from '../../../shared/quiz/quiz';
+import { Quiz, QuizConfiguration, AnswerType, FilterType, QuestionType } from '../../../shared/quiz/quiz';
 import { QuizService } from '../../../shared/quiz/quiz.service';
 import { QuizTypeService } from 'src/app/shared/quiz/quiz-type.service';
 
-export class ResponseChoice {
+export interface ResponseChoice {
   answer: boolean;
   multipleChoice: boolean;
 }
@@ -19,13 +19,13 @@ export class ResponseChoice {
 export class QuizConfigurationComponent implements OnInit {
   @Output() quizCreated = new EventEmitter<Quiz>();
 
-  questionTypes: Array<NgOption>;
+  questionTypes: NgOption[];
 
   choice: ResponseChoice;
 
-  filter: FilterType;
+  filter: FilterType | null;
 
-  filterValues: Array<NgOption>;
+  filterValues: NgOption[];
 
   configuration: QuizConfiguration;
 
@@ -34,17 +34,16 @@ export class QuizConfigurationComponent implements OnInit {
   constructor(private quizService: QuizService, private quizTypeService: QuizTypeService, private translate: TranslateService) {
     this.choice = { answer: true, multipleChoice: true };
 
-    this.configuration = new QuizConfiguration();
-    this.configuration.answerType = AnswerType.MULTIPLE_CHOICE;
-  }
-
-  ngOnInit() {
+    this.configuration = { answerType: AnswerType.MULTIPLE_CHOICE, questionType: QuestionType.FLAG };
     this.questionTypes = [];
     this.filterValues = [];
-    this.filter = { label: '', name: '', values: [] };
+    this.filter = null;
+  }
+
+  ngOnInit(): void {
     this.quizTypeService.getQuizTypes().subscribe((types) => {
       let i = 1;
-      const questionTypes = [];
+      const questionTypes: NgOption[] = [];
       types.forEach((type) => {
         questionTypes.push({
           index: i,
@@ -60,13 +59,13 @@ export class QuizConfigurationComponent implements OnInit {
         this.updateQuestion(questionTypes[0]);
       }
       let j = 1;
-      this.filter = types[0].filter;
-      const filterValues = [];
-      this.filter.values.forEach((possibility) => {
+      this.filter = types[0]?.filter;
+      const filterValues: NgOption[] = [];
+      this.filter?.values.forEach((possibility) => {
         filterValues.push({
           index: j,
           label: possibility.label,
-          filter: { name: this.filter.name, value: possibility.value },
+          filter: this.filter ? { name: this.filter.name, value: possibility.value } : null,
         });
         j++;
       });
@@ -79,17 +78,25 @@ export class QuizConfigurationComponent implements OnInit {
     return !!response;
   }
 
-  updateQuestion(event: NgOption) {
+  updateQuestion(event: NgOption): void {
     const questionOption = this.questionTypes.find((option) => option.questionType === event.questionType);
-    this.choice.multipleChoice = this.contains(questionOption, AnswerType.MULTIPLE_CHOICE);
-    this.choice.answer = this.contains(questionOption, AnswerType.ANSWER);
-
+    if (!questionOption) {
+      this.choice = {
+        answer: false,
+        multipleChoice: false,
+      };
+    } else {
+      this.choice = {
+        answer: this.contains(questionOption, AnswerType.ANSWER),
+        multipleChoice: this.contains(questionOption, AnswerType.MULTIPLE_CHOICE),
+      };
+    }
     if (this.configuration.answerType === AnswerType.ANSWER && !this.choice.answer) {
       this.configuration.answerType = AnswerType.MULTIPLE_CHOICE;
     }
   }
 
-  createQuiz() {
+  createQuiz(): void {
     this.quizService.createQuiz(this.configuration).subscribe((quizId) => {
       this.quizService.getQuiz(quizId).subscribe((quiz) => {
         this.quizCreated.emit(quiz);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Quiz } from '../../shared/quiz/quiz';
 
@@ -7,14 +7,13 @@ import { Quiz } from '../../shared/quiz/quiz';
   templateUrl: './quizzes.component.html',
   styleUrls: ['./quizzes.component.scss'],
 })
-export class QuizzesComponent implements OnInit {
+export class QuizzesComponent {
   quiz: Quiz;
 
-  constructor() {}
-
-  ngOnInit() {}
-
-  startQuiz(quiz: Quiz) {
+  constructor() {
+    this.quiz = { id: -1, questions: [] };
+  }
+  startQuiz(quiz: Quiz): void {
     this.quiz = quiz;
   }
 }

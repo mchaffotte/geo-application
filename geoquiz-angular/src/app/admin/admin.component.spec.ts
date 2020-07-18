@@ -7,10 +7,10 @@ import { Observable, of } from 'rxjs';
 import { AdminComponent } from './admin.component';
 import { SharedModule } from '../shared/shared.module';
 
-const translations: any = { 'admin.menu.dashboard': 'Dashboard' };
+const translations: object = { 'admin.menu.dashboard': 'Dashboard' };
 
 class FakeLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<any> {
+  getTranslation(lang: string): Observable<object> {
     return of(translations);
   }
 }
