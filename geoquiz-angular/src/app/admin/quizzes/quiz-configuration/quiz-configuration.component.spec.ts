@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -30,8 +30,8 @@ describe('QuizConfigurationComponent', () => {
   let component: QuizConfigurationComponent;
   let fixture: ComponentFixture<QuizConfigurationComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [QuizConfigurationComponent],
       imports: [
         FormsModule,
@@ -46,7 +46,7 @@ describe('QuizConfigurationComponent', () => {
         { provide: QuizTypeService, useClass: MockQuizTestService },
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(QuizConfigurationComponent);

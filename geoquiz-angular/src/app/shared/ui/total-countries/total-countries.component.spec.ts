@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Observable, of } from 'rxjs';
 
@@ -16,13 +16,13 @@ describe('TotalCountriesComponent', () => {
   let component: TotalCountriesComponent;
   let fixture: ComponentFixture<TotalCountriesComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [TotalCountriesComponent],
       imports: [FontAwesomeModule],
       providers: [{ provide: CountryService, useClass: MockCountryService }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TotalCountriesComponent);

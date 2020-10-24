@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 
@@ -32,8 +32,8 @@ describe('QuizzesComponent', () => {
   let component: QuizzesComponent;
   let fixture: ComponentFixture<QuizzesComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [QuizzesComponent, MockQuizConfigurationComponent, MockQuizGameComponent],
       imports: [
         TranslateModule.forRoot({
@@ -41,7 +41,7 @@ describe('QuizzesComponent', () => {
         }),
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(QuizzesComponent);

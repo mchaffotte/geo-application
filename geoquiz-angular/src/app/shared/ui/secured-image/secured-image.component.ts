@@ -14,7 +14,7 @@ export class SecuredImageComponent implements OnChanges {
   // This part just creates an rxjs stream from the src
   // this makes sure that we can handle it when the src changes
   // or even when the component gets destroyed
-  @Input() private src: string;
+  @Input() public src: string = '';
   private src$ = new BehaviorSubject(this.src);
 
   // this stream will contain the actual url that our img tag will load

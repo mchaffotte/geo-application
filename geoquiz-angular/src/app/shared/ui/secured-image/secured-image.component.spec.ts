@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SecuredImageComponent } from './secured-image.component';
 
@@ -7,12 +7,12 @@ describe('SecuredImageComponent', () => {
   let component: SecuredImageComponent;
   let fixture: ComponentFixture<SecuredImageComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [SecuredImageComponent],
       imports: [HttpClientModule],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SecuredImageComponent);

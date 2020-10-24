@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
@@ -29,8 +29,8 @@ describe('QuizGameComponent', () => {
   let component: QuizGameComponent;
   let fixture: ComponentFixture<QuizGameComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [QuizGameComponent, MockSecuredImageComponent],
       imports: [
         ReactiveFormsModule,
@@ -40,7 +40,7 @@ describe('QuizGameComponent', () => {
       ],
       providers: [{ provide: QuizService, useClass: MockQuizService }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(QuizGameComponent);
