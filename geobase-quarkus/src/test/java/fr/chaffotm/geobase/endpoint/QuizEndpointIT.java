@@ -7,6 +7,7 @@ import fr.chaffotm.quizzify.resource.*;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
 import org.assertj.core.api.Condition;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,10 +32,18 @@ public class QuizEndpointIT {
 
     private Condition<Question> fourChoices;
 
+    private Client client;
+
     @BeforeEach
     public void setUp() {
+        client = TestConfiguration.buildClient();
         withoutChoices = new Condition<>(hasChoices(0), "Empty choices");
         fourChoices = new Condition<>(hasChoices(4), "4 choices");
+    }
+
+    @AfterEach
+    public void tearDown() {
+        client.close();
     }
 
     private Predicate<Question> hasChoices(final int numberOfChoices) {
@@ -114,7 +123,6 @@ public class QuizEndpointIT {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.ANSWER);
         configuration.setQuestionType("WATER_AREA");
-        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("Quiz supports only multiple choice");
@@ -127,7 +135,6 @@ public class QuizEndpointIT {
     }
 
     private void assertThatQuizIsCreatedAndAnswerWithEmptySolution(final QuizConfiguration configuration, final Condition<Question> condition) {
-        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
 
         Response response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(configuration));
@@ -170,7 +177,6 @@ public class QuizEndpointIT {
 
     @Test
     public void answerQuiz_should_not_recognize_null_body() {
-        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("<list element> must not be null");
@@ -184,7 +190,6 @@ public class QuizEndpointIT {
 
     @Test
     public void answerQuiz_should_not_validate_null_body() {
-        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("quizAnswer must not be null");
@@ -198,7 +203,6 @@ public class QuizEndpointIT {
 
     @Test
     public void answerQuiz_should_not_validate_empty_body() {
-        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("quizAnswer must not be null");
@@ -214,7 +218,6 @@ public class QuizEndpointIT {
     public void answerQuiz_should_not_validate_null_list_of_question_answers() {
         final QuizAnswer quizAnswer = new QuizAnswer();
         quizAnswer.setQuestionAnswers(null);
-        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("questionAnswers must not be null");
@@ -233,7 +236,6 @@ public class QuizEndpointIT {
                 .questionAnswer("")
                 .questionAnswer(null)
                 .getQuizAnswer();
-        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("<list element> must not be null");
@@ -250,7 +252,6 @@ public class QuizEndpointIT {
         final QuizAnswer quizAnswer = new QuizAnswerBuilder()
                 .questionAnswer(null, "", null)
                 .getQuizAnswer();
-        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
         final BadRequestBody errorBody = new BadRequestBody();
         errorBody.addMessage("<list element> must not be null");

@@ -6,6 +6,8 @@ import fr.chaffotm.geodata.resource.City;
 import fr.chaffotm.geodata.resource.Country;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.client.Client;
@@ -24,9 +26,20 @@ public class CountryEndpointIT {
     @TestHTTPResource("/geobase")
     private URI baseURL;
 
+    private Client client;
+
+    @BeforeEach
+    public void setUp() {
+        client = TestConfiguration.buildClient();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        client.close();
+    }
+
     @Test
     public void crud_Country() {
-        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/countries");
 
         Response response = webTarget.request(APPLICATION_JSON_TYPE).get();

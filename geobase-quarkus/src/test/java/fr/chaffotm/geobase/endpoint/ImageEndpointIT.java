@@ -6,6 +6,8 @@ import fr.chaffotm.quizzify.resource.Quiz;
 import fr.chaffotm.quizzify.resource.QuizConfiguration;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.client.Client;
@@ -25,13 +27,24 @@ public class ImageEndpointIT {
     @TestHTTPResource("/geobase")
     private URI baseURL;
 
+    private Client client;
+
+    @BeforeEach
+    public void setUp() {
+        client = TestConfiguration.buildClient();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        client.close();
+    }
+
     @Test
     public void getImage_should_retrieve_the_correct_image() {
         final QuizConfiguration configuration = new QuizConfiguration();
         configuration.setAnswerType(AnswerType.MULTIPLE_CHOICE);
         configuration.setQuestionType("SILHOUETTE");
 
-        final Client client = TestConfiguration.buildClient();
         WebTarget webTarget = client.target(baseURL).path("api/quizzes");
 
         final Response response = webTarget.request(APPLICATION_JSON_TYPE).post(Entity.json(configuration));

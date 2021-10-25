@@ -5,6 +5,8 @@ import fr.chaffotm.quizzify.resource.FilterType;
 import fr.chaffotm.quizzify.resource.QuizType;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.client.Client;
@@ -23,6 +25,18 @@ public class QuizTypeEndpointIT {
     @TestHTTPResource("/geobase")
     private URI baseURL;
 
+    private Client client;
+
+    @BeforeEach
+    public void setUp() {
+        client = TestConfiguration.buildClient();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        client.close();
+    }
+
     private QuizType build(final String questionType, final FilterType filter, final AnswerType... answerTypes) {
         final QuizType type = new QuizType();
         type.setQuestionType(questionType);
@@ -33,7 +47,6 @@ public class QuizTypeEndpointIT {
 
     @Test
     public void getQuizTypes_should_return_all_possible_types() {
-        final Client client = TestConfiguration.buildClient();
         final WebTarget webTarget = client.target(baseURL).path("api/quiz-types");
         final FilterType filter = new FilterType();
         filter.setLabel("Region");

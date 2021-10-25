@@ -12,14 +12,10 @@ import java.io.IOException;
 public class ImportSQLTask extends DefaultTask {
 
     @InputDirectory
-    @Optional
-    public
-    String outputDir = "";
+    public String outputDir = "";
 
     @Input
-    @Optional
-    public
-    String fileName = "import";
+    public String fileName = "import";
 
     @OutputFile
     public File getSQLFile() {
